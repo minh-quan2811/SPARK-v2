@@ -1,0 +1,13 @@
+neo4j 
+langchain 
+langchain-community 
+langchain-google-genai 
+langchain-neo4j 
+langgraph 
+python-dotenv 
+pandas
+requests 
+beautifulsoup4
+qdrant-client 
+sentence-transformers
+tqdm

@@ -1,0 +1,8 @@
+.env
+.venv
+
+cv_test_case/
+*.csv
+
+__pycache__/
+*.pyc

@@ -1,0 +1,4445 @@
+[
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "aggregation",
+    "context": {
+      "faculty_name": "K. Cơ khí Giao thông (S)",
+      "programs": [
+        "SPKT Công nghiệp K2013",
+        "SPKT Công nghiệp K2014",
+        "SPKT Công nghiệp K2015",
+        "SPKT Công nghiệp K2016",
+        "SPKT Công nghiệp K2017"
+      ]
+    },
+    "question": "Could you tell me the total number of programs currently managed by the K. Cơ khí Giao thông (S) faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Cơ khí Giao thông (S)'})-[:HAS_PROGRAM]->(p:Program) RETURN count(p)",
+    "answer": [
+      {
+        "count(p)": 5
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "faculty_name": "K. Xây dựng Dân dụng - Công nghiệp",
+      "programs": [
+        "KT Xây dựng - CN Xây dựng DD & CN K2018",
+        "KT Xây dựng - CN Xây dựng DD & CN K2018CLC",
+        "KT Xây dựng - CN Xây dựng DD & CN K2019CLC",
+        "KT Xây dựng - CN Xây dựng DD & CN K2020",
+        "KT Xây dựng - CN Xây dựng DD & CN K2020_Kỹ sư"
+      ]
+    },
+    "question": "Could you provide a list of all the programs currently offered under the K. Xây dựng Dân dụng - Công nghiệp faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Xây dựng Dân dụng - Công nghiệp'})-[:HAS_PROGRAM]->(p:Program) RETURN p.ten_chuong_trinh",
+    "answer": [
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2018"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2018CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2019CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2020_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2020CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2020CLC_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2021_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2021CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2021CLC_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2022_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2023_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2024_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Xây dựng - CN Xây dựng DD & CN K2025_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Công trình xây dựng K2013"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Công trình xây dựng K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Công trình xây dựng K2014LT"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Công trình xây dựng K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Công trình xây dựng K2016"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Công trình xây dựng K2017"
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "aggregation",
+    "context": {
+      "faculty_name": "K. Điện tử Viễn thông",
+      "programs": [
+        "KTĐT-VT, CN Vi điện tử - thiết kế vi mạch K2024",
+        "KTĐT-VT, CN Vi điện tử - thiết kế vi mạch K2025",
+        "Kỹ thuật điện tử và viễn thông K2015_KTDT",
+        "Kỹ thuật điện tử và viễn thông K2015_KTMT",
+        "Kỹ thuật điện tử và viễn thông K2015_KTVT"
+      ]
+    },
+    "question": "Could you tell me the total number of programs currently managed by the K. Điện tử Viễn thông faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Điện tử Viễn thông'})-[:HAS_PROGRAM]->(p:Program) RETURN count(p) AS total_programs",
+    "answer": [
+      {
+        "total_programs": 59
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "faculty_name": "K. Hóa",
+      "programs": [
+        "Công nghệ dầu khí và khai thác dầu K2018CLC",
+        "Công nghệ dầu khí và khai thác dầu K2019CLC",
+        "Công nghệ dầu khí và khai thác dầu K2020",
+        "Công nghệ dầu khí và khai thác dầu K2020_Kỹ sư",
+        "Công nghệ dầu khí và khai thác dầu K2021"
+      ]
+    },
+    "question": "Could you provide a list of all the programs currently offered under the K. Hóa faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Hóa'})-[:HAS_PROGRAM]->(p:Program) RETURN p.ten_chuong_trinh",
+    "answer": [
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2018CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2019CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2020_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2021_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2022_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2023_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2024_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ dầu khí và khai thác dầu K2025_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2016"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2017"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2018"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2019"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2020_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2021_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2022_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2023_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2024_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Sinh học K2025_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ sinh học Y Dược K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ sinh học Y Dược K2022_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ sinh học Y Dược K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ sinh học Y Dược K2023_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ sinh học Y Dược K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ sinh học Y Dược K2024_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ sinh học Y Dược K2025_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2016_CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2017"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2017_CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2018"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2018CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2019CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2020_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2020CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2020CLC _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2021_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2021CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2021CLC _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2022_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2023_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2024_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thực phẩm K2025_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Vật liệu - Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Dầu Khí K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Dầu Khí K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Dầu Khí K2016_CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Dầu Khí K2017_CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2014_Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2014_Silicat"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2015_Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2015_Silicat"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2016_Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2016_Silicat"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2017_Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2017_Silicat"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2018"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2018_Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2018_Silicat"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2019"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2019_Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2019_Silicat"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2020_Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2020_Polymer _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2020_Silicat"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2020_Silicat _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2021 _Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2021_Polymer _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2021_Silicat"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2021_Silicat _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2022 _Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2022_Polymer _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2022_Silicat"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2022_Silicat _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2023 _Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2023_Polymer _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2023_Silicat _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2024 _Polymer"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2024_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2024_Polymer _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2024_Silicat _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2025_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2025_Polymer _Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Hóa học K2025_Silicat _Kỹ sư"
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "faculty_name": "K. Khoa học Công nghệ tiên tiến - PFIEV",
+      "programs": [
+        "CTĐT Kỹ sư Chất lượng cao Việt-Pháp CNPM_K2014",
+        "CTĐT Kỹ sư Chất lượng cao Việt-Pháp CNPM_K2015",
+        "CTĐT Kỹ sư Chất lượng cao Việt-Pháp CNPM_K2016",
+        "CTĐT Kỹ sư Chất lượng cao Việt-Pháp CNPM_K2017",
+        "CTĐT Kỹ sư Chất lượng cao Việt-Pháp SXTĐ_K2014"
+      ]
+    },
+    "question": "Could you list all the academic programs currently offered under the K. Khoa học Công nghệ tiên tiến - PFIEV faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Khoa học Công nghệ tiên tiến - PFIEV'})-[:HAS_PROGRAM]->(p:Program) RETURN p.ten_chuong_trinh",
+    "answer": [
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp CNPM_K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp CNPM_K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp CNPM_K2016"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp CNPM_K2017"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp SXTĐ_K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp SXTĐ_K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp SXTĐ_K2016"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp SXTĐ_K2017"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp THCN_K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp THCN_K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp THCN_K2016"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp THCN_K2017"
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "faculty_name": "K. Xây dựng công trình thủy",
+      "programs": [
+        "Kỹ thuật Công trình thủy K2015",
+        "Kỹ thuật Công trình thủy K2016",
+        "Kỹ thuật Công trình thủy K2017",
+        "Kỹ thuật Tài nguyên nước K2014",
+        "Kỹ thuật và QL xây dựng đô thị thông minh K2022"
+      ]
+    },
+    "question": "Is the Kỹ thuật Tài nguyên nước K2014 program currently managed by the K. Xây dựng công trình thủy faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Xây dựng công trình thủy'})-[:HAS_PROGRAM]->(p:Program {ten_chuong_trinh: 'Kỹ thuật Tài nguyên nước K2014'}) RETURN count(p) > 0 AS is_managed",
+    "answer": [
+      {
+        "is_managed": true
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "faculty_name": "K. Quản lý dự án",
+      "programs": [
+        "Kinh tế Xây dựng K2014",
+        "Kinh tế Xây dựng K2015",
+        "Kinh tế Xây dựng K2016",
+        "Kinh tế Xây dựng K2017",
+        "Kinh tế Xây dựng K2018"
+      ]
+    },
+    "question": "Could you tell me which faculty manages the Kinh tế Xây dựng K2018 program?",
+    "cypher": "MATCH (f:Faculty)-[:HAS_PROGRAM]->(p:Program {ten_chuong_trinh: 'Kinh tế Xây dựng K2018'}) RETURN f.name",
+    "answer": [
+      {
+        "f.name": "K. Quản lý dự án"
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "aggregation",
+    "context": {
+      "faculty_name": "K. Xây dựng Cầu - Đường",
+      "programs": [
+        "Công nghệ KT Vật liệu xây dựng K2014",
+        "Công nghệ KT Vật liệu xây dựng K2015",
+        "Công nghệ KT Vật liệu xây dựng K2016",
+        "Công nghệ KT Vật liệu xây dựng K2017",
+        "Công nghệ KT Vật liệu xây dựng K2018"
+      ]
+    },
+    "question": "Could you tell me the total number of programs currently managed by the K. Xây dựng Cầu - Đường faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Xây dựng Cầu - Đường'})-[:HAS_PROGRAM]->(p:Program) RETURN count(p)",
+    "answer": [
+      {
+        "count(p)": 80
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "faculty_name": "K. Công nghệ Thông tin",
+      "programs": [
+        "Công nghệ Thông tin K2014_ANTT",
+        "Công nghệ Thông tin K2014_HTN",
+        "Công nghệ Thông tin K2014_HTTT",
+        "Công nghệ Thông tin K2014CLC",
+        "Công nghệ Thông tin K2015_MANG"
+      ]
+    },
+    "question": "Could you list all the academic programs currently offered under the K. Công nghệ Thông tin faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Công nghệ Thông tin'})-[:HAS_PROGRAM]->(p:Program) RETURN p.ten_chuong_trinh",
+    "answer": [
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2014_ANTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2014_HTN"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2014_HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2014CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2015_MANG"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2015CLC- Anh"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2016_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2016_HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2016CLC- Anh"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2016CLC- Nhật"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2017_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2017_HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2017CLC- Anh"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2017CLC- Nhật"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2018 _ATTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2018 _CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2018CLC Đặc thù_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2018CLC Đặc thù_HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2018CLC Đặc thù_MẠNG"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2018CLC Nhật"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2019CLC Đặc thù_ATTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2019CLC Đặc thù_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2019CLC Đặc thù_HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2019CLC Đặc thù_KHDL&TTNT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2019CLC Nhật"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020 Đặc thù _ Kỹ sư _CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020 Đặc thù _ Kỹ sư _HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020 Đặc thù _CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020 Đặc thù _HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020CLC Đặc thù_ ATTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020CLC Đặc thù_ CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020CLC Đặc thù_ HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020CLC Đặc thù_Kỹ sư_ATTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020CLC Đặc thù_Kỹ sư_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020CLC Đặc thù_Kỹ sư_HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020CLC ĐT - KHDL_TTNT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020CLC ĐT- KHDL_TTNT _ Kỹ Sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020CLC Nhật"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2020CLC Nhật _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2021 Đặc thù _ Kỹ sư_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2021 Đặc thù_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2021CLC Đặc thù - KHDL_TTNT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2021CLC Đặc thù_ATTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2021CLC Đặc thù_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2021CLC Đặc thù_HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2021CLC Đặc thù_KTMT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2021CLC Đặc thù_Kỹ sư_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2021CLC ĐT- KHDL_TTNT _ Kỹ Sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2021CLC Nhật"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Đặc thù"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Đặc thù _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Đặc thù _ Kỹ sư_ATTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Đặc thù _ Kỹ sư_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Đặc thù _ Kỹ sư_HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Đặc thù _ Kỹ sư_KTMT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Đặc thù_ATTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Đặc thù_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Đặc thù_HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Đặc thù_KTMT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 ĐT - KHDL_TTNT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 ĐT - KHDL_TTNT _ Kỹ Sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Nhật"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2022 Nhật _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Đặc thù"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Đặc thù _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Đặc thù _ Kỹ sư_ATTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Đặc thù _ Kỹ sư_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Đặc thù _ Kỹ sư_HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Đặc thù _ Kỹ sư_KTMT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Đặc thù_ATTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Đặc thù_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Đặc thù_HTTT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Đặc thù_KTMT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 ĐT - KHDL_TTNT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 ĐT - KHDL_TTNT _ Kỹ Sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Nhật"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2023 Nhật _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2024 Đặc thù"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2024 Đặc thù _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2024 ĐT - KHDL_TTNT"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2024 ĐT - KHDL_TTNT _ Kỹ Sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2024 Nhật"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2024 Nhật _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2025 Đặc thù _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2025 ĐT - KHDL_TTNT _ Kỹ Sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ Thông tin K2025 Nhật _ Kỹ sư"
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "faculty_name": "K. Cơ khí Giao thông",
+      "programs": [
+        "Kỹ thuật cơ khí K2014",
+        "Kỹ thuật cơ khí K2015",
+        "Kỹ thuật cơ khí K2016",
+        "Kỹ thuật cơ khí K2017",
+        "Kỹ thuật cơ khí K2018"
+      ]
+    },
+    "question": "Could you confirm if the Kỹ thuật cơ khí K2018 program is currently managed by the K. Cơ khí Giao thông faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Cơ khí Giao thông'})-[:HAS_PROGRAM]->(p:Program {ten_chuong_trinh: 'Kỹ thuật cơ khí K2018'}) RETURN count(p) > 0 AS is_under_faculty",
+    "answer": [
+      {
+        "is_under_faculty": true
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "faculty_name": "K. Kiến trúc",
+      "programs": [
+        "Kiến trúc K2014",
+        "Kiến trúc K2015",
+        "Kiến trúc K2016CLC",
+        "Kiến trúc K2017CLC",
+        "Kiến trúc K2018CLC"
+      ]
+    },
+    "question": "Could you tell me which faculty manages the Kiến trúc K2016CLC program?",
+    "cypher": "MATCH (f:Faculty)-[:HAS_PROGRAM]->(p:Program {ten_chuong_trinh: 'Kiến trúc K2016CLC'}) RETURN f.name",
+    "answer": [
+      {
+        "f.name": "K. Kiến trúc"
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "faculty_name": "K. Khoa học Công nghệ tiên tiến",
+      "programs": [
+        "Công nghệ phần mềm_PFIEV_K2019",
+        "Công nghệ phần mềm_PFIEV_K2020",
+        "Công nghệ phần mềm_PFIEV_K2021",
+        "Công nghệ phần mềm_PFIEV_K2022",
+        "Công nghệ phần mềm_PFIEV_K2023"
+      ]
+    },
+    "question": "Could you provide a list of all the programs currently offered under the K. Khoa học Công nghệ tiên tiến faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Khoa học Công nghệ tiên tiến'})-[:HAS_PROGRAM]->(p:Program) RETURN p.ten_chuong_trinh",
+    "answer": [
+      {
+        "p.ten_chuong_trinh": "Công nghệ phần mềm_PFIEV_K2019"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ phần mềm_PFIEV_K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ phần mềm_PFIEV_K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ phần mềm_PFIEV_K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Công nghệ phần mềm_PFIEV_K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp K2018_CNPM"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp K2018_SXTĐ"
+      },
+      {
+        "p.ten_chuong_trinh": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp K2018_THCN"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2015 - ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2015 - VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2016 - ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2016 - VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2017 - ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2017 - VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2018 - ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2018 - VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2019 - ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2019 - ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2019 - VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2019 - VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2020 - ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2020 - VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2020_Kỹ sư ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2020_Kỹ sư VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2021 - ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2021 - VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2021_Kỹ sư ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2021_Kỹ sư VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2022 - ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2022 - VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2022_Kỹ sư ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2022_Kỹ sư VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2023 - ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2023 - VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2023_Kỹ sư ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2023_Kỹ sư VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2024 - ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2024 - VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2024_Kỹ sư ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2024_Kỹ sư VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2025_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2025_Kỹ sư ĐT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Ðiện tử - viễn thông K2025_Kỹ sư VT"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng K2016"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng K2017"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng K2018"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng K2019"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng K2020 _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng và IoT  K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng và IoT  K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng và IoT K2021 _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng và IoT K2022 _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng và IoT K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng và IoT K2023 _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng và IoT K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng và IoT K2024 _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT - Hệ thống nhúng và IoT K2025 _ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "CTTT -Ðiện tử - viễn thông K2019"
+      },
+      {
+        "p.ten_chuong_trinh": "PFIEV_2018_SXTD"
+      },
+      {
+        "p.ten_chuong_trinh": "PFIEV_K2019"
+      },
+      {
+        "p.ten_chuong_trinh": "PFIEV_K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "PFIEV_K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "PFIEV_K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "PFIEV_K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "PFIEV_K2025"
+      },
+      {
+        "p.ten_chuong_trinh": "Sản xuất tự động_PFIEV_K2019"
+      },
+      {
+        "p.ten_chuong_trinh": "Sản xuất tự động_PFIEV_K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "Sản xuất tự động_PFIEV_K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "Sản xuất tự động_PFIEV_K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Sản xuất tự động_PFIEV_K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "Tin học công nghiệp_PFIEV_K2019"
+      },
+      {
+        "p.ten_chuong_trinh": "Tin học công nghiệp_PFIEV_K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "Tin học công nghiệp_PFIEV_K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "Tin học công nghiệp_PFIEV_K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Tin học công nghiệp_PFIEV_K2023"
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "faculty_name": "K. Điện",
+      "programs": [
+        "Kỹ thuật Điện K2018_DCN",
+        "Kỹ thuật Điện K2018_DHT",
+        "Kỹ thuật Điện K2018CLC_DCN",
+        "Kỹ thuật Điện K2018CLC_DHT",
+        "Kỹ thuật Điện K2019CLC_DCN"
+      ]
+    },
+    "question": "Could you list all the academic programs currently offered under the K. Điện faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Điện'})-[:HAS_PROGRAM]->(p:Program) RETURN p.ten_chuong_trinh",
+    "answer": [
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2018_DCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2018_DHT"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2018CLC_DCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2018CLC_DHT"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2019CLC_DCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2019CLC_DHT"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2020_kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2020_kỹ sư_ĐCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2020_kỹ sư_HTĐ"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2020CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2020CLC_kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2020CLC_kỹ sư_ĐCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2020CLC_kỹ sư_HTĐ"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2021_kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2021_kỹ sư_ĐCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2021_kỹ sư_HTĐ"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2021CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2021CLC_kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2021CLC_kỹ sư_ĐCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2021CLC_kỹ sư_HTĐ"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2022_kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2022_kỹ sư_ĐCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2022_kỹ sư_HTĐ"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2023_kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2023_kỹ sư_ĐCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2023_kỹ sư_HTĐ"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2024_kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2024_kỹ sư_ĐCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2024_kỹ sư_HTĐ"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2025_kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2025_kỹ sư_ĐCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện K2025_kỹ sư_HTĐ"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2014_DCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2014_DHT"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2014_TDH"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2014LT"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2015_DCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2015_DCN_NMN2mon"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2015_DHT"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2015_DHT_NMN2mon"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2015DCLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2016"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2016_DCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2016_DHT"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2016DCLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2017"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2017_DCN"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2017_DHT"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điện, điện tử K2017DCLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2014CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2015_2"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2015CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2016"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2016CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2017"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2017CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2018"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2018CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2019CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2020_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2020CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2020CLC_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2021_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2021CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2021CLC_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2022_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2023_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2024_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Điều khiển & Tự động hóa K2025_Kỹ sư"
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "faculty_name": "K. Môi trường",
+      "programs": [
+        "Kỹ thuật Môi trường K2014",
+        "Kỹ thuật Môi trường K2015",
+        "Kỹ thuật Môi trường K2016",
+        "Kỹ thuật Môi trường K2017",
+        "Kỹ thuật Môi trường K2018"
+      ]
+    },
+    "question": "Could you provide a list of all the academic programs currently offered by the K. Môi trường faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Môi trường'})-[:HAS_PROGRAM]->(p:Program) RETURN p.ten_chuong_trinh",
+    "answer": [
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2016"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2017"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2018"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2020_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2021_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2022_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2023_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2024_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Môi trường K2025_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2013"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2016"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2017"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2018"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2019"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2020_ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2021_ Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2022_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2023_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2024_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Quản lý Tài nguyên và môi trường K2025_Kỹ sư"
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "faculty_name": "K. Cơ khí",
+      "programs": [
+        "Cơ khí hàng không K2020",
+        "Cơ khí hàng không K2020_Kỹ sư",
+        "Cơ khí hàng không K2021_Kỹ sư",
+        "Cơ khí hàng không K2022",
+        "Cơ khí hàng không K2022_Kỹ sư"
+      ]
+    },
+    "question": "Is the Cơ khí hàng không K2022 program currently managed by the K. Cơ khí faculty?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Cơ khí'})-[:HAS_PROGRAM]->(p:Program {ten_chuong_trinh: 'Cơ khí hàng không K2022'}) RETURN count(p) > 0 AS is_managed",
+    "answer": [
+      {
+        "is_managed": true
+      }
+    ]
+  },
+  {
+    "graph_element": "Faculty",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "faculty_name": "K. Công nghệ Nhiệt - Điện lạnh",
+      "programs": [
+        "KT Năng lượng & Môi trường K2015",
+        "KT Năng lượng & Môi trường K2017",
+        "KT Năng lượng & Môi trường K2018",
+        "Kỹ thuật Năng lượng & Môi trường K2014",
+        "Kỹ thuật nhiệt  K2019CLC"
+      ]
+    },
+    "question": "Could you list all the academic programs currently offered by the Faculty of Thermal and Refrigeration Engineering?",
+    "cypher": "MATCH (f:Faculty {name: 'K. Công nghệ Nhiệt - Điện lạnh'})-[:HAS_PROGRAM]->(p:Program) RETURN p.ten_chuong_trinh",
+    "answer": [
+      {
+        "p.ten_chuong_trinh": "KT Năng lượng & Môi trường K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Năng lượng & Môi trường K2017"
+      },
+      {
+        "p.ten_chuong_trinh": "KT Năng lượng & Môi trường K2018"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật Năng lượng & Môi trường K2014"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2019CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2020"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2020_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2020CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2020CLC_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2021"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2021_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2021CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2021CLC_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2022"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2022_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2023"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2023_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2024"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2024_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt  K2025_Kỹ sư"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt K2015"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt K2016"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt K2017"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt K2018CLC"
+      },
+      {
+        "p.ten_chuong_trinh": "Kỹ thuật nhiệt-QL Năng lượng  K2025_Kỹ sư"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật Điều khiển & Tự động hóa K2016",
+      "faculty": "K. Điện",
+      "major": "Kỹ thuật điều khiển và tự động hóa",
+      "total_credits": "154",
+      "num_semesters": "9",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me which language is used for instruction in the Kỹ thuật Điều khiển & Tự động hóa K2016 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điều khiển & Tự động hóa K2016\"}) RETURN p.ngon_ngu",
+    "answer": [
+      {
+        "p.ngon_ngu": "Tiếng Việt"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "CTTT - Hệ thống nhúng và IoT K2022 _ Kỹ sư",
+      "faculty": "K. Khoa học Công nghệ tiên tiến",
+      "major": "",
+      "total_credits": "180",
+      "num_semesters": "10",
+      "language": "Tiếng Anh"
+    },
+    "question": "Could you tell me how many credits I need to complete for the CTTT - Hệ thống nhúng và IoT K2022 _ Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"CTTT - Hệ thống nhúng và IoT K2022 _ Kỹ sư\"}) RETURN p.so_tin_chi",
+    "answer": [
+      {
+        "p.so_tin_chi": "180"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật Công trình thủy K2016",
+      "faculty": "K. Xây dựng công trình thủy",
+      "major": "Kỹ thuật xây dựng công trình thuỷ",
+      "total_credits": "153",
+      "num_semesters": "9",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me which language the Kỹ thuật Công trình thủy K2016 program is taught in?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Công trình thủy K2016\"}) RETURN p.ngon_ngu",
+    "answer": [
+      {
+        "p.ngon_ngu": "Tiếng Việt"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật ô tô K2023_Kỹ sư",
+      "faculty": "K. Cơ khí Giao thông",
+      "major": "",
+      "total_credits": "180",
+      "num_semesters": "10",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me which language is used for instruction in the Kỹ thuật ô tô K2023_Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật ô tô K2023_Kỹ sư\"}) RETURN p.ngon_ngu",
+    "answer": [
+      {
+        "p.ngon_ngu": "Tiếng Việt"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Quản lý Tài nguyên và môi trường K2020",
+      "faculty": "K. Môi trường",
+      "major": "",
+      "total_credits": "130",
+      "num_semesters": "8",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me which language the Quản lý Tài nguyên và môi trường K2020 program is taught in?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Quản lý Tài nguyên và môi trường K2020\"}) RETURN p.ngon_ngu",
+    "answer": [
+      {
+        "p.ngon_ngu": "Tiếng Việt"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Công nghệ Thực phẩm K2022_Kỹ sư",
+      "faculty": "K. Hóa",
+      "major": "",
+      "total_credits": "180",
+      "num_semesters": "10",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me if the Công nghệ Thực phẩm K2022_Kỹ sư program is designed as a full-time course, and how many credits are required for graduation?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thực phẩm K2022_Kỹ sư\"}) RETURN p.so_tin_chi, p.so_ky",
+    "answer": [
+      {
+        "p.so_tin_chi": "180",
+        "p.so_ky": "10"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Công nghệ phần mềm_PFIEV_K2023",
+      "faculty": "K. Khoa học Công nghệ tiên tiến",
+      "major": "",
+      "total_credits": "200",
+      "num_semesters": "10",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me which language is used for instruction in the Công nghệ phần mềm_PFIEV_K2023 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ phần mềm_PFIEV_K2023\"}) RETURN p.ngon_ngu",
+    "answer": [
+      {
+        "p.ngon_ngu": "Tiếng Việt"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật cơ khí K2023_Kỹ sư",
+      "faculty": "K. Cơ khí Giao thông",
+      "major": "",
+      "total_credits": "180",
+      "num_semesters": "10",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me how many credits I need to complete for the Kỹ thuật cơ khí K2023_Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật cơ khí K2023_Kỹ sư\"}) RETURN p.so_tin_chi",
+    "answer": [
+      {
+        "p.so_tin_chi": "180"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật Cơ Điện tử K2024",
+      "faculty": "K. Cơ khí",
+      "major": "",
+      "total_credits": "130",
+      "num_semesters": "8",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me if the Kỹ thuật Cơ Điện tử K2024 program is designed as a full-time course of study?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Cơ Điện tử K2024\"}) RETURN p.so_ky, p.so_tin_chi, p.ngon_ngu, p.khoa_quan_ly",
+    "answer": [
+      {
+        "p.so_ky": "8",
+        "p.so_tin_chi": "130",
+        "p.ngon_ngu": "Tiếng Việt",
+        "p.khoa_quan_ly": null
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Quản lý công nghiệp K2023",
+      "faculty": "K. Quản lý dự án",
+      "major": "",
+      "total_credits": "130",
+      "num_semesters": "8",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me if the Quản lý công nghiệp K2023 program is designed as a full-time course, and how many total credits are required for graduation?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Quản lý công nghiệp K2023\"}) RETURN p.so_tin_chi, p.so_ky, p.ngon_ngu, p.khoa_quan_ly",
+    "answer": [
+      {
+        "p.so_tin_chi": "130",
+        "p.so_ky": "8",
+        "p.ngon_ngu": "Tiếng Việt",
+        "p.khoa_quan_ly": null
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật máy tính K2024",
+      "faculty": "K. Điện tử Viễn thông",
+      "major": "",
+      "total_credits": "130",
+      "num_semesters": "8",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me how many credits I need to complete for the Kỹ thuật máy tính K2024 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật máy tính K2024\"}) RETURN p.so_tin_chi",
+    "answer": [
+      {
+        "p.so_tin_chi": "130"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật Điều khiển & Tự động hóa K2021",
+      "faculty": "K. Điện",
+      "major": "",
+      "total_credits": "130",
+      "num_semesters": "8",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me how many credits are required to complete the Kỹ thuật Điều khiển & Tự động hóa K2021 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điều khiển & Tự động hóa K2021\"}) RETURN p.so_tin_chi",
+    "answer": [
+      {
+        "p.so_tin_chi": "130"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Công nghệ Sinh học K2015",
+      "faculty": "K. Hóa",
+      "major": "Công nghệ sinh học",
+      "total_credits": "153",
+      "num_semesters": "9",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me which faculty is responsible for managing the Công nghệ Sinh học K2015 program?",
+    "cypher": "MATCH (f:Faculty)-[:HAS_PROGRAM]->(p:Program {ten_chuong_trinh: \"Công nghệ Sinh học K2015\"}) RETURN f.name",
+    "answer": [
+      {
+        "f.name": "K. Hóa"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật Điều khiển & Tự động hóa K2021_Kỹ sư",
+      "faculty": "K. Điện",
+      "major": "",
+      "total_credits": "180",
+      "num_semesters": "10",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me which faculty is responsible for managing the Kỹ thuật Điều khiển & Tự động hóa K2021_Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điều khiển & Tự động hóa K2021_Kỹ sư\"})-[:HAS_PROGRAM]-(f:Faculty) RETURN f.name",
+    "answer": [
+      {
+        "f.name": "K. Điện"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Quản lý công nghiệp K2022",
+      "faculty": "K. Quản lý dự án",
+      "major": "",
+      "total_credits": "130",
+      "num_semesters": "8",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me how many semesters are included in the Quản lý công nghiệp K2022 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Quản lý công nghiệp K2022\"}) RETURN p.so_ky",
+    "answer": [
+      {
+        "p.so_ky": "8"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật Cơ Điện tử K2020CLC_Kỹ sư",
+      "faculty": "K. Cơ khí",
+      "major": "",
+      "total_credits": "180",
+      "num_semesters": "10",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me which language is used for instruction in the Kỹ thuật Cơ Điện tử K2020CLC_Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Cơ Điện tử K2020CLC_Kỹ sư\"}) RETURN p.ngon_ngu",
+    "answer": [
+      {
+        "p.ngon_ngu": "Tiếng Việt"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật Điện K2024_kỹ sư_HTĐ",
+      "faculty": "K. Điện",
+      "major": "",
+      "total_credits": "180",
+      "num_semesters": "10",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me how many credits I need to complete for the Kỹ thuật Điện K2024_kỹ sư_HTĐ program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điện K2024_kỹ sư_HTĐ\"}) RETURN p.so_tin_chi",
+    "answer": [
+      {
+        "p.so_tin_chi": "180"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "KTĐT-VT, CN Vi điện tử - thiết kế vi mạch K2024",
+      "faculty": "K. Điện tử Viễn thông",
+      "major": "",
+      "total_credits": "152",
+      "num_semesters": "9",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me which faculty is responsible for managing the KTĐT-VT, CN Vi điện tử - thiết kế vi mạch K2024 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"KTĐT-VT, CN Vi điện tử - thiết kế vi mạch K2024\"}) RETURN p.khoa_quan_ly",
+    "answer": [
+      {
+        "p.khoa_quan_ly": null
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Quản lý Tài nguyên và môi trường K2016",
+      "faculty": "K. Môi trường",
+      "major": "Quản lý tài nguyên và môi trường",
+      "total_credits": "153",
+      "num_semesters": "9",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me how many semesters are included in the Quản lý Tài nguyên và môi trường K2016 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Quản lý Tài nguyên và môi trường K2016\"}) RETURN p.so_ky",
+    "answer": [
+      {
+        "p.so_ky": "9"
+      }
+    ]
+  },
+  {
+    "graph_element": "Program",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật nhiệt  K2021CLC",
+      "faculty": "K. Công nghệ Nhiệt - Điện lạnh",
+      "major": "",
+      "total_credits": "130",
+      "num_semesters": "8",
+      "language": "Tiếng Việt"
+    },
+    "question": "Could you tell me how many credits are required to complete the Kỹ thuật nhiệt K2021CLC program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật nhiệt  K2021CLC\"}) RETURN p.so_tin_chi",
+    "answer": [
+      {
+        "p.so_tin_chi": "130"
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2020CLC ĐT - KHDL_TTNT",
+      "semester_number": 3,
+      "subjects": [
+        "Giải tích 2",
+        "TN Vật lý (Cơ-Nhiệt)",
+        "Lập trình hướng đối tượng",
+        "Cơ sở dữ liệu",
+        "Phân tích & thiết kế giải thuật",
+        "Nguyên lý hệ điều hành",
+        "PBL 2: Dự án cơ sở lập trình",
+        "Tư tưởng Hồ Chí Minh"
+      ]
+    },
+    "question": "Could you tell me which semester in the Công nghệ Thông tin K2020CLC ĐT - KHDL_TTNT program contains the highest number of subjects?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Công nghệ Thông tin K2020CLC ĐT - KHDL_TTNT'})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject) RETURN sem.number, count(s) AS subject_count ORDER BY subject_count DESC LIMIT 1",
+    "answer": [
+      {
+        "sem.number": 6,
+        "subject_count": 11
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Kỹ thuật điện tử và viễn thông K2016_KTVT",
+      "semester_number": 6,
+      "subjects": [
+        "Phương pháp tính",
+        "Tổ chức máy tính",
+        "Thông tin số",
+        "Anh văn CN Điện tử",
+        "Kỹ thuật Siêu cao tần",
+        "TN Kỹ thuật siêu cao tần",
+        "Điện tử thông tin",
+        "Lý thuyết thông tin"
+      ]
+    },
+    "question": "Could you tell me how many subjects I need to complete during the sixth semester of the Kỹ thuật điện tử và viễn thông K2016_KTVT program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật điện tử và viễn thông K2016_KTVT'})-[:HAS_SEMESTER]->(sem:Semester {number: 6})-[:HAS_SUBJECT]->(s:Subject) RETURN count(s) AS subject_count",
+    "answer": [
+      {
+        "subject_count": 8
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "KT Xây dựng - CN Xây dựng DD & CN K2020_Kỹ sư",
+      "semester_number": 3,
+      "subjects": [
+        "Kinh tế chính trị Mác - Lênin",
+        "Sức bền vật liệu",
+        "TN Sức bền vật liệu (0.5)",
+        "Cơ lưu chất",
+        "TN cơ lưu chất (0.5 TC)",
+        "Xác suất thống kê",
+        "Trắc địa",
+        "TT Trắc địa (1TC)",
+        "Vẽ kỹ thuật trong xây dựng",
+        "TH Vẽ kỹ thuật trong xây dựng(0.5TC)",
+        "Môi trường"
+      ]
+    },
+    "question": "Could you tell me the total number of subjects I need to take during the third semester of the KT Xây dựng - CN Xây dựng DD & CN K2020_Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"KT Xây dựng - CN Xây dựng DD & CN K2020_Kỹ sư\"})-[:HAS_SEMESTER]->(sem:Semester {number: 3})-[:HAS_SUBJECT]->(s:Subject) RETURN count(s) AS subject_count",
+    "answer": [
+      {
+        "subject_count": 11
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Kỹ thuật Xây dựng Công trình thủy K2023_Kỹ sư",
+      "semester_number": 3,
+      "subjects": [
+        "Đại số tuyến tính",
+        "Hóa đại cương",
+        "TN hóa đại cương (1TC)",
+        "Sức bền vật liệu",
+        "TN Sức bền vật liệu (0.5)",
+        "Xác suất thống kê",
+        "Pháp luật đại cương",
+        "Cơ lưu chất",
+        "TN cơ lưu chất (0.5 TC)",
+        "Địa chất công trình",
+        "TT Địa chất công trình (0.5 TC)"
+      ]
+    },
+    "question": "Could you tell me which semester in the Kỹ thuật Xây dựng Công trình thủy K2023_Kỹ sư program contains the highest number of subjects?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Xây dựng Công trình thủy K2023_Kỹ sư'})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject) RETURN sem.number AS semester, count(s) AS subject_count ORDER BY subject_count DESC LIMIT 1",
+    "answer": [
+      {
+        "semester": 7,
+        "subject_count": 17
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật hệ thống công nghiệp K2021_Kỹ sư",
+      "semester_number": 8,
+      "subjects": [
+        "Hệ thống hoạch định nguồn lực doanh nghiệp (ERP)",
+        "Hoạch định nguồn lực sản xuất (MRPII)",
+        "PBL 6: Hoạch định nguồn lực doanh nghiệp",
+        "Quản lý sản xuất tiên tiến",
+        "Kinh tế học",
+        "Khả năng lãnh đạo",
+        "Học máy và dữ liệu lớn",
+        "Quản lý dự án",
+        "Vận trù học 2",
+        "Nguyên lý chương trình điều khiển"
+      ]
+    },
+    "question": "Could you list all the subjects I need to take during the eighth semester of the Kỹ thuật hệ thống công nghiệp K2021_Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật hệ thống công nghiệp K2021_Kỹ sư'})-[:HAS_SEMESTER]->(sem:Semester {number: 8})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "Hệ thống hoạch định nguồn lực doanh nghiệp (ERP)"
+      },
+      {
+        "s.ten_hoc_phan": "Hoạch định nguồn lực sản xuất (MRPII)"
+      },
+      {
+        "s.ten_hoc_phan": "PBL 6: Hoạch định nguồn lực doanh nghiệp"
+      },
+      {
+        "s.ten_hoc_phan": "Quản lý sản xuất tiên tiến"
+      },
+      {
+        "s.ten_hoc_phan": "Kinh tế học"
+      },
+      {
+        "s.ten_hoc_phan": "Khả năng lãnh đạo"
+      },
+      {
+        "s.ten_hoc_phan": "Học máy và dữ liệu lớn"
+      },
+      {
+        "s.ten_hoc_phan": "Quản lý dự án"
+      },
+      {
+        "s.ten_hoc_phan": "Vận trù học 2"
+      },
+      {
+        "s.ten_hoc_phan": "Nguyên lý chương trình điều khiển"
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ Thực phẩm K2017_CLC",
+      "semester_number": 2,
+      "subjects": [
+        "Những nguyên lý CB của CN Mac-Lênin 2",
+        "Vật lý 1",
+        "Giải tích 2",
+        "Đại số tuyến tính",
+        "Hóa hữu cơ",
+        "TN Hoá hữu cơ",
+        "Giáo dục thể chất 2",
+        "TN hóa hữu cơ"
+      ]
+    },
+    "question": "Could you provide me with the list of subjects I need to take during the second semester of the Công nghệ Thực phẩm K2017_CLC program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thực phẩm K2017_CLC\"})-[:HAS_SEMESTER]->(sem:Semester {number: 2})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "Vật lý 1"
+      },
+      {
+        "s.ten_hoc_phan": "Giáo dục thể chất 2"
+      },
+      {
+        "s.ten_hoc_phan": "Những nguyên lý CB của CN Mac-Lênin 2"
+      },
+      {
+        "s.ten_hoc_phan": "Đại số tuyến tính"
+      },
+      {
+        "s.ten_hoc_phan": "TN hóa hữu cơ"
+      },
+      {
+        "s.ten_hoc_phan": "Hóa hữu cơ"
+      },
+      {
+        "s.ten_hoc_phan": "TN Hoá hữu cơ"
+      },
+      {
+        "s.ten_hoc_phan": "Giải tích 2"
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Kỹ thuật Điều khiển & Tự động hóa K2021CLC",
+      "semester_number": 3,
+      "subjects": [
+        "Lý thuyết Trường điện từ",
+        "Toán chuyên ngành",
+        "Vật lý 2",
+        "TN Vật lý (Cơ-Nhiệt)",
+        "Vẽ kỹ thuật",
+        "Tư tưởng Hồ Chí Minh",
+        "Cơ sở lý thuyết mạch điện",
+        "Kiến tập nghề nghiệp",
+        "TH cơ sở lý thuyết mạch điện"
+      ]
+    },
+    "question": "Could you list the subjects I need to take in the third semester for the Kỹ thuật Điều khiển & Tự động hóa K2021CLC program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điều khiển & Tự động hóa K2021CLC\"})-[:HAS_SEMESTER]->(sem:Semester {number: 3})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "TN Vật lý (Cơ-Nhiệt)"
+      },
+      {
+        "s.ten_hoc_phan": "Vật lý 2"
+      },
+      {
+        "s.ten_hoc_phan": "Tư tưởng Hồ Chí Minh"
+      },
+      {
+        "s.ten_hoc_phan": "Toán chuyên ngành"
+      },
+      {
+        "s.ten_hoc_phan": "Lý thuyết Trường điện từ"
+      },
+      {
+        "s.ten_hoc_phan": "TH cơ sở lý thuyết mạch điện"
+      },
+      {
+        "s.ten_hoc_phan": "Vẽ kỹ thuật"
+      },
+      {
+        "s.ten_hoc_phan": "Cơ sở lý thuyết mạch điện"
+      },
+      {
+        "s.ten_hoc_phan": "Kiến tập nghề nghiệp"
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Kỹ thuật Điều khiển & Tự động hóa K2014",
+      "semester_number": 8,
+      "subjects": [
+        "Thực tập công nhân",
+        "Anh văn CN Ðiện",
+        "Tổng hợp hệ tuyến tính & ĐK số",
+        "Xử lý tín hiệu số",
+        "Điều khiển Truyền động điện",
+        "Đồ án tổng hợp Hệ thống TĐ điện",
+        "Mạng T.thông C.nghiệp & hệ SCADA"
+      ]
+    },
+    "question": "Could you list the subjects I need to take during the eighth semester of the Kỹ thuật Điều khiển & Tự động hóa K2014 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điều khiển & Tự động hóa K2014\"})-[:HAS_SEMESTER]->(sem:Semester {number: 8})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "Anh văn CN Ðiện"
+      },
+      {
+        "s.ten_hoc_phan": "Thực tập công nhân"
+      },
+      {
+        "s.ten_hoc_phan": "Mạng T.thông C.nghiệp & hệ SCADA"
+      },
+      {
+        "s.ten_hoc_phan": "Tổng hợp hệ tuyến tính & ĐK số"
+      },
+      {
+        "s.ten_hoc_phan": "Xử lý tín hiệu số"
+      },
+      {
+        "s.ten_hoc_phan": "Điều khiển Truyền động điện"
+      },
+      {
+        "s.ten_hoc_phan": "Đồ án tổng hợp Hệ thống TĐ điện"
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kiến trúc K2014",
+      "semester_number": 5,
+      "subjects": [
+        "Đường lối CM của ĐCS Việt Nam",
+        "Vật liệu xây dựng",
+        "Vật lý kiến trúc 1",
+        "Lịch sử Kiến trúc",
+        "Đồ án Thiết kế chung cư thấp tầng",
+        "Đồ án Thiết kế nhà văn hoá",
+        "Cấu tạo kiến trúc 2",
+        "Giáo dục thể chất 5",
+        "Kiến trúc công nghiệp 1"
+      ]
+    },
+    "question": "Could you list all the subjects I need to take during the fifth semester of the Kiến trúc K2014 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kiến trúc K2014'})-[:HAS_SEMESTER]->(sem:Semester {number: 5})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "Đường lối CM của ĐCS Việt Nam"
+      },
+      {
+        "s.ten_hoc_phan": "Giáo dục thể chất 5"
+      },
+      {
+        "s.ten_hoc_phan": "Vật liệu xây dựng"
+      },
+      {
+        "s.ten_hoc_phan": "Vật lý kiến trúc 1"
+      },
+      {
+        "s.ten_hoc_phan": "Lịch sử Kiến trúc"
+      },
+      {
+        "s.ten_hoc_phan": "Đồ án Thiết kế chung cư thấp tầng"
+      },
+      {
+        "s.ten_hoc_phan": "Đồ án Thiết kế nhà văn hoá"
+      },
+      {
+        "s.ten_hoc_phan": "Cấu tạo kiến trúc 2"
+      },
+      {
+        "s.ten_hoc_phan": "Kiến trúc công nghiệp 1"
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "KT Xây dựng - CN Xây dựng DD & CN K2019CLC",
+      "semester_number": 4,
+      "subjects": [
+        "Môi trường",
+        "Kinh tế chính trị Mác - Lênin",
+        "Xác suất thống kê",
+        "Cơ học kết cấu 2",
+        "Lý thuyết đàn hồi",
+        "Toán chuyên ngành 2 (PP PTHH)",
+        "Tham quan thực tế",
+        "Phân tích và xử lý dữ liệu thực nghiệm",
+        "Cấp thoát nước",
+        "Quy hoạch đô thị",
+        "PBL 2: Phân tích kết cấu",
+        "TN Vật lý (Điện-Từ-Quang)"
+      ]
+    },
+    "question": "Could you list all the subjects I need to take during the fourth semester of my KT Xây dựng - CN Xây dựng DD & CN K2019CLC program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"KT Xây dựng - CN Xây dựng DD & CN K2019CLC\"})-[:HAS_SEMESTER]->(sem:Semester {number: 4})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "Kinh tế chính trị Mác - Lênin"
+      },
+      {
+        "s.ten_hoc_phan": "Xác suất thống kê"
+      },
+      {
+        "s.ten_hoc_phan": "TN Vật lý (Điện-Từ-Quang)"
+      },
+      {
+        "s.ten_hoc_phan": "Môi trường"
+      },
+      {
+        "s.ten_hoc_phan": "Cơ học kết cấu 2"
+      },
+      {
+        "s.ten_hoc_phan": "Lý thuyết đàn hồi"
+      },
+      {
+        "s.ten_hoc_phan": "Toán chuyên ngành 2 (PP PTHH)"
+      },
+      {
+        "s.ten_hoc_phan": "Tham quan thực tế"
+      },
+      {
+        "s.ten_hoc_phan": "PBL 2: Phân tích kết cấu"
+      },
+      {
+        "s.ten_hoc_phan": "Phân tích và xử lý dữ liệu thực nghiệm"
+      },
+      {
+        "s.ten_hoc_phan": "Quy hoạch đô thị"
+      },
+      {
+        "s.ten_hoc_phan": "Cấp thoát nước"
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2021CLC Nhật",
+      "semester_number": 4,
+      "subjects": [
+        "Tiếng Nhật 4 (CNTT)",
+        "Chủ nghĩa Xã hội khoa học",
+        "Phân tích & thiết kế giải thuật",
+        "Mạng máy tính",
+        "Lập trình .NET",
+        "Lập trình Java",
+        "Toán ứng dụng Công nghệ thông tin",
+        "PBL 3: Đồ án lập trình ứng dụng"
+      ]
+    },
+    "question": "Could you list the subjects I need to take during the fourth semester of the Công nghệ Thông tin K2021CLC Nhật program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thông tin K2021CLC Nhật\"})-[:HAS_SEMESTER]->(sem:Semester {number: 4})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "Chủ nghĩa Xã hội khoa học"
+      },
+      {
+        "s.ten_hoc_phan": "Mạng máy tính"
+      },
+      {
+        "s.ten_hoc_phan": "Phân tích & thiết kế giải thuật"
+      },
+      {
+        "s.ten_hoc_phan": "Toán ứng dụng Công nghệ thông tin"
+      },
+      {
+        "s.ten_hoc_phan": "Lập trình .NET"
+      },
+      {
+        "s.ten_hoc_phan": "Lập trình Java"
+      },
+      {
+        "s.ten_hoc_phan": "Tiếng Nhật 4 (CNTT)"
+      },
+      {
+        "s.ten_hoc_phan": "PBL 3: Đồ án lập trình ứng dụng"
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Công nghệ KT Vật liệu xây dựng K2025_Kỹ sư",
+      "semester_number": 10,
+      "subjects": [
+        "Thực tập Tốt nghiệp (VLXD)",
+        "Đồ án Tốt nghiệp (VLXD)"
+      ]
+    },
+    "question": "Could you tell me which semester in the Công nghệ KT Vật liệu xây dựng K2025_Kỹ sư program contains the highest number of subjects?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Công nghệ KT Vật liệu xây dựng K2025_Kỹ sư'})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject) RETURN sem.number AS semester, count(s) AS subject_count ORDER BY subject_count DESC LIMIT 1",
+    "answer": [
+      {
+        "semester": 9,
+        "subject_count": 13
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Kỹ thuật XD công trình giao thông K2018",
+      "semester_number": 5,
+      "subjects": [
+        "Cơ học kết cấu 2",
+        "Kết cấu bêtông cốt thép 1",
+        "Đồ án Kết cấu bêtông cốt thép 1",
+        "Nền và Móng",
+        "Đồ án Nền và Móng",
+        "Tổng quan về công trình cầu",
+        "Thực tập Công nhân",
+        "Phương pháp tính",
+        "Đồ án Lập dự án công trình cầu"
+      ]
+    },
+    "question": "Could you tell me which semester in the Kỹ thuật XD công trình giao thông K2018 program contains the highest number of subjects?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật XD công trình giao thông K2018'})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject) RETURN sem.number, count(s) AS subject_count ORDER BY subject_count DESC LIMIT 1",
+    "answer": [
+      {
+        "sem.number": 4,
+        "subject_count": 17
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kinh tế Xây dựng K2015",
+      "semester_number": 5,
+      "subjects": [
+        "Toán chuyên ngành",
+        "Nền và Móng",
+        "Kết cấu Bê tông cốt thép",
+        "Kiến trúc 1",
+        "Đồ án Kết cấu Bê tông cốt thép",
+        "Đồ án Kỹ thuật thi công",
+        "Kế hoạch và Dự báo xây dựng",
+        "Kỹ thuật thi công",
+        "Giáo dục thể chất 5"
+      ]
+    },
+    "question": "Could you provide the list of subjects I need to take during the fifth semester of the Kinh tế Xây dựng K2015 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kinh tế Xây dựng K2015'})-[:HAS_SEMESTER]->(sem:Semester {number: 5})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "Giáo dục thể chất 5"
+      },
+      {
+        "s.ten_hoc_phan": "Kiến trúc 1"
+      },
+      {
+        "s.ten_hoc_phan": "Nền và Móng"
+      },
+      {
+        "s.ten_hoc_phan": "Toán chuyên ngành"
+      },
+      {
+        "s.ten_hoc_phan": "Kết cấu Bê tông cốt thép"
+      },
+      {
+        "s.ten_hoc_phan": "Đồ án Kết cấu Bê tông cốt thép"
+      },
+      {
+        "s.ten_hoc_phan": "Kỹ thuật thi công"
+      },
+      {
+        "s.ten_hoc_phan": "Đồ án Kỹ thuật thi công"
+      },
+      {
+        "s.ten_hoc_phan": "Kế hoạch và Dự báo xây dựng"
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Kỹ thuật Điện, điện tử K2014LT",
+      "semester_number": 1,
+      "subjects": [
+        "Giải tích 2",
+        "TN Lý thuyết mạch điện 2",
+        "Lý thuyết Trường điện từ",
+        "Mạng điện",
+        "TN Mạng điện",
+        "Đồ án Mạng điện",
+        "Máy điện 2",
+        "Đồ án Máy điện",
+        "Xác suất thống kê",
+        "Toán chuyên ngành",
+        "Kỹ thuật nhiệt điện"
+      ]
+    },
+    "question": "Could you tell me how many subjects are included in the first semester of the Kỹ thuật Điện, điện tử K2014LT program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Điện, điện tử K2014LT'})-[:HAS_SEMESTER]->(sem:Semester {number: 1})-[:HAS_SUBJECT]->(s:Subject) RETURN count(s) AS subject_count",
+    "answer": [
+      {
+        "subject_count": 11
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật điện tử và viễn thông K2020CLC_Kỹ sư_HTMT",
+      "semester_number": 10,
+      "subjects": [
+        "Capstone Project (Phần 1, TTTN)",
+        "Capstone Project (Phần 2, ĐATN)"
+      ]
+    },
+    "question": "Is Capstone Project (Phần 1, TTTN) included in the curriculum for the tenth semester of the Kỹ thuật điện tử và viễn thông K2020CLC_Kỹ sư_HTMT program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật điện tử và viễn thông K2020CLC_Kỹ sư_HTMT'})-[:HAS_SEMESTER]->(sem:Semester {number: 10})-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Capstone Project (Phần 1, TTTN)'}) RETURN count(s) > 0 AS exists",
+    "answer": [
+      {
+        "exists": true
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Kiến trúc K2014",
+      "semester_number": 2,
+      "subjects": [
+        "Vẽ Mỹ thuật 2",
+        "Anh văn A2.2",
+        "Giải tích 2",
+        "Hình hoạ kiến trúc",
+        "Đồ án Kiến trúc nhỏ",
+        "Tham quan kiến trúc",
+        "Giáo dục thể chất 2",
+        "Pháp luật đại cương",
+        "TH vẽ mỹ thuật 2"
+      ]
+    },
+    "question": "Could you tell me the total number of subjects I need to take during the second semester of the Kiến trúc K2014 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kiến trúc K2014'})-[:HAS_SEMESTER]->(s:Semester {number: 2})-[:HAS_SUBJECT]->(sub:Subject) RETURN count(sub) AS total_subjects",
+    "answer": [
+      {
+        "total_subjects": 9
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2016CLC- Nhật",
+      "semester_number": 1,
+      "subjects": [
+        "Giải tích 1",
+        "Tin học Đại cương",
+        "TH Tin học đại cương",
+        "Hóa đại cương",
+        "Đại số tuyến tính",
+        "Những nguyên lý cơ bản của CN Mac-Lênin 1",
+        "Giáo dục thể chất 1"
+      ]
+    },
+    "question": "Could you tell me the total number of subjects I need to take during the first semester of the Công nghệ Thông tin K2016CLC- Nhật program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thông tin K2016CLC- Nhật\"})-[:HAS_SEMESTER]->(sem:Semester {number: 1})-[:HAS_SUBJECT]->(s:Subject) RETURN count(s) AS subject_count",
+    "answer": [
+      {
+        "subject_count": 7
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Quản lý Tài nguyên và môi trường K2016",
+      "semester_number": 4,
+      "subjects": [
+        "Pháp luật đại cương",
+        "Tư tưởng Hồ Chí Minh",
+        "Kỹ thuật nhiệt",
+        "Xác suất thống kê",
+        "Kỹ thuật Điện tử",
+        "Nhập môn ngành",
+        "Công nghệ kim loại",
+        "Thủy lực",
+        "TN Thuỷ lực cơ sở",
+        "Giáo dục thể chất 4",
+        "Toán chuyên ngành (MT)"
+      ]
+    },
+    "question": "Could you tell me which semester in the Quản lý Tài nguyên và môi trường K2016 program contains the highest number of subjects?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Quản lý Tài nguyên và môi trường K2016'})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject) RETURN sem.number AS semester, count(s) AS subject_count ORDER BY subject_count DESC LIMIT 1",
+    "answer": [
+      {
+        "semester": 8,
+        "subject_count": 14
+      }
+    ]
+  },
+  {
+    "graph_element": "Semester",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Kỹ thuật cơ khí K2020CLC_Kỹ sư",
+      "semester_number": 8,
+      "subjects": [
+        "Động cơ tăng áp",
+        "Ô nhiễm khí xả động cơ",
+        "Điều khiển tự động trên động cơ",
+        "Động cơ điện",
+        "Truyền động điện",
+        "Thủy khí động lực học nâng cao",
+        "Truyền động thủy khí ô tô, máy công trình",
+        "PBL 5: Thiết kế hệ thống truyền động thủy khí",
+        "Mô phỏng số và ứng dụng",
+        "Nhiệt động lực học nâng cao",
+        "Máy xây dựng",
+        "Kỹ thuật ô tô hybrid _ Ô tô điện"
+      ]
+    },
+    "question": "Could you tell me the total number of subjects I need to take during the eighth semester of the Kỹ thuật cơ khí K2020CLC_Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật cơ khí K2020CLC_Kỹ sư\"})-[:HAS_SEMESTER]->(sem:Semester {number: 8})-[:HAS_SUBJECT]->(s:Subject) RETURN count(s) AS subject_count",
+    "answer": [
+      {
+        "subject_count": 12
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật điện tử và viễn thông K2021CLC_Kỹ sư",
+      "subject_name": "TN thông tin số",
+      "credits": "0",
+      "elective": "",
+      "semester": "6"
+    },
+    "question": "Could you provide me with all the available information regarding the TN thông tin số course?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật điện tử và viễn thông K2021CLC_Kỹ sư\"})-[:HAS_PROGRAM]->(s:Semester)-[:HAS_SUBJECT]->(sub:Subject {ten_hoc_phan: \"TN thông tin số\"}) RETURN sub",
+    "answer": []
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật Hóa học K2021_Polymer _Kỹ sư",
+      "subject_name": "TN hóa đại cương (1TC)",
+      "credits": "0",
+      "elective": "",
+      "semester": "1"
+    },
+    "question": "Could you tell me how many credits the TN hóa đại cương (1TC) course is worth?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Hóa học K2021_Polymer _Kỹ sư\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"TN hóa đại cương (1TC)\"}) RETURN s.so_tin_chi",
+    "answer": [
+      {
+        "s.so_tin_chi": "0"
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "KT Xây dựng - CN Xây dựng DD & CN K2024",
+      "subject_name": "Thiết kế kết cấu BTCT theo tiêu chuẩn nước ngoài",
+      "credits": "2",
+      "elective": "",
+      "semester": "7"
+    },
+    "question": "Could you provide me with all the available information regarding the Thiết kế kết cấu BTCT theo tiêu chuẩn nước ngoài course?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"KT Xây dựng - CN Xây dựng DD & CN K2024\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Thiết kế kết cấu BTCT theo tiêu chuẩn nước ngoài\"}) RETURN s",
+    "answer": [
+      {
+        "s": {
+          "ten_hoc_phan": "Thiết kế kết cấu BTCT theo tiêu chuẩn nước ngoài",
+          "tt": "67",
+          "tu_chon": "",
+          "ky_hieu": "",
+          "tq_da": "",
+          "ma_hp": "1102803",
+          "so_tin_chi": "2",
+          "ht_da": ""
+        }
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2022 ĐT - KHDL_TTNT",
+      "subject_name": "Trực quan hóa dữ liệu",
+      "credits": "2",
+      "elective": "",
+      "semester": "7"
+    },
+    "question": "Could you provide me with all the available information regarding the Trực quan hóa dữ liệu course?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thông tin K2022 ĐT - KHDL_TTNT\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Trực quan hóa dữ liệu\"}) RETURN s",
+    "answer": [
+      {
+        "s": {
+          "ten_hoc_phan": "Trực quan hóa dữ liệu",
+          "tt": "60",
+          "tu_chon": "",
+          "ky_hieu": "",
+          "tq_da": "",
+          "ma_hp": "1023653",
+          "so_tin_chi": "2",
+          "ht_da": "x"
+        }
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật cơ khí K2022",
+      "subject_name": "TH lý thuyết ô tô (0.5)",
+      "credits": "0",
+      "elective": "",
+      "semester": "5"
+    },
+    "question": "Could you provide me with all the available information regarding the TH lý thuyết ô tô (0.5) course?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật cơ khí K2022\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"TH lý thuyết ô tô (0.5)\"}) RETURN s",
+    "answer": [
+      {
+        "s": {
+          "ten_hoc_phan": "TH lý thuyết ô tô (0.5)",
+          "tt": "36",
+          "tu_chon": "",
+          "ky_hieu": "",
+          "tq_da": "",
+          "ma_hp": "1032430",
+          "so_tin_chi": "0",
+          "ht_da": "x"
+        }
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Sản xuất tự động_PFIEV_K2019",
+      "subject_name": "Tiếng Pháp 5",
+      "credits": "3",
+      "elective": "",
+      "semester": "5"
+    },
+    "question": "Could you provide me with all the available information regarding the Tiếng Pháp 5 course?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Sản xuất tự động_PFIEV_K2019\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Tiếng Pháp 5\"}) RETURN s",
+    "answer": [
+      {
+        "s": {
+          "ten_hoc_phan": "Tiếng Pháp 5",
+          "tt": "30",
+          "tu_chon": "",
+          "ky_hieu": "",
+          "tq_da": "",
+          "ma_hp": "1220290",
+          "so_tin_chi": "3",
+          "ht_da": "x"
+        }
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "CTTT - Ðiện tử - viễn thông K2020",
+      "subject_name": "TN Vật lý 1",
+      "credits": "1",
+      "elective": "",
+      "semester": "2"
+    },
+    "question": "Could you tell me how many credits are assigned to TN Vật lý 1 in my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"CTTT - Ðiện tử - viễn thông K2020\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"TN Vật lý 1\"}) RETURN s.so_tin_chi",
+    "answer": [
+      {
+        "s.so_tin_chi": "1"
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật Hóa học K2018_Polymer",
+      "subject_name": "TN Kỹ thuật gia công cao su",
+      "credits": "0.5",
+      "elective": "",
+      "semester": "7"
+    },
+    "question": "Is TN Kỹ thuật gia công cao su part of the curriculum for the Kỹ thuật Hóa học K2018_Polymer program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Hóa học K2018_Polymer\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"TN Kỹ thuật gia công cao su\"}) RETURN count(s) > 0 AS exists",
+    "answer": [
+      {
+        "exists": true
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật Điện K2020_kỹ sư",
+      "subject_name": "Giải tích 2",
+      "credits": "4",
+      "elective": "",
+      "semester": "2"
+    },
+    "question": "Could you check if Giải tích 2 is part of the curriculum for the Kỹ thuật Điện K2020_kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điện K2020_kỹ sư\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Giải tích 2\"}) RETURN count(s) > 0 AS exists",
+    "answer": [
+      {
+        "exists": true
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật nhiệt  K2019CLC",
+      "subject_name": "Kỹ thuật cháy và xử lý phát thải",
+      "credits": "2",
+      "elective": "",
+      "semester": "5"
+    },
+    "question": "Could you tell me which semester the subject Kỹ thuật cháy và xử lý phát thải is scheduled for in my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật nhiệt  K2019CLC\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Kỹ thuật cháy và xử lý phát thải\"}) RETURN sem.number",
+    "answer": [
+      {
+        "sem.number": 5
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "SPKT Công nghiệp K2013",
+      "subject_name": "Giáo dục thể chất 2",
+      "credits": "0",
+      "elective": "",
+      "semester": "2"
+    },
+    "question": "Could you provide me with all the information available for the subject Giáo dục thể chất 2?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"SPKT Công nghiệp K2013\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Giáo dục thể chất 2\"}) RETURN s",
+    "answer": [
+      {
+        "s": {
+          "ten_hoc_phan": "Giáo dục thể chất 2",
+          "tt": "5",
+          "tu_chon": "",
+          "ky_hieu": "GDTC2",
+          "tq_da": "",
+          "ma_hp": "0130021",
+          "so_tin_chi": "0",
+          "ht_da": ""
+        }
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật Điều khiển & Tự động hóa K2021CLC_Kỹ sư",
+      "subject_name": "Truyền động và điều khiển thủy khí",
+      "credits": "2",
+      "elective": "",
+      "semester": "9"
+    },
+    "question": "Could you tell me in which semester the subject Truyền động và điều khiển thủy khí is scheduled for my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điều khiển & Tự động hóa K2021CLC_Kỹ sư\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Truyền động và điều khiển thủy khí\"}) RETURN sem.number",
+    "answer": [
+      {
+        "sem.number": 9
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "SPKT Công nghiệp K2017",
+      "subject_name": "TN Máy điện 2",
+      "credits": "0.5",
+      "elective": "",
+      "semester": "5"
+    },
+    "question": "Could you tell me how many credits the TN Máy điện 2 course is worth?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"SPKT Công nghiệp K2017\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"TN Máy điện 2\"}) RETURN s.so_tin_chi",
+    "answer": [
+      {
+        "s.so_tin_chi": "0.5"
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật XD công trình giao thông K2018_CẦU",
+      "subject_name": "Hoá học Đại cương",
+      "credits": "2",
+      "elective": "",
+      "semester": "1"
+    },
+    "question": "Could you provide me with all the available information regarding the Hoá học Đại cương course?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật XD công trình giao thông K2018_CẦU\"})-[:HAS_PROGRAM]->(p)-[:HAS_SEMESTER]->(sem)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Hoá học Đại cương\"}) RETURN s",
+    "answer": []
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2014_ANTT",
+      "subject_name": "Mạng máy tính",
+      "credits": "2",
+      "elective": "",
+      "semester": "5"
+    },
+    "question": "Could you tell me how many credits the Mạng máy tính course is worth?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thông tin K2014_ANTT\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Mạng máy tính\"}) RETURN s.so_tin_chi",
+    "answer": [
+      {
+        "s.so_tin_chi": "2"
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật Môi trường K2020",
+      "subject_name": "Kinh tế chính trị Mác - Lênin",
+      "credits": "2",
+      "elective": "",
+      "semester": "5"
+    },
+    "question": "Could you tell me if the Kinh tế chính trị Mác - Lênin course is considered an elective or a compulsory subject for my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Môi trường K2020\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Kinh tế chính trị Mác - Lênin\"}) RETURN s.tu_chon",
+    "answer": [
+      {
+        "s.tu_chon": ""
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật Điện K2025_kỹ sư_HTĐ",
+      "subject_name": "Điều khiển logic",
+      "credits": "2",
+      "elective": "",
+      "semester": "6"
+    },
+    "question": "Could you tell me how many credits the Điều khiển logic course is worth?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điện K2025_kỹ sư_HTĐ\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Điều khiển logic\"}) RETURN s.so_tin_chi",
+    "answer": [
+      {
+        "s.so_tin_chi": "2"
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "simple_lookup",
+    "context": {
+      "program_name": "Kỹ thuật Điện K2022_kỹ sư",
+      "subject_name": "Mạch điện tử tương tự và số",
+      "credits": "2.5",
+      "elective": "",
+      "semester": "4"
+    },
+    "question": "Could you tell me how many credits the Mạch điện tử tương tự và số course is worth?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điện K2022_kỹ sư\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Mạch điện tử tương tự và số\"}) RETURN s.so_tin_chi",
+    "answer": [
+      {
+        "s.so_tin_chi": "2.5"
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2025 ĐT - KHDL_TTNT _ Kỹ Sư",
+      "subject_name": "Anh văn CN",
+      "credits": "3",
+      "elective": "",
+      "semester": "9"
+    },
+    "question": "Could you tell me in which semester the subject Anh văn CN is scheduled for my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thông tin K2025 ĐT - KHDL_TTNT _ Kỹ Sư\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Anh văn CN\"}) RETURN sem.number",
+    "answer": [
+      {
+        "sem.number": 9
+      }
+    ]
+  },
+  {
+    "graph_element": "Subject",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật XD công trình giao thông K2020 Kỹ sư",
+      "subject_name": "Vật liệu xây dựng",
+      "credits": "2.5",
+      "elective": "",
+      "semester": "4"
+    },
+    "question": "Could you tell me in which semester the Vật liệu xây dựng subject is scheduled for my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật XD công trình giao thông K2020 Kỹ sư\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Vật liệu xây dựng\"}) RETURN sem.number",
+    "answer": [
+      {
+        "sem.number": 4
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Kỹ thuật Điện, điện tử K2014",
+      "subject_name": "Mạch điện tử tương tự & số",
+      "credits": "3",
+      "elective": "",
+      "semester": "4"
+    },
+    "question": "Could you list all the subjects that are part of the fourth semester for the Kỹ thuật Điện, điện tử K2014 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điện, điện tử K2014\"})-[:HAS_SEMESTER]->(sem:Semester {number: 4})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "Giáo dục thể chất 4"
+      },
+      {
+        "s.ten_hoc_phan": "Vẽ Kỹ thuật"
+      },
+      {
+        "s.ten_hoc_phan": "Đường lối CM của ĐCS Việt Nam"
+      },
+      {
+        "s.ten_hoc_phan": "Mạch điện tử tương tự & số"
+      },
+      {
+        "s.ten_hoc_phan": "TN Mạch điện tử"
+      },
+      {
+        "s.ten_hoc_phan": "Lý thuyết Mạch điện 2"
+      },
+      {
+        "s.ten_hoc_phan": "TN Lý thuyết mạch điện 2"
+      },
+      {
+        "s.ten_hoc_phan": "Máy điện 1"
+      },
+      {
+        "s.ten_hoc_phan": "TN Máy điện 1"
+      },
+      {
+        "s.ten_hoc_phan": "Lý thuyết Điều khiển tự động"
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "CTTT - Ðiện tử - viễn thông K2021_Kỹ sư ĐT",
+      "subject_name": "TH Tín hiệu và hệ thống",
+      "credits": "0",
+      "elective": "",
+      "semester": "6"
+    },
+    "question": "Could you tell me in which semester I will be taking TH Tín hiệu và hệ thống as part of my CTTT - Ðiện tử - viễn thông K2021_Kỹ sư ĐT program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"CTTT - Ðiện tử - viễn thông K2021_Kỹ sư ĐT\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"TH Tín hiệu và hệ thống\"}) RETURN sem.number",
+    "answer": [
+      {
+        "sem.number": 6
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "CTĐT Kỹ sư Chất lượng cao Việt-Pháp THCN_K2017",
+      "subject_name": "Xác suất thống kê",
+      "credits": "4",
+      "elective": "",
+      "semester": "2"
+    },
+    "question": "Could you list all the subjects that are included in the second semester of my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"CTĐT Kỹ sư Chất lượng cao Việt-Pháp THCN_K2017\"})-[:HAS_SEMESTER]->(sem:Semester {number: 2})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "Những nguyên lý CB của CN Mac-Lênin 2"
+      },
+      {
+        "s.ten_hoc_phan": "Toán 2"
+      },
+      {
+        "s.ten_hoc_phan": "Tiếng Anh 2"
+      },
+      {
+        "s.ten_hoc_phan": "Xác suất thống kê"
+      },
+      {
+        "s.ten_hoc_phan": "Tiếng Pháp 2"
+      },
+      {
+        "s.ten_hoc_phan": "Vật lý 1"
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Quản lý Tài nguyên và môi trường K2019",
+      "subject_name": "Sinh thái môi trường",
+      "credits": "2",
+      "elective": "",
+      "semester": "5"
+    },
+    "question": "Is the Sinh thái môi trường course part of the curriculum for the Quản lý Tài nguyên và môi trường K2019 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Quản lý Tài nguyên và môi trường K2019\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Sinh thái môi trường\"}) RETURN count(s) > 0 AS exists",
+    "answer": [
+      {
+        "exists": true
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật nhiệt  K2020CLC",
+      "subject_name": "Pháp luật đại cương",
+      "credits": "2",
+      "elective": "",
+      "semester": "5"
+    },
+    "question": "Could you list all the subjects that are scheduled for the fifth semester in the Kỹ thuật nhiệt K2020CLC program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật nhiệt  K2020CLC'})-[:HAS_SEMESTER]->(sem:Semester {number: 5})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "Pháp luật đại cương"
+      },
+      {
+        "s.ten_hoc_phan": "Lịch sử Đảng Cộng sản Việt Nam"
+      },
+      {
+        "s.ten_hoc_phan": "Kỹ thuật Điện tử"
+      },
+      {
+        "s.ten_hoc_phan": "Sức bền vật liệu"
+      },
+      {
+        "s.ten_hoc_phan": "Truyền động cơ khí"
+      },
+      {
+        "s.ten_hoc_phan": "Kỹ thuật lạnh"
+      },
+      {
+        "s.ten_hoc_phan": "Lò hơi 1 (K2020)"
+      },
+      {
+        "s.ten_hoc_phan": "Thực tập nhiệt - lạnh 1"
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Kiến trúc K2017CLC",
+      "subject_name": "Lịch sử Kiến trúc",
+      "credits": "3",
+      "elective": "",
+      "semester": "5"
+    },
+    "question": "Could you tell me how many semesters in the Kiến trúc K2017CLC program include at least one subject?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kiến trúc K2017CLC'})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject) RETURN count(DISTINCT sem)",
+    "answer": [
+      {
+        "count(DISTINCT sem)": 9
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2022 ĐT - KHDL_TTNT",
+      "subject_name": "Nhập môn ngành",
+      "credits": "2",
+      "elective": "",
+      "semester": "1"
+    },
+    "question": "Could you tell me which semester the subject Nhập môn ngành is taught in for the Công nghệ Thông tin K2022 ĐT - KHDL_TTNT program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thông tin K2022 ĐT - KHDL_TTNT\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Nhập môn ngành\"}) RETURN sem.number",
+    "answer": [
+      {
+        "sem.number": 1
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "CTTT - Ðiện tử - viễn thông K2023",
+      "subject_name": "Toán chuyên ngành",
+      "credits": "3",
+      "elective": "",
+      "semester": "4"
+    },
+    "question": "Could you tell me how many semesters in the CTTT - Ðiện tử - viễn thông K2023 program include at least one subject?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"CTTT - Ðiện tử - viễn thông K2023\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject) RETURN count(DISTINCT sem)",
+    "answer": [
+      {
+        "count(DISTINCT sem)": 16
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật XD công trình giao thông K2016_Cầu",
+      "subject_name": "Hoá học Đại cương",
+      "credits": "2",
+      "elective": "",
+      "semester": "1"
+    },
+    "question": "Could you tell me which semester I should take Hoá học Đại cương in for my Kỹ thuật XD công trình giao thông K2016_Cầu program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật XD công trình giao thông K2016_Cầu\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Hoá học Đại cương\"}) RETURN sem.number",
+    "answer": [
+      {
+        "sem.number": 1
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ chế tạo máy K2023_ Kỹ sư",
+      "subject_name": "Hệ thống sản xuất tự động",
+      "credits": "2",
+      "elective": "",
+      "semester": "9"
+    },
+    "question": "Is the subject Hệ thống sản xuất tự động part of the curriculum for the Công nghệ chế tạo máy K2023_ Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ chế tạo máy K2023_ Kỹ sư\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Hệ thống sản xuất tự động\"}) RETURN count(s) > 0 AS exists",
+    "answer": [
+      {
+        "exists": true
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2016_HTTT",
+      "subject_name": "Vẽ Kỹ thuật",
+      "credits": "2",
+      "elective": "",
+      "semester": "4"
+    },
+    "question": "Could you tell me how many semesters in the Công nghệ Thông tin K2016_HTTT program include at least one subject?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thông tin K2016_HTTT\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject) RETURN count(DISTINCT sem)",
+    "answer": [
+      {
+        "count(DISTINCT sem)": 9
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật Hóa học K2014",
+      "subject_name": "Tin học Đại cương",
+      "credits": "2",
+      "elective": "",
+      "semester": "1"
+    },
+    "question": "Is Tin học Đại cương part of the curriculum for the Kỹ thuật Hóa học K2014 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Hóa học K2014\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Tin học Đại cương\"}) RETURN count(s) > 0 AS exists",
+    "answer": [
+      {
+        "exists": true
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "CTTT - Ðiện tử - viễn thông K2023 - ĐT",
+      "subject_name": "TN Hóa học đại cương",
+      "credits": "0",
+      "elective": "",
+      "semester": "3"
+    },
+    "question": "Could you tell me in which semester I will be taking TN Hóa học đại cương within my CTTT - Ðiện tử - viễn thông K2023 - ĐT program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"CTTT - Ðiện tử - viễn thông K2023 - ĐT\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"TN Hóa học đại cương\"}) RETURN sem.number",
+    "answer": [
+      {
+        "sem.number": 3
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật cơ khí K2021_ Kỹ sư",
+      "subject_name": "Kỹ thuật ô tô hybrid _ Ô tô điện",
+      "credits": "2",
+      "elective": "",
+      "semester": "9"
+    },
+    "question": "Is the Kỹ thuật ô tô hybrid _ Ô tô điện course part of the curriculum for the Kỹ thuật cơ khí K2021_ Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật cơ khí K2021_ Kỹ sư\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Kỹ thuật ô tô hybrid _ Ô tô điện\"}) RETURN count(s) > 0 AS exists",
+    "answer": [
+      {
+        "exists": true
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Kỹ thuật Điện, điện tử K2015",
+      "subject_name": "Vật lý 2",
+      "credits": "3",
+      "elective": "",
+      "semester": "3"
+    },
+    "question": "Could you tell me how many semesters in the Kỹ thuật Điện, điện tử K2015 program include at least one subject?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Điện, điện tử K2015'})-[:HAS_SEMESTER]->(s:Semester) WHERE EXISTS { (s)-[:HAS_SUBJECT]->(:Subject) } RETURN count(s)",
+    "answer": [
+      {
+        "count(s)": 9
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật Dầu Khí K2014",
+      "subject_name": "Kỹ thuật phân tích dầu thô & sản phẩm",
+      "credits": "2",
+      "elective": "",
+      "semester": "7"
+    },
+    "question": "Could you tell me in which semester I will be taking Kỹ thuật phân tích dầu thô & sản phẩm as part of my Kỹ thuật Dầu Khí K2014 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Dầu Khí K2014'})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Kỹ thuật phân tích dầu thô & sản phẩm'}) RETURN sem.number",
+    "answer": [
+      {
+        "sem.number": 7
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật XD công trình giao thông K2016CLC",
+      "subject_name": "Thực tập Địa chất công trình",
+      "credits": "0.5",
+      "elective": "",
+      "semester": "3"
+    },
+    "question": "Could you list all the subjects that are included in the third semester for the Kỹ thuật XD công trình giao thông K2016CLC program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật XD công trình giao thông K2016CLC\"})-[:HAS_SEMESTER]->(sem:Semester {number: 3})-[:HAS_SUBJECT]->(s:Subject) RETURN s.ten_hoc_phan",
+    "answer": [
+      {
+        "s.ten_hoc_phan": "Vật lý 2"
+      },
+      {
+        "s.ten_hoc_phan": "Giáo dục thể chất 3"
+      },
+      {
+        "s.ten_hoc_phan": "Tư tưởng Hồ Chí Minh"
+      },
+      {
+        "s.ten_hoc_phan": "Cơ lý thuyết"
+      },
+      {
+        "s.ten_hoc_phan": "Phương trình vi phân"
+      },
+      {
+        "s.ten_hoc_phan": "Xác xuất thống kê"
+      },
+      {
+        "s.ten_hoc_phan": "Thủy lực"
+      },
+      {
+        "s.ten_hoc_phan": "Địa chất công trình"
+      },
+      {
+        "s.ten_hoc_phan": "Thực tập Địa chất công trình"
+      },
+      {
+        "s.ten_hoc_phan": "TT Địa chất công trình (0.5 TC)"
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ phần mềm_PFIEV_K2019",
+      "subject_name": "Kiến trúc hướng dịch vụ",
+      "credits": "2",
+      "elective": "",
+      "semester": "9"
+    },
+    "question": "Could you tell me in which semester the subject Kiến trúc hướng dịch vụ is taught for the Công nghệ phần mềm_PFIEV_K2019 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ phần mềm_PFIEV_K2019\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Kiến trúc hướng dịch vụ\"}) RETURN sem.number",
+    "answer": [
+      {
+        "sem.number": 9
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "aggregation",
+    "context": {
+      "program_name": "Kỹ thuật XD công trình giao thông K2021CLC_Kỹ sư_Đ",
+      "subject_name": "Kết cấu Bê tông cốt thép - phần cơ bản",
+      "credits": "3",
+      "elective": "",
+      "semester": "5"
+    },
+    "question": "Could you tell me how many semesters in the Kỹ thuật XD công trình giao thông K2021CLC_Kỹ sư_Đ program include at least one subject?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật XD công trình giao thông K2021CLC_Kỹ sư_Đ\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject) RETURN count(DISTINCT sem)",
+    "answer": [
+      {
+        "count(DISTINCT sem)": 10
+      }
+    ]
+  },
+  {
+    "graph_element": "HAS_SUBJECT",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật cơ sở hạ tầng K2019",
+      "subject_name": "Kinh tế xây dựng",
+      "credits": "2",
+      "elective": "",
+      "semester": "3"
+    },
+    "question": "Is the Kinh tế xây dựng course part of the Kỹ thuật cơ sở hạ tầng K2019 curriculum?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật cơ sở hạ tầng K2019\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Kinh tế xây dựng\"}) RETURN count(s) > 0 AS exists",
+    "answer": [
+      {
+        "exists": true
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "CTTT - Ðiện tử - viễn thông K2024",
+      "subject_name": "Lập trình máy tính 2",
+      "prerequisite_names": [
+        "Lập trình máy tính 1"
+      ]
+    },
+    "question": "Could you tell me if Lập trình máy tính 1 is a required prerequisite for Lập trình máy tính 2 in my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"CTTT - Ðiện tử - viễn thông K2024\"})-[:HAS_PROGRAM]->(sem:Semester)-[:HAS_SUBJECT]->(s1:Subject {ten_hoc_phan: \"Lập trình máy tính 1\"}), (s1)-[:PREREQUISITE_OF]->(s2:Subject {ten_hoc_phan: \"Lập trình máy tính 2\"}) RETURN count(s2) > 0 AS is_prerequisite",
+    "answer": [
+      {
+        "is_prerequisite": false
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ KT Vật liệu xây dựng K2023_Kỹ sư",
+      "subject_name": "PBL 8. Công nghệ bê tông 2",
+      "prerequisite_names": [
+        "PBL 5: Công nghệ bê tông 1"
+      ]
+    },
+    "question": "Could you tell me if PBL 5: Công nghệ bê tông 1 is a required prerequisite for taking PBL 8. Công nghệ bê tông 2 in my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ KT Vật liệu xây dựng K2023_Kỹ sư\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s1:Subject {ten_hoc_phan: \"PBL 5: Công nghệ bê tông 1\"}), (p)-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s2:Subject {ten_hoc_phan: \"PBL 8. Công nghệ bê tông 2\"}) RETURN EXISTS((s1)-[:PREREQUISITE_OF]->(s2)) AS is_prerequisite",
+    "answer": [
+      {
+        "is_prerequisite": true
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "path_finding",
+    "context": {
+      "program_name": "Kỹ thuật Điện K2020CLC",
+      "subject_name": "Thực tập tốt nghiệp (Điện)",
+      "prerequisite_names": [
+        "Thực tập công nhân"
+      ]
+    },
+    "question": "Could you list all the subjects I need to finish before I can take Thực tập tốt nghiệp (Điện) in my Kỹ thuật Điện K2020CLC program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Điện K2020CLC'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Thực tập tốt nghiệp (Điện)'}), path = (pre:Subject)-[:PREREQUISITE_OF*]->(s) RETURN pre.ten_hoc_phan",
+    "answer": [
+      {
+        "pre.ten_hoc_phan": "Thực tập công nhân"
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật Tàu thủy K2023_Kỹ sư",
+      "subject_name": "Anh văn A2.2",
+      "prerequisite_names": [
+        "Anh văn A2.1"
+      ]
+    },
+    "question": "Could you tell me which subjects I need to finish before I can register for Anh văn A2.2 in the Kỹ thuật Tàu thủy K2023_Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Tàu thủy K2023_Kỹ sư'})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Anh văn A2.2'}) MATCH (prereq:Subject)-[:PREREQUISITE_OF]->(s) RETURN prereq.ten_hoc_phan",
+    "answer": [
+      {
+        "prereq.ten_hoc_phan": "Anh văn A2.1"
+      },
+      {
+        "prereq.ten_hoc_phan": "Anh văn 1"
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật điện tử và viễn thông K2020_Kỹ sư_KTDT",
+      "subject_name": "Capstone Project (Phần 2, ĐATN)",
+      "prerequisite_names": [
+        "Capstone Project (Phần 1",
+        "TTTN)"
+      ]
+    },
+    "question": "Could you tell me how many prerequisites are required for the Capstone Project (Phần 2, ĐATN) in my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật điện tử và viễn thông K2020_Kỹ sư_KTDT\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Capstone Project (Phần 2, ĐATN)\"})-[:PREREQUISITE_OF*0..1]-(prereq:Subject) WHERE s <> prereq RETURN count(prereq) AS prerequisite_count",
+    "answer": [
+      {
+        "prerequisite_count": 1
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "path_finding",
+    "context": {
+      "program_name": "Kỹ thuật Điện K2021CLC_kỹ sư",
+      "subject_name": "Đồ án Tốt nghiệp (DHT)",
+      "prerequisite_names": [
+        "Thực tập tốt nghiệp (D_DHT)"
+      ]
+    },
+    "question": "Could you list all the subjects I need to finish before I can register for Đồ án Tốt nghiệp (DHT) in my Kỹ thuật Điện K2021CLC_kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Điện K2021CLC_kỹ sư'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Đồ án Tốt nghiệp (DHT)'}), path = (pre:Subject)-[:PREREQUISITE_OF*]->(s) RETURN pre.ten_hoc_phan",
+    "answer": [
+      {
+        "pre.ten_hoc_phan": "PBL 1: Máy điện"
+      },
+      {
+        "pre.ten_hoc_phan": "Thực tập tốt nghiệp (D_DHT)"
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật hệ thống công nghiệp K2020_Kỹ sư",
+      "subject_name": "Capstone Project (Phần 2,ÐATN)",
+      "prerequisite_names": [
+        "Capstone Project (Phần 1",
+        "TTTN)"
+      ]
+    },
+    "question": "Could you tell me which subjects I need to finish before I can register for Capstone Project (Phần 2,ÐATN)?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật hệ thống công nghiệp K2020_Kỹ sư\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Capstone Project (Phần 2,ÐATN)\"})-[:PREREQUISITE_OF*1..]-(prereq:Subject) RETURN prereq.ten_hoc_phan",
+    "answer": [
+      {
+        "prereq.ten_hoc_phan": "Capstone Project (Phần 1,TTTN)"
+      },
+      {
+        "prereq.ten_hoc_phan": "PBL 5: Thiết kế sản xuất tích hợp"
+      },
+      {
+        "prereq.ten_hoc_phan": "Thực tập tốt nghiệp (HTCN)"
+      },
+      {
+        "prereq.ten_hoc_phan": "Đồ án Tốt nghiệp (HTCN)"
+      },
+      {
+        "prereq.ten_hoc_phan": "PBL 4: Nghiên cứu khả thi HTCN"
+      },
+      {
+        "prereq.ten_hoc_phan": "PBL 6: Hoạch định nguồn lực doanh nghiệp"
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật điện tử và viễn thông K2021CLC_Kỹ sư_KTVT",
+      "subject_name": "PBL 5: Chuyên ngành kỹ thuật viễn thông",
+      "prerequisite_names": [
+        "PBL1: Lập trình"
+      ]
+    },
+    "question": "Could you tell me which subjects I need to finish before I can register for PBL 5: Chuyên ngành kỹ thuật viễn thông?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật điện tử và viễn thông K2021CLC_Kỹ sư_KTVT\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"PBL 5: Chuyên ngành kỹ thuật viễn thông\"})-[:PREREQUISITE_OF*1..]-(prereq:Subject) RETURN prereq.ten_hoc_phan",
+    "answer": [
+      {
+        "prereq.ten_hoc_phan": "PBL1: Lập trình"
+      },
+      {
+        "prereq.ten_hoc_phan": "Thực tập Tốt nghiệp (DT)"
+      },
+      {
+        "prereq.ten_hoc_phan": "Đồ án tốt nghiệp"
+      },
+      {
+        "prereq.ten_hoc_phan": "Thực tập Tốt nghiệp (DTVT)"
+      },
+      {
+        "prereq.ten_hoc_phan": "PBL 4: Chuyên đề"
+      },
+      {
+        "prereq.ten_hoc_phan": "Capstone Project (Phần 1, TTTN)"
+      },
+      {
+        "prereq.ten_hoc_phan": "Capstone Project (Phần 2, ĐATN)"
+      },
+      {
+        "prereq.ten_hoc_phan": "Thực tập Tốt nghiệp (HTMT)"
+      },
+      {
+        "prereq.ten_hoc_phan": "Đồ án Tốt nghiệp (HTMT)"
+      },
+      {
+        "prereq.ten_hoc_phan": "Thực tập Tốt nghiệp (KTDT)"
+      },
+      {
+        "prereq.ten_hoc_phan": "Đồ án Tốt nghiệp (KTDT)"
+      },
+      {
+        "prereq.ten_hoc_phan": "Thực tập Tốt nghiệp (KTVT)"
+      },
+      {
+        "prereq.ten_hoc_phan": "Đồ án Tốt nghiệp (KTVT)"
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "CTTT - Ðiện tử - viễn thông K2021 - VT",
+      "subject_name": "Mạch điện 2",
+      "prerequisite_names": [
+        "Mạch điện 1"
+      ]
+    },
+    "question": "Could you tell me which courses I will be able to take after I finish Mạch điện 2?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"CTTT - Ðiện tử - viễn thông K2021 - VT\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Mạch điện 2\"})-[:PREREQUISITE_OF]->(next:Subject) RETURN next.ten_hoc_phan",
+    "answer": []
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "path_finding",
+    "context": {
+      "program_name": "KT Xây dựng - CN Xây dựng DD & CN K2024_Kỹ sư",
+      "subject_name": "Thực tập Tốt nghiệp",
+      "prerequisite_names": [
+        "Thiết kế công trình thép1103200- Tổ chức thi công xây dựng"
+      ]
+    },
+    "question": "Could you list all the subjects I need to finish before I can register for Thực tập Tốt nghiệp in my KT Xây dựng - CN Xây dựng DD & CN K2024_Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'KT Xây dựng - CN Xây dựng DD & CN K2024_Kỹ sư'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Thực tập Tốt nghiệp'}) MATCH path = (prereq:Subject)-[:PREREQUISITE_OF*]->(s) RETURN prereq.ten_hoc_phan",
+    "answer": [
+      {
+        "prereq.ten_hoc_phan": "Thiết kế công trình thép"
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "KT Xây dựng - CN Xây dựng DD & CN K2021",
+      "subject_name": "Đồ án tốt nghiệp",
+      "prerequisite_names": [
+        "Kỹ thuật Thi công1102120- Kỹ thuật Thi công1102653- Thiết kế nhà bê tông cốt thép (BTCT2)1102653- Thiết kế nhà bê tông cốt thép (BTCT2)"
+      ]
+    },
+    "question": "Could you list the subjects I need to finish before I can register for Đồ án tốt nghiệp in the KT Xây dựng - CN Xây dựng DD & CN K2021 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"KT Xây dựng - CN Xây dựng DD & CN K2021\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Đồ án tốt nghiệp\"})-[:PREREQUISITE_OF*1..]-(prereq:Subject) RETURN prereq.ten_hoc_phan",
+    "answer": [
+      {
+        "prereq.ten_hoc_phan": "Kỹ thuật Thi công"
+      },
+      {
+        "prereq.ten_hoc_phan": "Thiết kế nhà bê tông cốt thép (BTCT2)"
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật Hóa học K2014_Silicat",
+      "subject_name": "Anh văn CN Hóa (CNVL)",
+      "prerequisite_names": [
+        "Anh văn A2.2"
+      ]
+    },
+    "question": "Could you tell me how many prerequisites are required for the Anh văn CN Hóa (CNVL) course in my Kỹ thuật Hóa học K2014_Silicat program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Hóa học K2014_Silicat'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Anh văn CN Hóa (CNVL)'}) MATCH (prereq:Subject)-[:PREREQUISITE_OF]->(s) RETURN count(prereq)",
+    "answer": [
+      {
+        "count(prereq)": 1
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "path_finding",
+    "context": {
+      "program_name": "Quản lý công nghiệp K2023",
+      "subject_name": "Anh văn CN QLCN",
+      "prerequisite_names": [
+        "Anh văn A2.2"
+      ]
+    },
+    "question": "Could you list all the subjects I need to finish before I can take Anh văn CN QLCN in my Quản lý công nghiệp K2023 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Quản lý công nghiệp K2023'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Anh văn CN QLCN'}) MATCH (prereq:Subject)-[:PREREQUISITE_OF*1..]->(s) RETURN prereq.ten_hoc_phan",
+    "answer": [
+      {
+        "prereq.ten_hoc_phan": "Anh văn A2.1"
+      },
+      {
+        "prereq.ten_hoc_phan": "Anh văn A2.2"
+      },
+      {
+        "prereq.ten_hoc_phan": "Anh văn 1"
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "path_finding",
+    "context": {
+      "program_name": "Kỹ thuật Dầu Khí K2015",
+      "subject_name": "Anh văn CN Hoá (DK)",
+      "prerequisite_names": [
+        "Anh văn A2.2"
+      ]
+    },
+    "question": "Could you list all the subjects I need to finish before I can take Anh văn CN Hoá (DK) in my Kỹ thuật Dầu Khí K2015 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Dầu Khí K2015'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Anh văn CN Hoá (DK)'}), path = (pre:Subject)-[:PREREQUISITE_OF*]->(s) RETURN pre.ten_hoc_phan",
+    "answer": [
+      {
+        "pre.ten_hoc_phan": "Anh văn A2.1"
+      },
+      {
+        "pre.ten_hoc_phan": "Anh văn A2.2"
+      },
+      {
+        "pre.ten_hoc_phan": "Anh văn 1"
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "CTTT - Ðiện tử - viễn thông K2025_Kỹ sư ĐT",
+      "subject_name": "Mạch và thiết bị điện tử 1",
+      "prerequisite_names": [
+        "Mạch điện 1"
+      ]
+    },
+    "question": "Could you tell me which courses I can take after finishing Mạch và thiết bị điện tử 1?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"CTTT - Ðiện tử - viễn thông K2025_Kỹ sư ĐT\"})-[:HAS_PROGRAM]->(p)-[:HAS_SEMESTER]->(sem)-[:HAS_SUBJECT]->(s1:Subject {ten_hoc_phan: \"Mạch và thiết bị điện tử 1\"})-[:PREREQUISITE_OF]->(s2:Subject) RETURN s2.ten_hoc_phan",
+    "answer": []
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2022 Đặc thù _ Kỹ sư",
+      "subject_name": "Capstone Project (Phần 1, TTTN)",
+      "prerequisite_names": [
+        "Thực tập chuyên ngành"
+      ]
+    },
+    "question": "Could you tell me which courses I can take after finishing Capstone Project (Phần 1, TTTN)?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thông tin K2022 Đặc thù _ Kỹ sư\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Capstone Project (Phần 1, TTTN)\"})-[:PREREQUISITE_OF]->(next:Subject) RETURN next.ten_hoc_phan",
+    "answer": [
+      {
+        "next.ten_hoc_phan": "Capstone Project (Phần 2, ĐATN)"
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2015_MANG",
+      "subject_name": "Đồ án P.Tích & T.Kế H.Thống thông tin",
+      "prerequisite_names": [
+        "P.Tích & T.Kế H.Thống thông tin"
+      ]
+    },
+    "question": "Could you tell me which subjects I need to finish before I can register for Đồ án P.Tích & T.Kế H.Thống thông tin?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thông tin K2015_MANG\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Đồ án P.Tích & T.Kế H.Thống thông tin\"}) MATCH (prereq:Subject)-[:PREREQUISITE_OF]->(s) RETURN prereq.ten_hoc_phan",
+    "answer": [
+      {
+        "prereq.ten_hoc_phan": "P.Tích & T.Kế H.Thống thông tin"
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật Cơ Điện tử K2025_Kỹ sư",
+      "subject_name": "Đồ án Tốt nghiệp Cơ điện tử",
+      "prerequisite_names": [
+        "PBL 6: Đồ án cơ điện tử chuyên sâu1013320- Thực tập tốt nghiệp (CĐT)"
+      ]
+    },
+    "question": "Could you tell me if PBL 6: Đồ án cơ điện tử chuyên sâu is a prerequisite for the Đồ án Tốt nghiệp Cơ điện tử course in my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Cơ Điện tử K2025_Kỹ sư\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s1:Subject {ten_hoc_phan: \"PBL 6: Đồ án cơ điện tử chuyên sâu\"}), (p)-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s2:Subject {ten_hoc_phan: \"Đồ án Tốt nghiệp Cơ điện tử\"}) RETURN EXISTS((s1)-[:PREREQUISITE_OF]->(s2)) AS is_prerequisite",
+    "answer": [
+      {
+        "is_prerequisite": true
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "CTTT - Ðiện tử - viễn thông K2023",
+      "subject_name": "INTERNSHIP & CAPSTONE PROJECT (ECE)(VT)",
+      "prerequisite_names": [
+        "PBL 4: Thiết kế kỹ thuật"
+      ]
+    },
+    "question": "Could you tell me if PBL 4: Thiết kế kỹ thuật is a required prerequisite for INTERNSHIP & CAPSTONE PROJECT (ECE)(VT) in my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"CTTT - Ðiện tử - viễn thông K2023\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s1:Subject {ten_hoc_phan: \"PBL 4: Thiết kế kỹ thuật\"}), (p)-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s2:Subject {ten_hoc_phan: \"INTERNSHIP & CAPSTONE PROJECT (ECE)(VT)\"}), (s1)-[:PREREQUISITE_OF]->(s2) RETURN count(*) > 0 AS is_prerequisite",
+    "answer": [
+      {
+        "is_prerequisite": true
+      }
+    ]
+  },
+  {
+    "graph_element": "PREREQUISITE_OF",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật Hóa học K2025_Silicat _Kỹ sư",
+      "subject_name": "Hóa lý silicate 1",
+      "prerequisite_names": [
+        "Hóa vô cơ"
+      ]
+    },
+    "question": "Could you list all the subjects I need to finish before I can take Hóa lý silicate 1 in my Kỹ thuật Hóa học K2025_Silicat _Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Hóa học K2025_Silicat _Kỹ sư'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Hóa lý silicate 1'}) MATCH (prereq:Subject)-[:PREREQUISITE_OF*1..]->(s) RETURN prereq.ten_hoc_phan",
+    "answer": [
+      {
+        "prereq.ten_hoc_phan": "Hóa vô cơ"
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Kỹ thuật Cơ Điện tử K2021",
+      "subject_name": "Chi tiết và cơ cấu máy",
+      "corequisite_names": [
+        "Kỹ thuật chế tạo máy"
+      ]
+    },
+    "question": "Could you tell me which subjects I need to enroll in concurrently with Chi tiết và cơ cấu máy?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Cơ Điện tử K2021'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Chi tiết và cơ cấu máy'})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN coreq.ten_hoc_phan",
+    "answer": [
+      {
+        "coreq.ten_hoc_phan": "Kỹ thuật chế tạo máy"
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Kỹ thuật Tàu thủy K2020",
+      "subject_name": "TH Kỹ thuật tàu cao tốc (1TC)",
+      "corequisite_names": [
+        "Kỹ thuật tàu cao tốc"
+      ]
+    },
+    "question": "Could you tell me how many corequisites are required for the TH Kỹ thuật tàu cao tốc (1TC) course?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Tàu thủy K2020\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"TH Kỹ thuật tàu cao tốc (1TC)\"})-[:COREQUISITE_WITH]->(c:Subject) RETURN count(c) AS corequisite_count",
+    "answer": [
+      {
+        "corequisite_count": 1
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Kỹ thuật XD công trình giao thông K2016_Cầu",
+      "subject_name": "Sức bền vật liệu",
+      "corequisite_names": [
+        "Cơ lý thuyết"
+      ]
+    },
+    "question": "Could you tell me if Sức bền vật liệu and Cơ lý thuyết are considered corequisites in my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật XD công trình giao thông K2016_Cầu\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s1:Subject {ten_hoc_phan: \"Sức bền vật liệu\"}), (s1)-[:COREQUISITE_WITH]->(s2:Subject {ten_hoc_phan: \"Cơ lý thuyết\"}) RETURN count(s2) > 0 AS is_corequisite",
+    "answer": [
+      {
+        "is_corequisite": true
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Mô hình thông tin trong xây dựng BIM&AIK2022",
+      "subject_name": "Ứng dụng BIM trong thiết kế hạ tầng",
+      "corequisite_names": [
+        "Lập dự án công trình giao thông"
+      ]
+    },
+    "question": "Could you tell me if Ứng dụng BIM trong thiết kế hạ tầng and Lập dự án công trình giao thông are corequisites for my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Mô hình thông tin trong xây dựng BIM&AIK2022\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s1:Subject {ten_hoc_phan: \"Ứng dụng BIM trong thiết kế hạ tầng\"}), (s1)-[:COREQUISITE_WITH]->(s2:Subject {ten_hoc_phan: \"Lập dự án công trình giao thông\"}) RETURN count(s2) > 0 AS is_corequisite",
+    "answer": [
+      {
+        "is_corequisite": true
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2024 Đặc thù _ Kỹ sư",
+      "subject_name": "Lập trình hệ thống nhúng",
+      "corequisite_names": [
+        "Vi điều khiển"
+      ]
+    },
+    "question": "Could you tell me how many corequisite courses I need to take alongside Lập trình hệ thống nhúng for my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Thông tin K2024 Đặc thù _ Kỹ sư\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Lập trình hệ thống nhúng\"})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN count(coreq) AS corequisite_count",
+    "answer": [
+      {
+        "corequisite_count": 3
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Kỹ thuật Điều khiển & Tự động hóa K2019CLC",
+      "subject_name": "TN điện tử công suất",
+      "corequisite_names": [
+        "Điện tử công suất"
+      ]
+    },
+    "question": "Could you tell me which subjects I need to enroll in concurrently with TN điện tử công suất?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Điều khiển & Tự động hóa K2019CLC\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"TN điện tử công suất\"})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN coreq.ten_hoc_phan",
+    "answer": [
+      {
+        "coreq.ten_hoc_phan": "Cơ sở điện tử công suất"
+      },
+      {
+        "coreq.ten_hoc_phan": "Mạch điện tử tương tự và số"
+      },
+      {
+        "coreq.ten_hoc_phan": "Điện tử công suất"
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật Xây dựng - CN Tin học xây dựng K2021",
+      "subject_name": "Thực tập Nhận thức",
+      "corequisite_names": [
+        "Công trình thủy1112240- Kết cấu bêtông cốt thép công trình"
+      ]
+    },
+    "question": "Could you list all the corequisite subjects for the Thực tập Nhận thức course within my Kỹ thuật Xây dựng - CN Tin học xây dựng K2021 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật Xây dựng - CN Tin học xây dựng K2021\"})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"Thực tập Nhận thức\"})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN coreq.ten_hoc_phan",
+    "answer": [
+      {
+        "coreq.ten_hoc_phan": "Công trình thủy"
+      },
+      {
+        "coreq.ten_hoc_phan": "Công trình thủy 1"
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Công nghệ chế tạo máy K2021",
+      "subject_name": "TN Điều khiển logic và lập trình PLC",
+      "corequisite_names": [
+        "Điều khiển logic và lập trình PLC"
+      ]
+    },
+    "question": "Could you tell me which subjects I need to enroll in simultaneously with TN Điều khiển logic và lập trình PLC?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ chế tạo máy K2021\"})-[:HAS_PROGRAM]->(s1:Subject {ten_hoc_phan: \"TN Điều khiển logic và lập trình PLC\"})-[:COREQUISITE_WITH]->(s2:Subject) RETURN s2.ten_hoc_phan",
+    "answer": []
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Công nghệ Sinh học K2023_Kỹ sư",
+      "subject_name": "TN Công nghệ lên men (1TC)",
+      "corequisite_names": [
+        "Công nghệ lên men"
+      ]
+    },
+    "question": "Could you tell me which subjects are listed as corequisites for TN Công nghệ lên men (1TC) within my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Công nghệ Sinh học K2023_Kỹ sư\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"TN Công nghệ lên men (1TC)\"})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN coreq.ten_hoc_phan",
+    "answer": [
+      {
+        "coreq.ten_hoc_phan": "Công nghệ lên men"
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Quản lý Tài nguyên và môi trường K2021_ Kỹ sư",
+      "subject_name": "TN Hóa phân tích môi trường (1TC)",
+      "corequisite_names": [
+        "Hóa phân tích môi trường"
+      ]
+    },
+    "question": "Could you tell me if there are any corequisites I need to keep in mind for the TN Hóa phân tích môi trường (1TC) course within my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Quản lý Tài nguyên và môi trường K2021_ Kỹ sư\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"TN Hóa phân tích môi trường (1TC)\"})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN coreq.ten_hoc_phan",
+    "answer": [
+      {
+        "coreq.ten_hoc_phan": "Hóa phân tích môi trường"
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Kỹ thuật nhiệt  K2019CLC",
+      "subject_name": "PBL 6: Điều hòa không khí",
+      "corequisite_names": [
+        "Tư vấn thiết kê",
+        "giám sát và quản lý HT nhiệt lạnh"
+      ]
+    },
+    "question": "Could you tell me which subjects I need to enroll in concurrently with PBL 6: Điều hòa không khí for my Kỹ thuật nhiệt  K2019CLC program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: \"Kỹ thuật nhiệt  K2019CLC\"})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: \"PBL 6: Điều hòa không khí\"})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN coreq.ten_hoc_phan",
+    "answer": [
+      {
+        "coreq.ten_hoc_phan": "Thực tập Tốt nghiệp (Nhiệt)"
+      },
+      {
+        "coreq.ten_hoc_phan": "Tư vấn thiết kê, giám sát và quản lý HT nhiệt lạnh"
+      },
+      {
+        "coreq.ten_hoc_phan": "Thông gió và điều hòa không khí"
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ Thông tin K2014_HTN",
+      "subject_name": "TH Vi điều khiển",
+      "corequisite_names": [
+        "Vi điều khiển"
+      ]
+    },
+    "question": "Could you tell me how many corequisites are required for the TH Vi điều khiển course?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Công nghệ Thông tin K2014_HTN'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'TH Vi điều khiển'})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN count(coreq) AS corequisite_count",
+    "answer": [
+      {
+        "corequisite_count": 1
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "CTTT - Hệ thống nhúng và IoT  K2021",
+      "subject_name": "TH Tín hiệu và hệ thống",
+      "corequisite_names": [
+        "Tín hiệu và hệ thống"
+      ]
+    },
+    "question": "Could you tell me how many corequisite subjects are required for TH Tín hiệu và hệ thống in the CTTT - Hệ thống nhúng và IoT  K2021 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'CTTT - Hệ thống nhúng và IoT  K2021'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'TH Tín hiệu và hệ thống'})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN count(coreq) AS corequisite_count",
+    "answer": [
+      {
+        "corequisite_count": 1
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật Điện K2023",
+      "subject_name": "TN Mạng điện",
+      "corequisite_names": [
+        "Mạng điện"
+      ]
+    },
+    "question": "Could you tell me if TN Mạng điện and Mạng điện are considered corequisites in the Kỹ thuật Điện K2023 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật Điện K2023'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s1:Subject {ten_hoc_phan: 'TN Mạng điện'}), (s1)-[:COREQUISITE_WITH]->(s2:Subject {ten_hoc_phan: 'Mạng điện'}) RETURN count(s2) > 0 AS is_corequisite",
+    "answer": [
+      {
+        "is_corequisite": true
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ Thực phẩm K2025_Kỹ sư",
+      "subject_name": "TN Quá trình và thiết bị",
+      "corequisite_names": [
+        "Quá trình & Thiết bị truyền chất"
+      ]
+    },
+    "question": "Could you list all the corequisite subjects for TN Quá trình và thiết bị within the Công nghệ Thực phẩm K2025_Kỹ sư program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Công nghệ Thực phẩm K2025_Kỹ sư'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'TN Quá trình và thiết bị'})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN coreq.ten_hoc_phan",
+    "answer": [
+      {
+        "coreq.ten_hoc_phan": "Quá trình & Thiết bị truyền chất"
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật XD công trình giao thông K2018_CẦU",
+      "subject_name": "Thực tập Trắc địa",
+      "corequisite_names": [
+        "Trắc địa"
+      ]
+    },
+    "question": "Could you tell me how many corequisite subjects I need to take alongside Thực tập Trắc địa in the Kỹ thuật XD công trình giao thông K2018_CẦU program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật XD công trình giao thông K2018_CẦU'})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Thực tập Trắc địa'})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN count(coreq) AS corequisite_count",
+    "answer": [
+      {
+        "corequisite_count": 1
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Quản lý Tài nguyên và môi trường K2014",
+      "subject_name": "Đánh giá tác động môi trường",
+      "corequisite_names": [
+        "Xử lý nước thải công nghiệp1170702- Xử lý nước thải công nghiệp"
+      ]
+    },
+    "question": "Could you list all the corequisite subjects for the course Đánh giá tác động môi trường within the Quản lý Tài nguyên và môi trường K2014 program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Quản lý Tài nguyên và môi trường K2014'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Đánh giá tác động môi trường'})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN coreq.ten_hoc_phan",
+    "answer": [
+      {
+        "coreq.ten_hoc_phan": "Xử lý nước thải đô thị"
+      },
+      {
+        "coreq.ten_hoc_phan": "Xử lý nước thải công nghiệp"
+      },
+      {
+        "coreq.ten_hoc_phan": "TH đánh giá tác động môi trường"
+      },
+      {
+        "coreq.ten_hoc_phan": "Thực tập Tốt nghiệp (QLMT)"
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Kỹ thuật cơ khí K2019CLC",
+      "subject_name": "Thực tập kỹ thuật 2 (ô tô)",
+      "corequisite_names": [
+        "Kết cấu và tính toán ô tô"
+      ]
+    },
+    "question": "Could you tell me if there are any corequisites I need to enroll in alongside Thực tập kỹ thuật 2 (ô tô) for my Kỹ thuật cơ khí K2019CLC program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật cơ khí K2019CLC'})-[:HAS_SEMESTER]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Thực tập kỹ thuật 2 (ô tô)'})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN coreq.ten_hoc_phan",
+    "answer": [
+      {
+        "coreq.ten_hoc_phan": "Kết cấu và tính toán ô tô"
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_1hop",
+    "context": {
+      "program_name": "Kỹ thuật điện tử và viễn thông K2016_CLC",
+      "subject_name": "Vật lý 2",
+      "corequisite_names": [
+        "Vật lý 1"
+      ]
+    },
+    "question": "Could you list the subjects that are corequisites for Vật lý 2 within the Kỹ thuật điện tử và viễn thông K2016_CLC program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Kỹ thuật điện tử và viễn thông K2016_CLC'})-[:HAS_SEMESTER]->(sem:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'Vật lý 2'})-[:COREQUISITE_WITH]->(coreq:Subject) RETURN coreq.ten_hoc_phan",
+    "answer": [
+      {
+        "coreq.ten_hoc_phan": "Vật lý 1"
+      },
+      {
+        "coreq.ten_hoc_phan": "TN Vật lý (Cơ-Nhiệt)"
+      },
+      {
+        "coreq.ten_hoc_phan": "Kỹ thuật nhiệt"
+      },
+      {
+        "coreq.ten_hoc_phan": "TN Vật lý"
+      },
+      {
+        "coreq.ten_hoc_phan": "Kỹ thuật điện"
+      },
+      {
+        "coreq.ten_hoc_phan": "TN Vật lý (Điện-Từ-Quang)"
+      },
+      {
+        "coreq.ten_hoc_phan": "Kỹ thuật điện tử"
+      },
+      {
+        "coreq.ten_hoc_phan": "Kỹ thuật điện tử"
+      },
+      {
+        "coreq.ten_hoc_phan": "Cơ lý thuyết"
+      },
+      {
+        "coreq.ten_hoc_phan": "TN Lý thuyết mạch điện 1"
+      },
+      {
+        "coreq.ten_hoc_phan": "Lý thuyết Trường điện từ"
+      }
+    ]
+  },
+  {
+    "graph_element": "COREQUISITE_WITH",
+    "query_pattern": "traversal_multihop",
+    "context": {
+      "program_name": "Công nghệ KT Vật liệu xây dựng K2023",
+      "subject_name": "TH Kiểm định và TN Vật liệu công trình",
+      "corequisite_names": [
+        "Kiểm định và TN Vật liệu công trình"
+      ]
+    },
+    "question": "Could you tell me how many corequisite subjects are linked to TH Kiểm định và TN Vật liệu công trình in my program?",
+    "cypher": "MATCH (p:Program {ten_chuong_trinh: 'Công nghệ KT Vật liệu xây dựng K2023'})-[:HAS_PROGRAM]->(:Semester)-[:HAS_SUBJECT]->(s:Subject {ten_hoc_phan: 'TH Kiểm định và TN Vật liệu công trình'})-[:COREQUISITE_WITH]->(c:Subject) RETURN count(c) AS corequisite_count",
+    "answer": [
+      {
+        "corequisite_count": 0
+      }
+    ]
+  }
+]
