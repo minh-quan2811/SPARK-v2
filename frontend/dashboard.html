@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPARK — Career Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0c0c0e;
+      --surface:  #141418;
+      --surface2: #1c1c22;
+      --surface3: #232329;
+      --border:   rgba(255,255,255,0.06);
+      --border2:  rgba(255,255,255,0.11);
+      --border3:  rgba(255,255,255,0.18);
+      --text:     #eceae2;
+      --muted:    #78788a;
+      --muted2:   #a0a0b0;
+
+      --cv:   #5dcaa5;
+      --job:  #7f77dd;
+      --cur:  #ef9f27;
+      --plan: #ed93b1;
+
+      --cv-dim:   rgba(93,202,165,0.10);
+      --job-dim:  rgba(127,119,221,0.10);
+      --cur-dim:  rgba(239,159,39,0.10);
+      --plan-dim: rgba(237,147,177,0.10);
+
+      --cv-border:   rgba(93,202,165,0.25);
+      --job-border:  rgba(127,119,221,0.25);
+      --cur-border:  rgba(239,159,39,0.25);
+      --plan-border: rgba(237,147,177,0.25);
+
+      --green:  #639922;
+      --red:    #c0392b;
+      --font-h: 'Syne', sans-serif;
+      --font-m: 'IBM Plex Mono', monospace;
+      --r:      10px;
+    }
+
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-m);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    /* ═══ HEADER ═══════════════════════════════════════════════════ */
+    header {
+      height: 49px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border2);
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+    .logo { font-family: var(--font-h); font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .logo b { color: var(--cv); font-weight: 800; }
+    .sep { width: 1px; height: 18px; background: var(--border2); }
+    .hdr-sub { font-size: 11px; color: var(--muted); letter-spacing: 0.5px; }
+    .hdr-status { margin-left: auto; display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--muted); }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cv); }
+    .dot.live { animation: blink 1.3s infinite; }
+    .dot.done { background: var(--green); animation: none; }
+    .dot.err  { background: var(--red);   animation: none; }
+    .dot.retry { background: var(--cur); animation: blink 0.7s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+    /* ═══ LAYOUT ════════════════════════════════════════════════════ */
+    .layout {
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      height: calc(100vh - 49px);
+      overflow: hidden;
+    }
+
+    /* ═══ SIDEBAR ════════════════════════════════════════════════════ */
+    .sidebar {
+      border-right: 1px solid var(--border2);
+      padding: 20px 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sb-label {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); padding: 0 8px 10px;
+    }
+
+    .chip {
+      border-radius: var(--r);
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      padding: 11px 13px;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      transition: border-color .15s, background .15s;
+    }
+    .chip:hover, .chip.active { background: var(--surface2); }
+
+    .chip[data-agent="cv_agent"]         { border-left: 3px solid var(--cv-border); }
+    .chip[data-agent="job_agent"]        { border-left: 3px solid var(--job-border); }
+    .chip[data-agent="curriculum_agent"] { border-left: 3px solid var(--cur-border); }
+    .chip[data-agent="plan_agent"]       { border-left: 3px solid var(--plan-border); }
+
+    .chip[data-agent="cv_agent"].active         { border-left-color: var(--cv);   border-color: var(--cv-border); }
+    .chip[data-agent="job_agent"].active        { border-left-color: var(--job);  border-color: var(--job-border); }
+    .chip[data-agent="curriculum_agent"].active { border-left-color: var(--cur);  border-color: var(--cur-border); }
+    .chip[data-agent="plan_agent"].active       { border-left-color: var(--plan); border-color: var(--plan-border); }
+
+    .cdot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); flex-shrink: 0; transition: background .25s; }
+    .cdot.run  { animation: blink 1.3s infinite; }
+    .cdot.done { animation: none; background: var(--green) !important; }
+
+    .chip[data-agent="cv_agent"]         .cdot.run { background: var(--cv); }
+    .chip[data-agent="job_agent"]        .cdot.run { background: var(--job); }
+    .chip[data-agent="curriculum_agent"] .cdot.run { background: var(--cur); }
+    .chip[data-agent="plan_agent"]       .cdot.run { background: var(--plan); }
+
+    .cinfo { flex: 1; min-width: 0; }
+    .cname { font-family: var(--font-h); font-size: 12px; font-weight: 600; }
+    .chip[data-agent="cv_agent"]         .cname { color: var(--cv); }
+    .chip[data-agent="job_agent"]        .cname { color: var(--job); }
+    .chip[data-agent="curriculum_agent"] .cname { color: var(--cur); }
+    .chip[data-agent="plan_agent"]       .cname { color: var(--plan); }
+
+    .cstep {
+      font-size: 10px; color: var(--muted); margin-top: 2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .cbadge {
+      font-size: 10px; padding: 1px 7px; border-radius: 20px; flex-shrink: 0;
+      border: 1px solid var(--border2); color: var(--muted); background: var(--surface3);
+    }
+    .cbadge.run  { background: rgba(93,202,165,.1);  color: var(--cv);  border-color: rgba(93,202,165,.2); }
+    .cbadge.done { background: rgba(99,153,34,.12); color: #97c459; border-color: rgba(99,153,34,.25); }
+
+    /* ═══ MAIN ══════════════════════════════════════════════════════ */
+    .main {
+      overflow-y: auto;
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* ═══ AGENT SECTION ══════════════════════════════════════════════ */
+    .agent-section {
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      overflow: visible;
+      animation: fadeIn .2s ease;
+    }
+
+    .agent-section[data-agent="cv_agent"]         { border-top: 2px solid var(--cv); }
+    .agent-section[data-agent="job_agent"]        { border-top: 2px solid var(--job); }
+    .agent-section[data-agent="curriculum_agent"] { border-top: 2px solid var(--cur); }
+    .agent-section[data-agent="plan_agent"]       { border-top: 2px solid var(--plan); }
+
+    .asec-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .agent-section[data-agent="cv_agent"]         .asec-header { background: var(--cv-dim);   border-bottom-color: var(--cv-border); }
+    .agent-section[data-agent="job_agent"]        .asec-header { background: var(--job-dim);  border-bottom-color: var(--job-border); }
+    .agent-section[data-agent="curriculum_agent"] .asec-header { background: var(--cur-dim);  border-bottom-color: var(--cur-border); }
+    .agent-section[data-agent="plan_agent"]       .asec-header { background: var(--plan-dim); border-bottom-color: var(--plan-border); }
+
+    .asec-icon { font-size: 16px; }
+    .agent-section[data-agent="cv_agent"]         .asec-icon { color: var(--cv); }
+    .agent-section[data-agent="job_agent"]        .asec-icon { color: var(--job); }
+    .agent-section[data-agent="curriculum_agent"] .asec-icon { color: var(--cur); }
+    .agent-section[data-agent="plan_agent"]       .asec-icon { color: var(--plan); }
+
+    .asec-title { font-family: var(--font-h); font-size: 14px; font-weight: 600; }
+    .agent-section[data-agent="cv_agent"]         .asec-title { color: var(--cv); }
+    .agent-section[data-agent="job_agent"]        .asec-title { color: var(--job); }
+    .agent-section[data-agent="curriculum_agent"] .asec-title { color: var(--cur); }
+    .agent-section[data-agent="plan_agent"]       .asec-title { color: var(--plan); }
+
+    .asec-state { margin-left: auto; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+
+    .asec-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+
+    /* ═══ THOUGHT STREAM ══════════════════════════════════════════════ */
+    .stream { display: flex; flex-direction: column; gap: 4px; }
+
+    .thought {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 8px 12px; border-radius: 6px;
+      border: 1px solid transparent;
+      animation: fadeIn .18s ease;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(3px) } to { opacity:1; transform:none } }
+
+    .thought.step   { background: var(--surface2); border-color: var(--border); }
+    .thought.tool   { background: rgba(127,119,221,.07); border-color: rgba(127,119,221,.2); }
+    .thought.result { background: rgba(93,202,165,.05);  border-color: rgba(93,202,165,.18); }
+    .thought.err    { background: rgba(192,57,43,.07);   border-color: rgba(192,57,43,.25); }
+
+    .t-icon { font-size: 13px; flex-shrink: 0; padding-top: 1px; }
+    .thought.step   .t-icon { color: var(--muted); }
+    .thought.tool   .t-icon { color: var(--job); }
+    .thought.result .t-icon { color: var(--cv); }
+    .thought.err    .t-icon { color: #c0392b; }
+
+    .t-body { flex: 1; min-width: 0; }
+    .t-label { font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--muted); margin-bottom: 1px; }
+    .t-text  { color: var(--text); word-break: break-all; font-size: 12px; }
+    .t-time  { flex-shrink: 0; font-size: 10px; color: var(--muted); padding-top: 2px; }
+
+    /* ═══ OUTPUT CARDS ════════════════════════════════════════════════ */
+    .out-card { animation: fadeIn .25s ease; }
+    .out-card-hd {
+      display: flex; align-items: center; gap: 8px;
+      padding: 0 0 10px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+    .out-card-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted2); }
+    .out-card-body  { display: flex; flex-direction: column; gap: 14px; }
+
+    .frow { display: flex; gap: 8px; align-items: flex-start; flex-wrap: wrap; }
+    .fkey { font-size: 11px; color: var(--muted); min-width: 120px; flex-shrink: 0; padding-top: 2px; }
+    .fval { color: var(--text); flex: 1; }
+    .divd { border: none; border-top: 1px solid var(--border); }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .tag  {
+      font-size: 11px; padding: 2px 8px; border-radius: 20px;
+      border: 1px solid var(--border2); background: var(--surface3); color: var(--muted2);
+    }
+    .tag.skill  { border-color: rgba(127,119,221,.3); color: var(--job); background: rgba(127,119,221,.08); }
+    .tag.soft   { border-color: rgba(93,202,165,.25); color: var(--cv);  background: rgba(93,202,165,.07); }
+    .tag.course { border-color: rgba(239,159,39,.3);  color: var(--cur); background: rgba(239,159,39,.08); }
+    .tag.jtitle { border-color: rgba(93,202,165,.3);  color: var(--cv);  background: rgba(93,202,165,.07); }
+
+    .xblock {
+      padding: 14px 16px;
+      border: 1px solid var(--border2);
+      border-left: 3px solid var(--border3);
+      border-radius: 6px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .xblock-title { font-family: var(--font-h); font-size: 14px; font-weight: 600; color: var(--text); }
+    .xblock-sub   { font-size: 12px; color: var(--muted2); }
+    .xblock-desc  { font-size: 12px; color: var(--muted); font-style: italic; line-height: 1.6; }
+
+    .job-card {
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 16px 18px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .job-card-title   { font-family: var(--font-h); font-size: 14px; font-weight: 600; color: var(--text); }
+    .job-card-company { font-size: 12px; color: var(--muted2); margin-left: 6px; }
+    .job-meta   { display: flex; flex-wrap: wrap; gap: 5px; }
+    .job-reqs, .job-resp { font-size: 11px; color: var(--muted); }
+    .job-reqs ul, .job-resp ul { padding-left: 16px; display: flex; flex-direction: column; gap: 2px; }
+    .job-reqs li, .job-resp li { color: var(--muted2); }
+    .job-salary { font-size: 11px; color: #97c459; }
+    .job-url    { font-size: 11px; color: var(--job); text-decoration: none; }
+    .job-url:hover { text-decoration: underline; }
+
+    .section-title-sm {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--muted); margin-bottom: 4px;
+    }
+
+    .cypher {
+      font-family: var(--font-m); font-size: 11px; color: var(--muted2);
+      background: var(--surface3); border: 1px solid var(--border);
+      border-radius: 6px; padding: 10px 12px;
+      white-space: pre-wrap; word-break: break-all;
+    }
+
+    .roadmap { padding: 6px 4px; }
+    .roadmap h1 { font-family: var(--font-h); font-size: 20px; font-weight: 700; color: var(--plan); margin-bottom: 16px; }
+    .roadmap h2 { font-family: var(--font-h); font-size: 15px; font-weight: 600; color: var(--text); margin: 18px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+    .roadmap h3 { font-family: var(--font-h); font-size: 12px; font-weight: 600; color: var(--muted2); margin: 12px 0 5px; }
+    .roadmap ul { padding-left: 18px; display: flex; flex-direction: column; gap: 3px; }
+    .roadmap li { color: var(--text); }
+    .roadmap p  { color: var(--muted2); }
+
+    .done-banner {
+      border: 1px solid rgba(99,153,34,.3);
+      border-radius: var(--r); padding: 12px 18px;
+      background: rgba(99,153,34,.08);
+      display: flex; align-items: center; gap: 10px;
+      color: #97c459; font-size: 13px;
+    }
+
+    .retry-banner {
+      border: 1px solid rgba(239,159,39,.3);
+      border-radius: var(--r); padding: 12px 18px;
+      background: rgba(239,159,39,.08);
+      display: flex; align-items: center; gap: 10px;
+      color: var(--cur); font-size: 13px;
+    }
+
+    .empty { color: var(--muted); font-size: 12px; display: flex; align-items: center; gap: 6px; }
+    .err-state {
+      padding: 32px;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      color: var(--muted); text-align: center;
+    }
+    .err-state i { font-size: 32px; color: var(--red); }
+    .err-state strong { font-family: var(--font-h); font-size: 16px; color: var(--text); }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">SP<b>ARK</b></div>
+  <div class="sep"></div>
+  <span class="hdr-sub">Career Intelligence Pipeline</span>
+  <div class="hdr-status">
+    <div class="dot live" id="hdr-dot"></div>
+    <span id="hdr-txt">Connecting…</span>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sb-label">Agents</div>
+
+    <div class="chip" data-agent="cv_agent" id="chip-cv_agent" onclick="focusAgent('cv_agent')">
+      <div class="cdot" id="cdot-cv_agent"></div>
+      <div class="cinfo">
+        <div class="cname">CV Agent</div>
+        <div class="cstep" id="cstep-cv_agent">Waiting…</div>
+      </div>
+      <span class="cbadge" id="cbadge-cv_agent">wait</span>
+    </div>
+
+    <div class="chip" data-agent="job_agent" id="chip-job_agent" onclick="focusAgent('job_agent')">
+      <div class="cdot" id="cdot-job_agent"></div>
+      <div class="cinfo">
+        <div class="cname">Job Agent</div>
+        <div class="cstep" id="cstep-job_agent">Waiting…</div>
+      </div>
+      <span class="cbadge" id="cbadge-job_agent">wait</span>
+    </div>
+
+    <div class="chip" data-agent="curriculum_agent" id="chip-curriculum_agent" onclick="focusAgent('curriculum_agent')">
+      <div class="cdot" id="cdot-curriculum_agent"></div>
+      <div class="cinfo">
+        <div class="cname">Curriculum Agent</div>
+        <div class="cstep" id="cstep-curriculum_agent">Waiting…</div>
+      </div>
+      <span class="cbadge" id="cbadge-curriculum_agent">wait</span>
+    </div>
+
+    <div class="chip" data-agent="plan_agent" id="chip-plan_agent" onclick="focusAgent('plan_agent')">
+      <div class="cdot" id="cdot-plan_agent"></div>
+      <div class="cinfo">
+        <div class="cname">Plan Agent</div>
+        <div class="cstep" id="cstep-plan_agent">Waiting…</div>
+      </div>
+      <span class="cbadge" id="cbadge-plan_agent">wait</span>
+    </div>
+  </aside>
+
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────
+   Constants
+───────────────────────────────────────────────────────── */
+const SESSION = localStorage.getItem('session_id');
+
+const AGENT_META = {
+  cv_agent:         { label: 'CV Agent',        icon: 'ti-file-cv'   },
+  job_agent:        { label: 'Job Agent',        icon: 'ti-briefcase' },
+  curriculum_agent: { label: 'Curriculum Agent', icon: 'ti-school'    },
+  plan_agent:       { label: 'Plan Agent',       icon: 'ti-map'       },
+};
+
+const NODE_TYPE = {
+  tool_call:   'tool',
+  tool_result: 'result',
+  query_error: 'err',
+  agent_error: 'err',
+  json_error:  'err',
+};
+
+const NODE_LABEL = {
+  extract_text:    'Reading PDF',
+  llm_extraction:  'AI extraction',
+  parse_json:      'Parsing response',
+  validate_output: 'Validating data',
+  prepare_query:   'Building query',
+  run_agent:       'Agent activity',
+  format_results:  'Formatting',
+  generate_cypher: 'Generating Cypher',
+  execute_query:   'Running query',
+  query_error:     'Query error',
+  agent_error:     'Agent error',
+  generate_plan:   'Generating roadmap',
+  tool_call:       'Tool call',
+  tool_result:     'Tool result',
+};
+
+const THOUGHT_ICON = {
+  step:   'ti-arrow-right',
+  tool:   'ti-plug-connected',
+  result: 'ti-circle-check',
+  err:    'ti-alert-triangle',
+};
+
+/* ─────────────────────────────────────────────────────────
+   Helpers
+───────────────────────────────────────────────────────── */
+const $  = id => document.getElementById(id);
+const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const now = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+const hdrDot = $('hdr-dot');
+const hdrTxt = $('hdr-txt');
+const mainEl = $('main');
+
+/* ─────────────────────────────────────────────────────────
+   Section builder
+───────────────────────────────────────────────────────── */
+function ensureSection(agent) {
+  if ($('sec-' + agent)) return;
+  const meta = AGENT_META[agent] || { label: agent, icon: 'ti-robot' };
+  const sec = document.createElement('div');
+  sec.className = 'agent-section';
+  sec.id = 'sec-' + agent;
+  sec.dataset.agent = agent;
+  sec.innerHTML = `
+    <div class="asec-header">
+      <i class="ti ${meta.icon} asec-icon" aria-hidden="true"></i>
+      <span class="asec-title">${esc(meta.label)}</span>
+      <span class="asec-state" id="astate-${agent}">running…</span>
+    </div>
+    <div class="asec-body">
+      <div class="stream" id="stream-${agent}"></div>
+      <div id="out-${agent}"></div>
+    </div>`;
+  mainEl.appendChild(sec);
+}
+
+/* ─────────────────────────────────────────────────────────
+   Sidebar chip state
+───────────────────────────────────────────────────────── */
+function chipState(agent, state, step) {
+  const dot   = $('cdot-'   + agent);
+  const badge = $('cbadge-' + agent);
+  const cstep = $('cstep-'  + agent);
+  if (!dot) return;
+  dot.className   = 'cdot ' + state;
+  badge.className = 'cbadge ' + state;
+  badge.textContent = state === 'run' ? 'running' : state === 'done' ? 'done' : 'wait';
+  if (step) cstep.textContent = step;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Add thought row — no auto-scroll
+───────────────────────────────────────────────────────── */
+function addThought(agent, node, message) {
+  const stream = $('stream-' + agent);
+  if (!stream) return;
+  const type  = NODE_TYPE[node]  || 'step';
+  const label = NODE_LABEL[node] || node || '';
+  const icon  = THOUGHT_ICON[type] || 'ti-arrow-right';
+  const el = document.createElement('div');
+  el.className = `thought ${type}`;
+  el.innerHTML = `
+    <i class="ti ${icon} t-icon" aria-hidden="true"></i>
+    <div class="t-body">
+      ${label ? `<div class="t-label">${esc(label)}</div>` : ''}
+      <div class="t-text">${esc(message || '')}</div>
+    </div>
+    <span class="t-time">${now()}</span>`;
+  stream.appendChild(el);
+}
+
+/* ─────────────────────────────────────────────────────────
+   Sidebar click — instant scroll, no smooth animation
+───────────────────────────────────────────────────────── */
+function focusAgent(agent) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  $('chip-' + agent)?.classList.add('active');
+  const sec   = $('sec-'  + agent);
+  const panel = $('main');
+  if (sec && panel) panel.scrollTop = sec.offsetTop - 20;
+}
+
+/* ─────────────────────────────────────────────────────────
+   CV renderer
+───────────────────────────────────────────────────────── */
+function renderCV(data) {
+  const edu  = data.education || {};
+  const tech = data.technical_skills || [];
+  const soft = data.soft_skills || [];
+  const cert = data.certifications || [];
+  const exps = data.experience || [];
+  const proj = data.projects || [];
+
+  let h = `<div class="out-card">
+    <div class="out-card-hd">
+      <i class="ti ti-file-description" style="color:var(--cv);font-size:14px" aria-hidden="true"></i>
+      <span class="out-card-title">Extracted CV Data</span>
+    </div>
+    <div class="out-card-body">`;
+
+  if (edu.degree || edu.major || edu.gpa || edu.graduation_year || edu.academic_year) {
+    h += `<div class="frow"><span class="fkey">Education</span><div>`;
+    if (edu.degree || edu.major)
+      h += `<div class="fval">${esc([edu.degree, edu.major].filter(Boolean).join(' · '))}</div>`;
+    if (edu.gpa)
+      h += `<div style="font-size:11px;color:var(--muted2)">GPA: ${esc(edu.gpa)}</div>`;
+    if (edu.academic_year)
+      h += `<div style="font-size:11px;color:var(--muted2)">Year ${esc(edu.academic_year)} of study</div>`;
+    if (edu.graduation_year)
+      h += `<div style="font-size:11px;color:var(--muted2)">Graduating ${esc(edu.graduation_year)}</div>`;
+    h += `</div></div>`;
+  }
+
+  if (tech.length) {
+    h += `<div class="frow"><span class="fkey">Technical skills</span>
+      <div class="tags">${tech.map(s => `<span class="tag skill">${esc(s)}</span>`).join('')}</div>
+    </div>`;
+  }
+
+  if (soft.length) {
+    h += `<div class="frow"><span class="fkey">Soft skills</span>
+      <div class="tags">${soft.map(s => `<span class="tag soft">${esc(s)}</span>`).join('')}</div>
+    </div>`;
+  }
+
+  if (exps.length) {
+    h += `<hr class="divd"><div class="section-title-sm">Work Experience (${exps.length})</div>`;
+    exps.forEach(e => {
+      const skills = (e.skills_used || []).slice(0, 6);
+      h += `<div class="xblock">
+        <div class="xblock-title">${esc(e.position || 'Role')}</div>
+        <div class="xblock-sub">${esc(e.company || '')}${e.duration ? ' · ' + esc(e.duration) : ''}</div>
+        ${e.description ? `<div class="xblock-desc">${esc(e.description)}</div>` : ''}
+        ${skills.length ? `<div class="tags" style="margin-top:4px">${skills.map(s => `<span class="tag skill">${esc(s)}</span>`).join('')}</div>` : ''}
+      </div>`;
+    });
+  }
+
+  if (proj.length) {
+    h += `<hr class="divd"><div class="section-title-sm">Projects (${proj.length})</div>`;
+    proj.forEach(p => {
+      const skills = (p.skills_used || []).slice(0, 6);
+      h += `<div class="xblock">
+        <div class="xblock-title">${esc(p.name || 'Project')}</div>
+        ${p.description ? `<div class="xblock-desc">${esc(p.description)}</div>` : ''}
+        ${skills.length ? `<div class="tags" style="margin-top:4px">${skills.map(s => `<span class="tag skill">${esc(s)}</span>`).join('')}</div>` : ''}
+      </div>`;
+    });
+  }
+
+  if (cert.length) {
+    h += `<hr class="divd">
+      <div class="frow"><span class="fkey">Certifications</span>
+        <div class="tags">${cert.map(c => `<span class="tag">${esc(c)}</span>`).join('')}</div>
+      </div>`;
+  }
+
+  h += `</div></div>`;
+  return h;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Job renderer
+───────────────────────────────────────────────────────── */
+function renderJobs(data) {
+  const jobs    = data.jobs || [];
+  const titles  = data.top_job_titles || [];
+  const summary = data.summary || '';
+
+  let h = `<div class="out-card">
+    <div class="out-card-hd">
+      <i class="ti ti-briefcase" style="color:var(--job);font-size:14px" aria-hidden="true"></i>
+      <span class="out-card-title">Job Search Results — ${jobs.length} listings</span>
+    </div>
+    <div class="out-card-body">`;
+
+  if (summary) {
+    h += `<div style="font-size:12px;line-height:1.7;padding:10px 12px;
+      background:var(--surface3);border:1px solid var(--border);border-radius:6px;
+      color:var(--muted2)">${esc(summary)}</div>`;
+  }
+
+  if (titles.length) {
+    h += `<div class="frow"><span class="fkey">Top titles</span>
+      <div class="tags">${titles.slice(0, 8).map(t => `<span class="tag jtitle">${esc(t)}</span>`).join('')}</div>
+    </div>`;
+  }
+
+  if (jobs.length) h += `<hr class="divd"><div class="section-title-sm">All Listings</div>`;
+
+  jobs.forEach(j => {
+    const tech = j.technical_skills || [];
+    const reqs = j.requirements     || [];
+    const resp = j.responsibilities || [];
+    h += `<div class="job-card">
+      <div>
+        <span class="job-card-title">${esc(j.title || 'Untitled')}</span>
+        <span class="job-card-company">${esc(j.company || '')}</span>
+      </div>
+      <div class="job-meta">
+        ${j.location            ? `<span class="tag"><i class="ti ti-map-pin" style="font-size:10px"></i> ${esc(j.location)}</span>` : ''}
+        ${j.seniority           ? `<span class="tag">${esc(j.seniority)}</span>` : ''}
+        ${j.employment_type     ? `<span class="tag">${esc(j.employment_type)}</span>` : ''}
+        ${j.years_of_experience ? `<span class="tag">${esc(j.years_of_experience)}</span>` : ''}
+        ${j.remote === true     ? `<span class="tag soft">Remote</span>` : ''}
+      </div>
+      ${tech.length ? `<div class="tags">${tech.map(s => `<span class="tag skill">${esc(s)}</span>`).join('')}</div>` : ''}
+      ${reqs.length ? `<div class="job-reqs">
+        <div class="section-title-sm">Requirements</div>
+        <ul>${reqs.slice(0, 5).map(r => `<li>${esc(r)}</li>`).join('')}</ul>
+      </div>` : ''}
+      ${resp.length ? `<div class="job-resp">
+        <div class="section-title-sm">Responsibilities</div>
+        <ul>${resp.slice(0, 5).map(r => `<li>${esc(r)}</li>`).join('')}</ul>
+      </div>` : ''}
+      ${j.salary    ? `<div class="job-salary">Salary: ${esc(j.salary)}</div>` : ''}
+      ${j.apply_url ? `<a class="job-url" href="${esc(j.apply_url)}" target="_blank" rel="noopener">
+        Apply <i class="ti ti-external-link" style="font-size:11px"></i>
+      </a>` : ''}
+    </div>`;
+  });
+
+  h += `</div></div>`;
+  return h;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Curriculum renderer
+───────────────────────────────────────────────────────── */
+function renderCurriculum(data) {
+  const records = data.records || [];
+
+  let h = `<div class="out-card">
+    <div class="out-card-hd">
+      <i class="ti ti-school" style="color:var(--cur);font-size:14px" aria-hidden="true"></i>
+      <span class="out-card-title">Curriculum — ${records.length} courses found</span>
+    </div>
+    <div class="out-card-body">`;
+
+  if (data.cypher_statement) {
+    h += `<div class="section-title-sm">Generated Cypher Query</div>
+      <pre class="cypher">${esc(data.cypher_statement)}</pre>`;
+  }
+
+  if (records.length) {
+    h += `<div class="section-title-sm">Courses</div><div class="tags">`;
+    records.forEach(r => {
+      const label = Object.values(r).find(v => typeof v === 'string' && v.length < 150);
+      if (label) h += `<span class="tag course">${esc(label)}</span>`;
+    });
+    h += `</div>`;
+
+    h += `<div class="section-title-sm" style="margin-top:6px">Record details (first 3)</div>`;
+    records.slice(0, 3).forEach(r => {
+      h += `<div class="xblock">`;
+      Object.entries(r).forEach(([k, v]) => {
+        if (v == null || v === '') return;
+        h += `<div class="frow">
+          <span class="fkey" style="min-width:100px">${esc(k)}</span>
+          <span class="fval" style="font-size:11px">${esc(String(v))}</span>
+        </div>`;
+      });
+      h += `</div>`;
+    });
+  } else {
+    h += `<div class="empty"><i class="ti ti-info-circle"></i> No courses found.</div>`;
+  }
+
+  if (data.error) {
+    h += `<div style="color:#c0392b;font-size:11px;padding:8px 10px;
+      background:rgba(192,57,43,.07);border:1px solid rgba(192,57,43,.2);border-radius:6px">
+      ${esc(data.error)}</div>`;
+  }
+
+  h += `</div></div>`;
+  return h;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Handle a parsed SSE event — shared between connections
+───────────────────────────────────────────────────────── */
+function handleEvent(ev) {
+  const { agent, node, message, status, output, markdown, type } = ev;
+
+  if (type === 'complete') {
+    hdrDot.className = 'dot done';
+    hdrTxt.textContent = 'Complete';
+    const b = document.createElement('div');
+    b.className = 'done-banner';
+    b.innerHTML = `<i class="ti ti-circle-check"></i> Pipeline complete — roadmap ready below.`;
+    mainEl.appendChild(b);
+    return true; // signal "close the stream"
+  }
+
+  if (agent) {
+    ensureSection(agent);
+
+    if (status === 'running') {
+      chipState(agent, 'run', message || node);
+      $('astate-' + agent).textContent = 'running…';
+      addThought(agent, node, message);
+    }
+
+    if (status === 'done') {
+      chipState(agent, 'done', 'Done');
+      $('astate-' + agent).textContent = 'done';
+
+      if (output) {
+        const container = $('out-' + agent);
+        if      (agent === 'cv_agent')         container.innerHTML = renderCV(output);
+        else if (agent === 'job_agent')        container.innerHTML = renderJobs(output);
+        else if (agent === 'curriculum_agent') container.innerHTML = renderCurriculum(output);
+      }
+    }
+  }
+
+  if (markdown) {
+    ensureSection('plan_agent');
+    chipState('plan_agent', 'done', 'Done');
+    $('astate-plan_agent').textContent = 'done';
+    $('out-plan_agent').innerHTML =
+      `<div class="out-card"><div class="out-card-hd">
+        <i class="ti ti-map" style="color:var(--plan);font-size:14px" aria-hidden="true"></i>
+        <span class="out-card-title">Career Roadmap</span>
+      </div><div class="out-card-body"><div class="roadmap">${marked.parse(markdown)}</div></div></div>`;
+  }
+
+  return false;
+}
+
+/* ─────────────────────────────────────────────────────────
+   SSE connection with automatic retry
+───────────────────────────────────────────────────────── */
+function connectSSE(retries = 6, delay = 800) {
+  const es = new EventSource(`http://127.0.0.1:8000/api/stream/${SESSION}`);
+
+  hdrDot.className = 'dot live';
+  hdrTxt.textContent = 'Live';
+
+  // Remove any leftover retry banner
+  const old = $('retry-banner');
+  if (old) old.remove();
+
+  es.onmessage = (e) => {
+    let ev;
+    try { ev = JSON.parse(e.data); } catch { return; }
+    const done = handleEvent(ev);
+    if (done) es.close();
+  };
+
+  es.onerror = () => {
+    es.close();
+
+    if (retries <= 0) {
+      hdrDot.className = 'dot err';
+      hdrTxt.textContent = 'Disconnected';
+
+      // Only show the error state if nothing has rendered yet
+      if (!mainEl.querySelector('.agent-section')) {
+        mainEl.innerHTML = `<div class="err-state">
+          <i class="ti ti-wifi-off"></i>
+          <strong>Could not connect to the pipeline</strong>
+          <span>Make sure the backend is running on port 8000 and try submitting again.</span>
+        </div>`;
+      }
+      return;
+    }
+
+    hdrDot.className = 'dot retry';
+    hdrTxt.textContent = `Reconnecting… (${retries} left)`;
+
+    // Show a non-intrusive banner in the main area only if nothing is there yet
+    if (!mainEl.querySelector('.agent-section') && !$('retry-banner')) {
+      const b = document.createElement('div');
+      b.id = 'retry-banner';
+      b.className = 'retry-banner';
+      b.innerHTML = `<i class="ti ti-refresh"></i> Waiting for pipeline to start… retrying in ${(delay / 1000).toFixed(1)}s`;
+      mainEl.appendChild(b);
+    }
+
+    setTimeout(() => connectSSE(retries - 1, Math.min(delay * 1.3, 3000)), delay);
+  };
+}
+
+/* ─────────────────────────────────────────────────────────
+   Boot
+───────────────────────────────────────────────────────── */
+if (!SESSION) {
+  hdrDot.className = 'dot err';
+  hdrTxt.textContent = 'No session';
+  mainEl.innerHTML = `<div class="err-state">
+    <i class="ti ti-alert-circle"></i>
+    <strong>No session found</strong>
+    <span>Please go back and submit the form first.</span>
+  </div>`;
+} else {
+  connectSSE();
+}
+</script>
+</body>
+</html>

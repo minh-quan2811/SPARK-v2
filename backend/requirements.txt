@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+python-multipart
+sse-starlette
+pydantic
+pymupdf
+langchain-google-genai
+sentence-transformers
+qdrant-client
+neo4j
+langchain-community
+langchain-neo4j
+langgraph
+python-dotenv

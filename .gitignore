@@ -2,6 +2,7 @@
 .venv
 
 cv_test_case/
+uploads/
 *.csv
 
 __pycache__/

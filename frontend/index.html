@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SPARK — Career Planner</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0c0c0e;
+      --surface: #141418;
+      --surface2: #1c1c22;
+      --surface3: #232329;
+
+      --border: rgba(255,255,255,0.06);
+      --border2: rgba(255,255,255,0.11);
+
+      --text: #eceae2;
+      --muted: #78788a;
+      --muted2: #a0a0b0;
+
+      --cv: #5dcaa5;
+      --job: #7f77dd;
+      --cur: #ef9f27;
+      --plan: #ed93b1;
+
+      --font-h: 'Syne', sans-serif;
+      --font-m: 'IBM Plex Mono', monospace;
+
+      --radius: 12px;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-m);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+    header {
+      height: 58px;
+      border-bottom: 1px solid var(--border2);
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      gap: 14px;
+    }
+
+    .logo {
+      font-family: var(--font-h);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo b {
+      color: var(--cv);
+    }
+
+    .sep {
+      width: 1px;
+      height: 20px;
+      background: var(--border2);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    /* PAGE */
+    .page {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 920px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-top: 2px solid var(--cv);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .card-header {
+      padding: 24px 30px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(93,202,165,0.06);
+    }
+
+    .card-header h1 {
+      font-family: var(--font-h);
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .card-header p {
+      color: var(--muted2);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    form {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    .field.full {
+      grid-column: span 2;
+    }
+
+    label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: var(--muted);
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--text);
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      font-family: var(--font-m);
+      font-size: 13px;
+      outline: none;
+      transition: 0.15s ease;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: rgba(93,202,165,0.4);
+      box-shadow: 0 0 0 3px rgba(93,202,165,0.08);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--muted);
+    }
+
+    /* SEARCHABLE DROPDOWN */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-list {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      overflow: hidden;
+      max-height: 260px;
+      overflow-y: auto;
+      z-index: 20;
+      display: none;
+    }
+
+    .dropdown-item {
+      padding: 12px 14px;
+      cursor: pointer;
+      font-size: 12px;
+      border-bottom: 1px solid var(--border);
+      transition: 0.12s ease;
+    }
+
+    .dropdown-item:hover {
+      background: var(--surface3);
+      color: var(--cur);
+    }
+
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+
+    /* FILE */
+    .file-box {
+      border: 1px dashed rgba(255,255,255,0.14);
+      border-radius: var(--radius);
+      padding: 18px;
+      background: var(--surface2);
+    }
+
+    .file-box input {
+      border: none;
+      padding: 0;
+      background: transparent;
+    }
+
+    /* BUTTON */
+    .submit-btn {
+      margin-top: 10px;
+      height: 54px;
+      border: none;
+      border-radius: 14px;
+      background: var(--cv);
+      color: #07110d;
+      font-family: var(--font-h);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.92;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.12);
+      border-radius: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: span 1;
+      }
+
+      .card-header h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">SP<b>ARK</b></div>
+    <div class="sep"></div>
+    <div class="subtitle">Career Intelligence Pipeline</div>
+  </header>
+
+  <div class="page">
+    <div class="card">
+
+      <div class="card-header">
+        <h1>Career Planning Form</h1>
+        <p>
+          Upload your CV and provide your academic background,
+          preferences, and faculty information to generate a personalized
+          career roadmap.
+        </p>
+      </div>
+
+      <form id="sparkForm">
+
+        <div class="grid">
+
+          <div class="field">
+            <label>Academic Year</label>
+            <select name="year">
+              <option value="1">Year 1</option>
+              <option value="2">Year 2</option>
+              <option value="3">Year 3</option>
+              <option value="4">Year 4</option>
+              <option value="5">Year 5</option>
+            </select>
+          </div>
+
+          <div class="field dropdown">
+            <label>Faculty</label>
+
+            <input
+              type="text"
+              name="faculty"
+              id="facultyInput"
+              autocomplete="off"
+              placeholder="Type your faculty..."
+              required
+            />
+
+            <div class="dropdown-list" id="facultyDropdown"></div>
+          </div>
+
+          <div class="field full">
+            <label>Background</label>
+            <textarea
+              name="background"
+              placeholder="Describe your background, interests, experience, and strengths..."
+            ></textarea>
+          </div>
+
+          <div class="field full">
+            <label>Preferences</label>
+            <textarea
+              name="preferences"
+              placeholder="Describe preferred industries, technologies, roles, or career directions..."
+            ></textarea>
+          </div>
+
+          <div class="field full">
+            <label>Plan Preferences</label>
+            <textarea
+              name="plan_preferences"
+              placeholder="Describe the type of roadmap or learning style you want..."
+            ></textarea>
+          </div>
+
+          <div class="field full">
+            <label>Upload CV</label>
+
+            <div class="file-box">
+              <input
+                type="file"
+                name="cv_file"
+                accept=".pdf"
+                required
+              />
+            </div>
+          </div>
+
+        </div>
+
+        <button type="submit" class="submit-btn">
+          Generate Career Roadmap
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+    const facultyInput = document.getElementById("facultyInput");
+    const dropdown = document.getElementById("facultyDropdown");
+
+    let facultyOptions = [];
+
+    // Load txt file
+    fetch("ten_chuong_trinh.txt")
+      .then(res => res.text())
+      .then(text => {
+        facultyOptions = text
+          .split("\n")
+          .map(item => item.trim())
+          .filter(item => item.length > 0);
+      });
+
+    // Filter dropdown
+    facultyInput.addEventListener("input", () => {
+      const value = facultyInput.value.toLowerCase().trim();
+
+      dropdown.innerHTML = "";
+
+      if (!value) {
+        dropdown.style.display = "none";
+        return;
+      }
+
+      const matches = facultyOptions.filter(option =>
+        option.toLowerCase().includes(value)
+      );
+
+      if (matches.length === 0) {
+        dropdown.style.display = "none";
+        return;
+      }
+
+      matches.slice(0, 100).forEach(match => {
+        const item = document.createElement("div");
+        item.className = "dropdown-item";
+        item.textContent = match;
+
+        item.addEventListener("click", () => {
+          facultyInput.value = match;
+          dropdown.style.display = "none";
+        });
+
+        dropdown.appendChild(item);
+      });
+
+      dropdown.style.display = "block";
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".dropdown")) {
+        dropdown.style.display = "none";
+      }
+    });
+  </script>
+
+  <script src="js/form.js"></script>
+
+</body>
+</html>
