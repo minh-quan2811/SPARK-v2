@@ -1,0 +1,59 @@
+/* ═══════════════════════════════════════════════════════════
+   SPARK — Header Component
+   header.css
+═══════════════════════════════════════════════════════════ */
+
+header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 28px;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+/* ── Logo ── */
+.logo {
+  font-family: var(--font-h);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.logo b { color: var(--cv); font-weight: 800; }
+
+/* ── Separator ── */
+.sep {
+  width: 1px;
+  background: var(--border2);
+}
+
+/* ── Sub-label ── */
+.hdr-sub {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+/* ── Status indicator (dashboard only) ── */
+.hdr-status {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ── Status dot ── */
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cv);
+}
+.dot.live  { animation: blink 1.3s infinite; }
+.dot.done  { background: var(--green); animation: none; }
+.dot.err   { background: var(--red);   animation: none; }
+.dot.retry { background: var(--cur);   animation: blink 0.7s infinite; }

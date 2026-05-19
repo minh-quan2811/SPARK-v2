@@ -1,0 +1,308 @@
+/* ═══════════════════════════════════════════════════════════
+   SPARK — Dashboard Styles
+   dashboard.css
+═══════════════════════════════════════════════════════════ */
+
+/* dashboard header overrides */
+header      { height: 49px; }
+header .logo  { font-size: 20px; }
+header .sep   { height: 18px; }
+header .hdr-sub { font-size: 11px; }
+
+html, body { overflow: hidden; }
+
+/* ═══ LAYOUT ═════════════════════════════════════════════ */
+.layout {
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  height: calc(100vh - 49px);
+  overflow: hidden;
+}
+
+/* ═══ SIDEBAR ════════════════════════════════════════════ */
+.sidebar {
+  border-right: 1px solid var(--border2);
+  padding: 20px 12px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sb-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 8px 10px;
+}
+
+/* ── Agent chip ── */
+.chip {
+  border-radius: var(--r);
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  padding: 11px 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.chip:hover,
+.chip.active { background: var(--surface2); }
+
+/* left accent bar per agent */
+.chip[data-agent="cv_agent"]         { border-left: 3px solid var(--cv-border); }
+.chip[data-agent="job_agent"]        { border-left: 3px solid var(--job-border); }
+.chip[data-agent="curriculum_agent"] { border-left: 3px solid var(--cur-border); }
+.chip[data-agent="plan_agent"]       { border-left: 3px solid var(--plan-border); }
+
+.chip[data-agent="cv_agent"].active         { border-left-color: var(--cv);   border-color: var(--cv-border); }
+.chip[data-agent="job_agent"].active        { border-left-color: var(--job);  border-color: var(--job-border); }
+.chip[data-agent="curriculum_agent"].active { border-left-color: var(--cur);  border-color: var(--cur-border); }
+.chip[data-agent="plan_agent"].active       { border-left-color: var(--plan); border-color: var(--plan-border); }
+
+/* ── Chip dot ── */
+.cdot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--muted);
+  flex-shrink: 0;
+  transition: background 0.25s;
+}
+.cdot.run  { animation: blink 1.3s infinite; }
+.cdot.done { animation: none; background: var(--green) !important; }
+
+.chip[data-agent="cv_agent"]         .cdot.run { background: var(--cv); }
+.chip[data-agent="job_agent"]        .cdot.run { background: var(--job); }
+.chip[data-agent="curriculum_agent"] .cdot.run { background: var(--cur); }
+.chip[data-agent="plan_agent"]       .cdot.run { background: var(--plan); }
+
+/* ── Chip info ── */
+.cinfo { flex: 1; min-width: 0; }
+.cname { font-family: var(--font-h); font-size: 12px; font-weight: 600; }
+.chip[data-agent="cv_agent"]         .cname { color: var(--cv); }
+.chip[data-agent="job_agent"]        .cname { color: var(--job); }
+.chip[data-agent="curriculum_agent"] .cname { color: var(--cur); }
+.chip[data-agent="plan_agent"]       .cname { color: var(--plan); }
+
+.cstep {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Badge ── */
+.cbadge {
+  font-size: 10px; padding: 1px 7px;
+  border-radius: 20px; flex-shrink: 0;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+  background: var(--surface3);
+}
+.cbadge.run  { background: rgba(93, 202, 165, .1);  color: var(--cv);   border-color: rgba(93, 202, 165, .2); }
+.cbadge.done { background: rgba(99, 153,  34, .12); color: #97c459;     border-color: rgba(99, 153,  34, .25); }
+
+/* ═══ MAIN PANEL ═════════════════════════════════════════ */
+.main {
+  overflow-y: auto;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ═══ AGENT SECTION ══════════════════════════════════════ */
+.agent-section {
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  overflow: visible;
+  animation: fadeIn 0.2s ease;
+}
+
+.agent-section[data-agent="cv_agent"]         { border-top: 2px solid var(--cv); }
+.agent-section[data-agent="job_agent"]        { border-top: 2px solid var(--job); }
+.agent-section[data-agent="curriculum_agent"] { border-top: 2px solid var(--cur); }
+.agent-section[data-agent="plan_agent"]       { border-top: 2px solid var(--plan); }
+
+/* ── Section header ── */
+.asec-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.agent-section[data-agent="cv_agent"]         .asec-header { background: var(--cv-dim);   border-bottom-color: var(--cv-border); }
+.agent-section[data-agent="job_agent"]        .asec-header { background: var(--job-dim);  border-bottom-color: var(--job-border); }
+.agent-section[data-agent="curriculum_agent"] .asec-header { background: var(--cur-dim);  border-bottom-color: var(--cur-border); }
+.agent-section[data-agent="plan_agent"]       .asec-header { background: var(--plan-dim); border-bottom-color: var(--plan-border); }
+
+.asec-icon { font-size: 16px; }
+.agent-section[data-agent="cv_agent"]         .asec-icon { color: var(--cv); }
+.agent-section[data-agent="job_agent"]        .asec-icon { color: var(--job); }
+.agent-section[data-agent="curriculum_agent"] .asec-icon { color: var(--cur); }
+.agent-section[data-agent="plan_agent"]       .asec-icon { color: var(--plan); }
+
+.asec-title { font-family: var(--font-h); font-size: 14px; font-weight: 600; }
+.agent-section[data-agent="cv_agent"]         .asec-title { color: var(--cv); }
+.agent-section[data-agent="job_agent"]        .asec-title { color: var(--job); }
+.agent-section[data-agent="curriculum_agent"] .asec-title { color: var(--cur); }
+.agent-section[data-agent="plan_agent"]       .asec-title { color: var(--plan); }
+
+.asec-state {
+  margin-left: auto;
+  font-size: 10px; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--muted);
+}
+
+.asec-body {
+  padding: 20px 24px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+/* ═══ THOUGHT STREAM ════════════════════════════════════ */
+.stream { display: flex; flex-direction: column; gap: 4px; }
+
+.thought {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 8px 12px; border-radius: 6px;
+  border: 1px solid transparent;
+  animation: fadeIn 0.18s ease;
+}
+
+.thought.step   { background: var(--surface2);              border-color: var(--border); }
+.thought.tool   { background: rgba(127, 119, 221, .07);     border-color: rgba(127, 119, 221, .2); }
+.thought.result { background: rgba(93,  202, 165, .05);     border-color: rgba(93,  202, 165, .18); }
+.thought.err    { background: rgba(192,  57,  43, .07);     border-color: rgba(192,  57,  43, .25); }
+
+.t-icon { font-size: 13px; flex-shrink: 0; padding-top: 1px; }
+.thought.step   .t-icon { color: var(--muted); }
+.thought.tool   .t-icon { color: var(--job); }
+.thought.result .t-icon { color: var(--cv); }
+.thought.err    .t-icon { color: var(--red); }
+
+.t-body { flex: 1; min-width: 0; }
+.t-label {
+  font-size: 10px; letter-spacing: 1.4px;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 1px;
+}
+.t-text  { color: var(--text); word-break: break-all; font-size: 12px; }
+.t-time  { flex-shrink: 0; font-size: 10px; color: var(--muted); padding-top: 2px; }
+
+/* ═══ OUTPUT CARDS ════════════════════════════════════════ */
+.out-card { animation: fadeIn 0.25s ease; }
+
+.out-card-hd {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 14px;
+}
+.out-card-title {
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--muted2);
+}
+.out-card-body { display: flex; flex-direction: column; gap: 14px; }
+
+/* ── Field rows ── */
+.frow { display: flex; gap: 8px; align-items: flex-start; flex-wrap: wrap; }
+.fkey { font-size: 11px; color: var(--muted); min-width: 120px; flex-shrink: 0; padding-top: 2px; }
+.fval { color: var(--text); flex: 1; }
+.divd { border: none; border-top: 1px solid var(--border); }
+
+/* ── Tags ── */
+.tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tag {
+  font-size: 11px; padding: 2px 8px; border-radius: 20px;
+  border: 1px solid var(--border2); background: var(--surface3); color: var(--muted2);
+}
+.tag.skill  { border-color: rgba(127, 119, 221, .3); color: var(--job);  background: rgba(127, 119, 221, .08); }
+.tag.soft   { border-color: rgba(93,  202, 165, .25); color: var(--cv);  background: rgba(93,  202, 165, .07); }
+.tag.course { border-color: rgba(239, 159,  39, .3);  color: var(--cur); background: rgba(239, 159,  39, .08); }
+.tag.jtitle { border-color: rgba(93,  202, 165, .3);  color: var(--cv);  background: rgba(93,  202, 165, .07); }
+
+/* ── Experience / project block ── */
+.xblock {
+  padding: 14px 16px;
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--border3);
+  border-radius: 6px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.xblock-title { font-family: var(--font-h); font-size: 14px; font-weight: 600; color: var(--text); }
+.xblock-sub   { font-size: 12px; color: var(--muted2); }
+.xblock-desc  { font-size: 12px; color: var(--muted); font-style: italic; line-height: 1.6; }
+
+/* ── Job card ── */
+.job-card {
+  border: 1px solid var(--border2);
+  border-radius: 8px; padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.job-card-title   { font-family: var(--font-h); font-size: 14px; font-weight: 600; color: var(--text); }
+.job-card-company { font-size: 12px; color: var(--muted2); margin-left: 6px; }
+.job-meta         { display: flex; flex-wrap: wrap; gap: 5px; }
+.job-reqs, .job-resp { font-size: 11px; color: var(--muted); }
+.job-reqs ul, .job-resp ul { padding-left: 16px; display: flex; flex-direction: column; gap: 2px; }
+.job-reqs li, .job-resp li { color: var(--muted2); }
+.job-salary { font-size: 11px; color: #97c459; }
+.job-url    { font-size: 11px; color: var(--job); text-decoration: none; }
+.job-url:hover { text-decoration: underline; }
+
+/* ── Small section title ── */
+.section-title-sm {
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--muted); margin-bottom: 4px;
+}
+
+/* ── Cypher block ── */
+.cypher {
+  font-family: var(--font-m); font-size: 11px; color: var(--muted2);
+  background: var(--surface3); border: 1px solid var(--border);
+  border-radius: 6px; padding: 10px 12px;
+  white-space: pre-wrap; word-break: break-all;
+}
+
+/* ── Roadmap markdown ── */
+.roadmap { padding: 6px 4px; }
+.roadmap h1 { font-family: var(--font-h); font-size: 20px; font-weight: 700; color: var(--plan); margin-bottom: 16px; }
+.roadmap h2 { font-family: var(--font-h); font-size: 15px; font-weight: 600; color: var(--text); margin: 18px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.roadmap h3 { font-family: var(--font-h); font-size: 12px; font-weight: 600; color: var(--muted2); margin: 12px 0 5px; }
+.roadmap ul { padding-left: 18px; display: flex; flex-direction: column; gap: 3px; }
+.roadmap li { color: var(--text); }
+.roadmap p  { color: var(--muted2); }
+
+/* ═══ STATUS BANNERS ════════════════════════════════════ */
+.done-banner {
+  border: 1px solid rgba(99, 153, 34, .3);
+  border-radius: var(--r); padding: 12px 18px;
+  background: rgba(99, 153, 34, .08);
+  display: flex; align-items: center; gap: 10px;
+  color: #97c459; font-size: 13px;
+}
+
+.retry-banner {
+  border: 1px solid rgba(239, 159, 39, .3);
+  border-radius: var(--r); padding: 12px 18px;
+  background: rgba(239, 159, 39, .08);
+  display: flex; align-items: center; gap: 10px;
+  color: var(--cur); font-size: 13px;
+}
+
+/* ═══ MISC ══════════════════════════════════════════════ */
+.empty {
+  color: var(--muted); font-size: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.err-state {
+  padding: 32px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 12px;
+  color: var(--muted); text-align: center;
+}
+.err-state i      { font-size: 32px; color: var(--red); }
+.err-state strong { font-family: var(--font-h); font-size: 16px; color: var(--text); }

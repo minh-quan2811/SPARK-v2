@@ -1,0 +1,75 @@
+/* ═══════════════════════════════════════════════════════════
+   SPARK — Design Tokens & Reset
+   variables.css
+═══════════════════════════════════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* ── Backgrounds ── */
+  --bg:       #0c0c0e;
+  --surface:  #141418;
+  --surface2: #1c1c22;
+  --surface3: #232329;
+
+  /* ── Borders ── */
+  --border:   rgba(255, 255, 255, 0.06);
+  --border2:  rgba(255, 255, 255, 0.11);
+  --border3:  rgba(255, 255, 255, 0.18);
+
+  /* ── Text ── */
+  --text:   #eceae2;
+  --muted:  #78788a;
+  --muted2: #a0a0b0;
+
+  /* ── Agent accent colours ── */
+  --cv:   #5dcaa5;
+  --job:  #7f77dd;
+  --cur:  #ef9f27;
+  --plan: #ed93b1;
+
+  /* ── Agent dim backgrounds ── */
+  --cv-dim:   rgba(93,  202, 165, 0.10);
+  --job-dim:  rgba(127, 119, 221, 0.10);
+  --cur-dim:  rgba(239, 159,  39, 0.10);
+  --plan-dim: rgba(237, 147, 177, 0.10);
+
+  /* ── Agent border tints ── */
+  --cv-border:   rgba(93,  202, 165, 0.25);
+  --job-border:  rgba(127, 119, 221, 0.25);
+  --cur-border:  rgba(239, 159,  39, 0.25);
+  --plan-border: rgba(237, 147, 177, 0.25);
+
+  /* ── Status colours ── */
+  --green: #639922;
+  --red:   #c0392b;
+
+  /* ── Typography ── */
+  --font-h: 'Syne', sans-serif;
+  --font-m: 'IBM Plex Mono', monospace;
+
+  /* ── Radius ── */
+  --r: 10px;
+}
+
+/* ── Base typography ── */
+html, body {
+  height: 100%;
+  color: var(--text);
+  background: var(--bg);
+  font-family: var(--font-m);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+/* ── Shared animation ── */
+@keyframes blink   { 0%, 100% { opacity: 1 } 50% { opacity: .25 } }
+@keyframes fadeIn  { from { opacity: 0; transform: translateY(3px) } to { opacity: 1; transform: none } }

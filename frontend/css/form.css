@@ -1,0 +1,167 @@
+/* ═══════════════════════════════════════════════════════════
+   SPARK — Form Page
+   form.css
+═══════════════════════════════════════════════════════════ */
+
+/* index header overrides */
+header           { height: 58px; padding: 0 32px; }
+header .logo     { font-size: 24px; }
+header .sep      { height: 20px; }
+header .hdr-sub  { font-size: 12px; letter-spacing: 1px; }
+
+/* ── Page wrapper ── */
+.page {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Card ── */
+.card {
+  width: 100%;
+  max-width: 920px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-top: 2px solid var(--cv);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+.card-header {
+  padding: 24px 30px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(93, 202, 165, 0.06);
+}
+.card-header h1 {
+  font-family: var(--font-h);
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+.card-header p {
+  color: var(--muted2);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* ── Form layout ── */
+form {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+.field.full { grid-column: span 2; }
+
+/* ── Labels ── */
+label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--muted);
+}
+
+/* ── Inputs ── */
+input,
+textarea,
+select {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  padding: 14px 16px;
+  border-radius: var(--r);
+  font-family: var(--font-m);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+textarea { min-height: 120px; resize: vertical; line-height: 1.7; }
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: rgba(93, 202, 165, 0.4);
+  box-shadow: 0 0 0 3px rgba(93, 202, 165, 0.08);
+}
+input::placeholder,
+textarea::placeholder { color: var(--muted); }
+
+/* ── Faculty searchable dropdown ── */
+.dropdown-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 260px;
+  overflow-y: auto;
+  z-index: 20;
+  display: none;
+}
+
+.dropdown-item {
+  padding: 12px 14px;
+  cursor: pointer;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s, color 0.12s;
+}
+.dropdown-item:hover       { background: var(--surface3); color: var(--cur); }
+.dropdown-item:last-child  { border-bottom: none; }
+
+/* ── File input wrapper ── */
+.file-box {
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  border-radius: var(--r);
+  padding: 18px;
+  background: var(--surface2);
+}
+.file-box input { border: none; padding: 0; background: transparent; }
+
+/* ── Submit button ── */
+.submit-btn {
+  margin-top: 10px;
+  height: 54px;
+  border: none;
+  border-radius: 14px;
+  background: var(--cv);
+  color: #07110d;
+  font-family: var(--font-h);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s;
+}
+.submit-btn:hover { transform: translateY(-1px); opacity: 0.92; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .grid                 { grid-template-columns: 1fr; }
+  .field.full           { grid-column: span 1; }
+  .card-header h1       { font-size: 22px; }
+}

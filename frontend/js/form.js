@@ -1,34 +1,51 @@
-document.getElementById('sparkForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+/**
+ * form.js
+ * Handles career planning form submission.
+ * Posts multipart/form-data to the backend, stores the
+ * returned session_id, then redirects to the dashboard.
+ */
 
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  btn.textContent = 'Submitting…';
+'use strict';
 
-  try {
-    const formData = new FormData(e.target);
-    const res = await fetch('http://127.0.0.1:8000/api/submit', {
-      method: 'POST',
-      body: formData,
-    });
+(function () {
+  const form = document.getElementById('sparkForm');
+  if (!form) return;
 
-    if (!res.ok) {
-      throw new Error(`Server error: ${res.status}`);
+  let submitting = false;          // ← guard against double-submit
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    e.stopImmediatePropagation();  // ← block any other listeners
+
+    if (submitting) return;        // ← already in-flight, bail out
+    submitting = true;
+
+    const btn = form.querySelector('.submit-btn');
+    btn.disabled    = true;
+    btn.textContent = 'Submitting…';
+
+    try {
+      const data = new FormData(form);
+
+      const res = await fetch('http://127.0.0.1:8000/api/submit', {
+        method: 'POST',
+        body:   data,
+      });
+
+      if (!res.ok) throw new Error(`Server error ${res.status}`);
+
+      const json = await res.json();
+
+      if (!json.session_id) throw new Error('No session_id returned from server.');
+
+      localStorage.setItem('session_id', json.session_id);
+      window.location.href = 'dashboard.html';
+
+    } catch (err) {
+      submitting      = false;     // ← allow retry on failure
+      btn.disabled    = false;
+      btn.textContent = 'Generate Career Roadmap';
+      alert(`Submission failed: ${err.message}`);
     }
-
-    const data = await res.json();
-
-    // Write to localStorage first, then navigate
-    localStorage.setItem('session_id', data.session_id);
-
-    // Small tick to guarantee the write is visible before navigation
-    await new Promise((resolve) => setTimeout(resolve, 0));
-
-    location.href = 'dashboard.html';
-  } catch (err) {
-    console.error('Submit failed:', err);
-    btn.disabled = false;
-    btn.textContent = 'Submit';
-    alert(`Submission failed: ${err.message}`);
-  }
-});
+  });
+}());
