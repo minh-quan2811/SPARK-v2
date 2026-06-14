@@ -11,3 +11,8 @@ beautifulsoup4
 qdrant-client 
 sentence-transformers
 tqdm
+openpyxl
+scikit-learn
+matplotlib
+bert-score
+cohere

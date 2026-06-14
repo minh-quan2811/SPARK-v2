@@ -2,30 +2,24 @@ import os
 import json
 import re
 import asyncio
-from typing import List, Dict, Any, Callable, Awaitable
+from typing import List, Dict, Any, Callable, Awaitable, Optional, Set, Tuple
+
 import requests
+import cohere
 from bs4 import BeautifulSoup
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.messages import HumanMessage, SystemMessage, AIMessage, ToolMessage
-from langchain_core.tools import tool
+from langchain_core.messages import HumanMessage, SystemMessage
 from tavily import TavilyClient
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# ─────────────────────────────────────────────
-# Types
-# ─────────────────────────────────────────────
-
 Emit = Callable[[str, str], Awaitable[None]]
 
-# ─────────────────────────────────────────────
-# LLM
-# ─────────────────────────────────────────────
+_llm: Optional[ChatGoogleGenerativeAI] = None
 
-_llm = None
 
-def get_llm():
+def get_llm() -> ChatGoogleGenerativeAI:
     global _llm
     if _llm is None:
         _llm = ChatGoogleGenerativeAI(
@@ -37,30 +31,34 @@ def get_llm():
     return _llm
 
 
-# ─────────────────────────────────────────────
-# Tool implementations (sync, run in threads)
-# ─────────────────────────────────────────────
-
-def _do_search_jobs(query: str) -> str:
-    try:
-        tavily_key = os.getenv("TAVILY_API_KEY")
-        if not tavily_key:
-            return json.dumps({"error": "TAVILY_API_KEY not set"})
-        client = TavilyClient(api_key=tavily_key)
-        results = client.search(query=query, max_results=10, topic="general")
-        output = []
-        for r in results.get("results", []):
-            output.append({
-                "url": r["url"],
-                "title": r.get("title", ""),
-                "snippet": r.get("content", "")[:300],
-            })
-        return json.dumps(output, ensure_ascii=False)
-    except Exception as e:
-        return json.dumps({"error": str(e)})
+async def _call_llm(system: str, user: str) -> str:
+    llm = get_llm()
+    messages = [SystemMessage(content=system), HumanMessage(content=user)]
+    response = await asyncio.to_thread(llm.invoke, messages)
+    content = response.content
+    if isinstance(content, list):
+        return "\n".join(
+            b.get("text", "") if isinstance(b, dict) else str(b) for b in content
+        ).strip()
+    return str(content).strip()
 
 
-def _do_scrape_page(url: str) -> str:
+_BLOCKED_DOMAINS = {
+    "linkedin.com", "glassdoor.com", "indeed.com",
+    "careerbuilder.com", "monster.com", "ziprecruiter.com",
+    "simplyhired.com",
+}
+
+
+def _domain(url: str) -> str:
+    return re.sub(r"https?://(www\.)?", "", url).split("/")[0].lower()
+
+
+def _is_scrapable(url: str) -> bool:
+    return _domain(url) not in _BLOCKED_DOMAINS
+
+
+def _scrape(url: str) -> str:
     headers = {
         "User-Agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -71,9 +69,9 @@ def _do_scrape_page(url: str) -> str:
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     }
     try:
-        response = requests.get(url, headers=headers, timeout=12)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.content, "html.parser")
+        resp = requests.get(url, headers=headers, timeout=12)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.content, "html.parser")
         for tag in soup(["script", "style", "nav", "footer", "header",
                           "aside", "form", "noscript", "iframe"]):
             tag.decompose()
@@ -86,244 +84,305 @@ def _do_scrape_page(url: str) -> str:
         )
         text = (main or soup).get_text(separator="\n", strip=True)
         text = re.sub(r"\n{3,}", "\n\n", text)
-        return text[:6000] if text else "No readable content found."
+        return text[:6000] if text else ""
     except Exception as e:
-        return f"Scrape error: {e}"
+        return f"SCRAPE_ERROR: {e}"
 
 
-# ─────────────────────────────────────────────
-# LangChain tool schemas (for bind_tools)
-# ─────────────────────────────────────────────
+def _tavily_search(query: str, max_results: int = 8) -> List[Dict[str, str]]:
+    key = os.getenv("TAVILY_API_KEY")
+    if not key:
+        return []
+    client = TavilyClient(api_key=key)
+    try:
+        results = client.search(query=query, max_results=max_results, topic="general")
+        return [
+            {"url": r["url"], "title": r.get("title", ""), "snippet": r.get("content", "")[:200]}
+            for r in results.get("results", [])
+        ]
+    except Exception:
+        return []
 
-@tool
-def search_jobs(query: str) -> str:
-    """Search the web for job listings. Returns a JSON list of URLs and snippets."""
-    return _do_search_jobs(query)
 
-@tool
-def scrape_page(url: str) -> str:
-    """Scrape a webpage and return its cleaned text content."""
-    return _do_scrape_page(url)
+def _clean_json(raw: str) -> str:
+    raw = raw.strip()
+    raw = re.sub(r"^```json\s*", "", raw)
+    raw = re.sub(r"^```\s*", "", raw)
+    raw = re.sub(r"\s*```$", "", raw)
+    return raw.strip()
 
-TOOL_SCHEMAS = [search_jobs, scrape_page]
 
-# ─────────────────────────────────────────────
-# System prompt
-# ─────────────────────────────────────────────
+_BUILD_QUERIES_SYSTEM = """You are a job search strategist helping a student find jobs on LinkedIn or Indeed.
+Generate exactly 3 search queries using three different angles of the student's profile.
 
-SYSTEM_PROMPT = """You are a job search agent. Your goal is to find relevant job listings and extract structured data from them.
+A good query sounds like a job title someone would search for — short, role-focused, and natural.
+A bad query is a list of technologies or frameworks strung together.
 
-WORKFLOW:
-1. Call `search_jobs` with a good search query based on the user's profile.
-2. Review the returned URLs and snippets. Pick 4-6 URLs that look like actual job listings or job boards.
-3. Call `scrape_page` on each chosen URL to get the full content.
-4. If a page returns very little content or an error, try another URL.
-5. Once you have at least 3-5 real job listings, extract structured data and respond.
+Query 1 — Role + Domain: Use the student's target role (or most recent role if no target is given) and the domain or industry they work in. 3 to 5 words.
+Query 2 — Role + Seniority + Specialty: Use the student's experience level (Fresher / Junior / Mid) combined with their single strongest demonstrated specialty — a skill backed by actual project evidence. 3 to 6 words.
+Query 3 — Role + Application Area: Use the role name and the type of system, product, or industry the student's dominant skill cluster applies to. 3 to 5 words.
 
-OUTPUT FORMAT:
-When done, respond with ONLY a valid JSON object — no markdown, no explanation:
+Rules:
+- Every query must begin with a role title or job function
+- Maximum 2 technology names per query, and only if they define the role (e.g. "iOS Developer Swift" is fine, "Python LangChain FastAPI AWS" is not)
+- If preferences include a location, append it to all queries
+- If preferences include an industry, work it into the most relevant query only
+
+Return ONLY a valid JSON array of exactly 3 strings. No explanation, no markdown, no extra keys.
+Good example: ["AI Engineer NLP applications", "Junior Machine Learning Engineer computer vision", "LLM Developer conversational AI startup"]
+Bad example: ["AI Engineer Python LangChain LlamaIndex RAG", "LangGraph FastAPI AWS cloud AI", "PyTorch Transformers deep learning NLP"]"""
+
+_BUILD_QUERIES_HUMAN = """CV Profile:
+{cv_json}
+
+Preferences: {preferences}
+Background: {background}"""
+
+
+async def build_queries(cv_data: dict, preferences: str, background: str) -> List[str]:
+    raw = await _call_llm(
+        _BUILD_QUERIES_SYSTEM,
+        _BUILD_QUERIES_HUMAN.format(
+            cv_json=json.dumps(cv_data, ensure_ascii=False),
+            preferences=preferences or "None",
+            background=background or "None",
+        ),
+    )
+    raw = _clean_json(raw)
+    queries = json.loads(raw)
+    if not isinstance(queries, list):
+        raise ValueError(f"Expected list of queries, got: {type(queries)}")
+    return queries[:3]
+
+
+async def _retrieve_for_query(
+    query: str,
+    seen_urls: Set[str],
+    emit: Emit,
+    min_pages: int = 3,
+    max_candidates: int = 10,
+) -> List[Dict[str, str]]:
+    await emit("tool_call", f'Searching: "{query}"')
+    candidates = await asyncio.to_thread(_tavily_search, query, max_candidates)
+    await emit("tool_result", f"{len(candidates)} candidate URLs found")
+
+    pages: List[Dict[str, str]] = []
+    for item in candidates:
+        url = item["url"]
+        if url in seen_urls:
+            continue
+        if not _is_scrapable(url):
+            seen_urls.add(url)
+            continue
+
+        seen_urls.add(url)
+        await emit("tool_call", f"Scraping: {url[:80]}")
+        text = await asyncio.to_thread(_scrape, url)
+
+        if text.startswith("SCRAPE_ERROR") or len(text) < 200:
+            await emit("tool_result", f"{_domain(url)} — failed or too short, skipping")
+            continue
+
+        await emit("tool_result", f"{_domain(url)} — {len(text):,} chars extracted")
+        pages.append({"url": url, "text": text})
+
+        if len(pages) >= min_pages:
+            break
+
+    return pages
+
+
+_EXTRACT_SYSTEM = """You are a job listing extractor. Extract ALL job postings from the web page text.
+
+Return ONLY a valid JSON array. Each element must follow this schema exactly:
 {
-  "jobs": [
-    {
-      "title": "Job Title",
-      "company": "Company Name",
-      "location": "City, Country",
-      "salary": "salary range or null",
-      "technical_skills": ["skill1", "skill2"],
-      "requirements": ["requirement1"],
-      "responsibilities": ["duty1"],
-      "years_of_experience": "X years or null",
-      "seniority": "Junior/Mid/Senior or null",
-      "employment_type": "Full-time/Part-time/Contract or null",
-      "remote": true or false,
-      "apply_url": "url or null"
-    }
-  ],
-  "summary": "2-3 sentence summary in Vietnamese of what was found"
+  "title": "Job Title",
+  "company": "Company Name",
+  "location": "City, Country or Remote",
+  "salary": "salary range as string, or null",
+  "technical_skills": ["skill1", "skill2"],
+  "requirements": ["requirement1", "requirement2"],
+  "responsibilities": ["duty1", "duty2"],
+  "years_of_experience": "X years or null",
+  "seniority": "Fresher/Junior/Mid/Senior or null",
+  "employment_type": "Full-time/Part-time/Contract or null",
+  "remote": true or false,
+  "apply_url": "direct application URL or null"
 }
 
-RULES:
-- Only include real jobs with a real company name. Skip generic or duplicate listings.
-- If a page has multiple jobs, extract all of them.
-- Do not invent data. Use null for missing fields.
-- Summary must be in Vietnamese.
-"""
+Rules:
+- Only include real job postings with a named company. Skip ads, nav text, and generic content.
+- Include all postings found on the page as separate objects.
+- Never invent data. Use null for missing fields.
+- Return [] if no real jobs are found.
+- Return ONLY the JSON array, no explanation, no markdown fences."""
 
 
-# ─────────────────────────────────────────────
-# Helpers
-# ─────────────────────────────────────────────
-
-def _extract_text(content) -> str:
-    if isinstance(content, str):
-        return content
-    if isinstance(content, list):
-        return "\n".join(
-            b if isinstance(b, str)
-            else b.get("text", "") if isinstance(b, dict) and b.get("type") == "text"
-            else ""
-            for b in content
-        )
-    return str(content)
-
-
-def _parse_json_response(raw: str) -> dict:
-    cleaned = re.sub(r"^```json\s*", "", raw.strip())
-    cleaned = re.sub(r"\s*```$", "", cleaned).strip()
-    return json.loads(cleaned)
-
-
-def _summarise_search(raw: str) -> str:
+async def _extract_jobs_from_page(url: str, text: str) -> List[Dict[str, Any]]:
+    raw = await _call_llm(
+        _EXTRACT_SYSTEM,
+        f"Page URL: {url}\n\nPage text (truncated):\n{text[:4000]}",
+    )
+    raw = _clean_json(raw)
     try:
-        items = json.loads(raw)
-        if isinstance(items, list) and items:
-            titles = [i.get("title", "") for i in items[:5] if i.get("title")]
-            return f"{len(items)} results — " + " · ".join(t[:55] for t in titles[:3])
+        parsed = json.loads(raw)
+        if isinstance(parsed, list):
+            return parsed
     except Exception:
         pass
-    return raw[:120]
+    return []
 
 
-def _summarise_scrape(url: str, raw: str) -> str:
-    domain = re.sub(r"https?://(www\.)?", "", url).split("/")[0]
-    if "Scrape error" in raw:
-        return f"{domain} — {raw[:100]}"
-    lines = [l.strip() for l in raw.splitlines() if len(l.strip()) > 20][:3]
-    preview = " · ".join(l[:55] for l in lines)
-    return f"{domain} — {len(raw):,} chars — \"{preview[:120]}...\""
-
-
-# ─────────────────────────────────────────────
-# Manual async agent loop
-# ─────────────────────────────────────────────
-
-async def _run_agent_loop(messages: List, emit: Emit, max_iterations: int = 14) -> List:
-    """
-    Runs the LLM → tools → LLM loop manually.
-
-    Key design: each tool call is individually awaited so we can emit
-    events *as each one starts and finishes*, not after the whole batch.
-    The LLM invocation is blocking so it runs in asyncio.to_thread().
-    Tool calls (HTTP) also run in threads so they don't block the event loop.
-    """
-    llm_with_tools = get_llm().bind_tools(TOOL_SCHEMAS)
-
-    for _iteration in range(max_iterations):
-        # ── Ask the LLM what to do next ───────────────────────
-        full_messages = [SystemMessage(content=SYSTEM_PROMPT)] + messages
-        response: AIMessage = await asyncio.to_thread(
-            llm_with_tools.invoke, full_messages
+def _deduplicate(jobs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    seen: Set[Tuple[str, str]] = set()
+    unique: List[Dict[str, Any]] = []
+    for job in jobs:
+        key = (
+            (job.get("title") or "").lower().strip(),
+            (job.get("company") or "").lower().strip(),
         )
-        messages.append(response)
-
-        tool_calls = getattr(response, "tool_calls", None) or []
-
-        # No tool calls → LLM has produced the final JSON answer
-        if not tool_calls:
-            return messages
-
-        # ── Execute each tool call, one at a time ─────────────
-        # (The LLM may batch multiple calls in one turn; we run them serially
-        #  so the emit stream is ordered and readable.)
-        for tc in tool_calls:
-            name    = tc.get("name", "")
-            args    = tc.get("args", {})
-            call_id = tc.get("id", "")
-
-            if name == "search_jobs":
-                query = args.get("query", "")
-                # Emit BEFORE the network call
-                await emit("tool_call", f'Searching web: "{query}"')
-                raw = await asyncio.to_thread(_do_search_jobs, query)
-                await emit("tool_result", _summarise_search(raw))
-
-            elif name == "scrape_page":
-                url = args.get("url", "")
-                short = (url[:88] + "…") if len(url) > 88 else url
-                # Emit BEFORE the network call
-                await emit("tool_call", f"Scraping: {short}")
-                raw = await asyncio.to_thread(_do_scrape_page, url)
-                await emit("tool_result", _summarise_scrape(url, raw))
-
-            else:
-                await emit("tool_call", f"Tool: {name}({json.dumps(args)[:80]})")
-                raw = f"Unknown tool: {name}"
-                await emit("tool_result", raw[:120])
-
-            # Feed result back into the conversation
-            messages.append(ToolMessage(content=str(raw), tool_call_id=call_id))
-
-    return messages
+        if key in seen or key == ("", ""):
+            continue
+        seen.add(key)
+        unique.append(job)
+    return unique
 
 
-# ─────────────────────────────────────────────
-# Public run()
-# ─────────────────────────────────────────────
+def _build_profile_query(cv_data: dict, preferences: str, background: str) -> str:
+    edu = cv_data.get("education") or {}
+    tech = cv_data.get("technical_skills", [])
+    experience = cv_data.get("experience", [])
+    projects = cv_data.get("projects", [])
+
+    exp_roles = ", ".join(e.get("position", "") for e in experience[:3] if e.get("position"))
+    proj_tools = ", ".join(s for p in projects[:3] for s in (p.get("skills_used") or [])[:4])
+
+    parts = [
+        f"Target role: {edu.get('major', '')}" if edu.get("major") else "",
+        f"Skills: {', '.join(tech[:20])}" if tech else "",
+        f"Experience: {exp_roles}" if exp_roles else "",
+        f"Project tools: {proj_tools}" if proj_tools else "",
+        f"Preferences: {preferences}" if preferences else "",
+        f"Background: {background}" if background else "",
+    ]
+    return " | ".join(p for p in parts if p)
+
+
+def _job_to_document(job: Dict[str, Any]) -> str:
+    lines = [
+        f"Title: {job.get('title', '')}",
+        f"Company: {job.get('company', '')}",
+        f"Location: {job.get('location', '')}",
+        f"Seniority: {job.get('seniority', '')}",
+        f"Skills: {', '.join(job.get('technical_skills') or [])}",
+        f"Requirements: {', '.join((job.get('requirements') or [])[:5])}",
+        f"Responsibilities: {', '.join((job.get('responsibilities') or [])[:5])}",
+    ]
+    return "\n".join(l for l in lines if not l.endswith(": "))
+
+
+def _cohere_rerank(jobs: List[Dict[str, Any]], query: str, top_n: int = 10) -> List[Dict[str, Any]]:
+    api_key = os.getenv("COHERE_API_KEY")
+    if not api_key or not jobs:
+        return jobs[:top_n]
+
+    co = cohere.ClientV2(api_key=api_key)
+    documents = [_job_to_document(j) for j in jobs]
+
+    try:
+        response = co.rerank(
+            model="rerank-v3.5",
+            query=query,
+            documents=documents,
+            top_n=min(top_n, len(documents)),
+        )
+        reranked: List[Dict[str, Any]] = []
+        for r in response.results:
+            job = jobs[r.index].copy()
+            job["relevance_score"] = round(r.relevance_score, 4)
+            reranked.append(job)
+        return reranked
+    except Exception:
+        for j in jobs[:top_n]:
+            j.setdefault("relevance_score", None)
+        return jobs[:top_n]
+
+
+_SUMMARY_SYSTEM = (
+    "You are a career advisor writing a brief Vietnamese-language summary for a student. "
+    "Summarise the job search results in 2-3 sentences covering: "
+    "how many jobs were found, which roles/companies stand out, and any key skill requirements."
+)
+
+
+async def _generate_summary(jobs: List[Dict[str, Any]], preferences: str) -> str:
+    user_msg = (
+        f"Student preferences: {preferences or 'None'}\n\n"
+        f"Top job results:\n{json.dumps(jobs[:6], ensure_ascii=False, indent=2)}"
+    )
+    try:
+        return await _call_llm(_SUMMARY_SYSTEM, user_msg)
+    except Exception:
+        return f"Tìm thấy {len(jobs)} vị trí việc làm phù hợp."
+
 
 async def run(cv_data: dict, preferences: str, background: str, emit: Emit) -> dict:
-    """
-    Search for jobs based on CV and preferences.
-    Live-streams every search query and scrape as they happen.
-    """
-    await emit("prepare_query", "Building search query from your profile")
+    await emit("prepare_query", "Building three-dimensional search queries from CV profile…")
 
-    education  = cv_data.get("education") or {}
-    skills     = cv_data.get("technical_skills", [])
-    major      = education.get("major", "")
-    skills_str = ", ".join(skills[:8])
+    queries = await build_queries(cv_data, preferences, background)
+    for i, q in enumerate(queries, 1):
+        await emit("prepare_query", f"Query {i}: {q}")
 
-    parts = [p for p in [major, preferences, background] if p]
-    topic = " ".join(parts) if parts else "entry level jobs"
+    await emit("run_agent", "Running retrieval loops for all three queries…")
 
-    await emit("prepare_query",
-               f"Target roles: {topic[:80]} | Key skills: {skills_str or 'none'}")
+    seen_urls: Set[str] = set()
+    all_pages: List[Dict[str, str]] = []
 
-    user_message = (
-        f"Find job listings for someone with this profile:\n"
-        f"- Major / field: {major or 'Not specified'}\n"
-        f"- Technical skills: {skills_str or 'Not specified'}\n"
-        f"- Preferences: {preferences or 'None'}\n"
-        f"- Background: {background or 'None'}\n\n"
-        f"Search for: {topic} jobs Vietnam\n"
-        f"Focus on Vietnam-based roles or remote roles open to Vietnam candidates."
+    for i, query in enumerate(queries, 1):
+        await emit("tool_call", f"[Query {i}/3] {query}")
+        pages = await _retrieve_for_query(query, seen_urls, emit, min_pages=3)
+        await emit("tool_result", f"Query {i} collected {len(pages)} pages")
+        all_pages.extend(pages)
+
+    if not all_pages:
+        await emit("format_results", "No pages could be scraped — returning empty results")
+        return {"jobs": [], "summary": "Không tìm thấy kết quả phù hợp.", "top_job_titles": []}
+
+    await emit("format_results", f"Extracting job listings from {len(all_pages)} pages…")
+
+    per_page_results = await asyncio.gather(
+        *[_extract_jobs_from_page(p["url"], p["text"]) for p in all_pages],
+        return_exceptions=True,
     )
 
-    messages: List = [HumanMessage(content=user_message)]
+    raw_jobs: List[Dict[str, Any]] = []
+    for result in per_page_results:
+        if isinstance(result, list):
+            raw_jobs.extend(result)
 
-    await emit("run_agent", "Agent started — searching and scraping job listings live")
+    await emit("format_results", f"{len(raw_jobs)} raw job entries extracted")
 
-    # The loop emits events as each tool call fires
-    messages = await _run_agent_loop(messages, emit)
+    unique_jobs = _deduplicate(raw_jobs)
+    await emit("format_results", f"{len(unique_jobs)} unique jobs after deduplication")
 
-    await emit("format_results", "Parsing extracted job listings…")
+    if not unique_jobs:
+        await emit("format_results", "No valid job entries found after deduplication")
+        return {"jobs": [], "summary": "Không tìm thấy kết quả phù hợp.", "top_job_titles": []}
 
-    # ── Find the final JSON answer in the message history ─────
-    jobs: List[Dict[str, Any]] = []
-    summary = ""
+    await emit("format_results", "Reranking with Cohere cross-encoder…")
 
-    for msg in reversed(messages):
-        if not isinstance(msg, AIMessage):
-            continue
-        raw = _extract_text(msg.content).strip()
-        if not raw:
-            continue
-        try:
-            data = _parse_json_response(raw)
-            if "jobs" in data:
-                jobs    = data.get("jobs", [])
-                summary = data.get("summary", "")
-                break
-        except Exception:
-            continue
+    profile_query = _build_profile_query(cv_data, preferences, background)
+    ranked_jobs = await asyncio.to_thread(_cohere_rerank, unique_jobs, profile_query, 10)
 
-    count = len(jobs)
-    await emit("format_results",
-               f"{count} job listing{'s' if count != 1 else ''} structured and ready")
+    await emit("format_results", f"{len(ranked_jobs)} jobs ranked and ready")
+
+    summary = await _generate_summary(ranked_jobs, preferences)
 
     return {
-        "jobs": jobs,
+        "jobs": ranked_jobs,
         "summary": summary,
-        "top_job_titles": [j.get("title") for j in jobs[:10] if j.get("title")],
+        "top_job_titles": [j.get("title") for j in ranked_jobs if j.get("title")],
     }
+
 
 get_llm()
