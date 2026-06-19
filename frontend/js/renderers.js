@@ -159,7 +159,9 @@ function renderJobs(data) {
 
 /* ── Curriculum renderer ──────────────────────────────── */
 function renderCurriculum(data) {
-  const records = data.records || [];
+  const records = data.database_records || data.records || [];
+  const cypher  = data.cypher_statement || '';
+  const errors  = data.errors           || [];
 
   let h = `<div class="out-card">
     <div class="out-card-hd">
@@ -168,15 +170,15 @@ function renderCurriculum(data) {
     </div>
     <div class="out-card-body">`;
 
-  if (data.cypher_statement) {
+  if (cypher) {
     h += `<div class="section-title-sm">Generated Cypher Query</div>
-      <pre class="cypher">${esc(data.cypher_statement)}</pre>`;
+      <pre class="cypher">${esc(cypher)}</pre>`;
   }
 
   if (records.length) {
     h += `<div class="section-title-sm">Courses</div><div class="tags">`;
     records.forEach(r => {
-      const label = Object.values(r).find(v => typeof v === 'string' && v.length < 150);
+      const label = r.name || Object.values(r).find(v => typeof v === 'string' && v.length < 150 && v !== r.program);
       if (label) h += `<span class="tag course">${esc(label)}</span>`;
     });
     h += `</div>`;
@@ -197,10 +199,10 @@ function renderCurriculum(data) {
     h += `<div class="empty"><i class="ti ti-info-circle"></i> No courses found.</div>`;
   }
 
-  if (data.error) {
+  if (errors.length) {
     h += `<div style="color:var(--red);font-size:11px;padding:8px 10px;
       background:rgba(192,57,43,.07);border:1px solid rgba(192,57,43,.2);border-radius:6px">
-      ${esc(data.error)}</div>`;
+      ${esc(errors.join(', '))}</div>`;
   }
 
   h += `</div></div>`;

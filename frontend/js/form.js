@@ -11,13 +11,31 @@
   const form = document.getElementById('sparkForm');
   if (!form) return;
 
-  let submitting = false;          // ← guard against double-submit
+  let submitting = false;
+
+  /* Builds the plan_preferences string sent to the backend */
+  function buildPlanPreferences() {
+    const duration = document.getElementById('duration').value.trim();
+    const dims = typeof getDimensionSelections === 'function'
+      ? getDimensionSelections()
+      : {};
+
+    const dimLine = Object.entries(dims)
+      .map(([key, value]) => `${key}=${value}`)
+      .join(',');
+
+    const parts = [];
+    if (duration) parts.push(duration);
+    if (dimLine)  parts.push(`dimensions: ${dimLine}`);
+
+    return parts.join('\n\n');
+  }
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    e.stopImmediatePropagation();  // ← block any other listeners
+    e.stopImmediatePropagation();
 
-    if (submitting) return;        // ← already in-flight, bail out
+    if (submitting) return;
     submitting = true;
 
     const btn = form.querySelector('.submit-btn');
@@ -26,6 +44,11 @@
 
     try {
       const data = new FormData(form);
+
+      // Remove the raw 'duration' field name (not a backend field) and
+      // replace plan_preferences with the assembled string.
+      data.delete('duration');
+      data.set('plan_preferences', buildPlanPreferences());
 
       const res = await fetch('http://127.0.0.1:8000/api/submit', {
         method: 'POST',
@@ -42,7 +65,7 @@
       window.location.href = 'dashboard.html';
 
     } catch (err) {
-      submitting      = false;     // ← allow retry on failure
+      submitting      = false;
       btn.disabled    = false;
       btn.textContent = 'Generate Career Roadmap';
       alert(`Submission failed: ${err.message}`);

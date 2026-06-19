@@ -88,15 +88,53 @@
             ></textarea>
           </div>
 
-          <!-- Plan preferences -->
+          <!-- Duration (natural language) -->
           <div class="field full">
-            <label for="plan_preferences">Plan Preferences</label>
+            <label for="duration">Planning Duration</label>
             <textarea
-              id="plan_preferences"
-              name="plan_preferences"
-              placeholder="Describe the type of roadmap or learning style you want…"
+              id="duration"
+              name="duration"
+              placeholder="How far ahead do you want to plan, and do you have any time constraints? e.g. “Plan for the next 2 semesters — I have an internship in semester 6 so I can't take a heavy course load then.”"
             ></textarea>
           </div>
+
+          <!-- 6-Dimension carousel -->
+          <div class="field full">
+            <label>Roadmap Style</label>
+            <p class="dim-intro">
+              Pick the side that fits you for each dimension. Use the arrows to move between them.
+            </p>
+
+            <div class="dim-carousel" id="dimCarousel">
+
+              <div class="dim-carousel-head">
+                <span class="dim-progress" id="dimProgress">1 / 6</span>
+                <div class="dim-dots" id="dimDots"></div>
+                <div class="dim-nav">
+                  <button type="button" class="dim-arrow" id="dimPrev" aria-label="Previous dimension">
+                    <i class="ti ti-chevron-left"></i>
+                  </button>
+                  <button type="button" class="dim-arrow" id="dimNext" aria-label="Next dimension">
+                    <i class="ti ti-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="dim-name" id="dimName">Coverage</div>
+
+              <div class="dim-pair">
+                <button type="button" class="dim-card" data-side="left" id="dimCardLeft">
+                  <span class="dim-card-label" id="dimCardLeftLabel"></span>
+                  <span class="dim-card-desc" id="dimCardLeftDesc"></span>
+                </button>
+                <button type="button" class="dim-card" data-side="right" id="dimCardRight">
+                  <span class="dim-card-label" id="dimCardRightLabel"></span>
+                  <span class="dim-card-desc" id="dimCardRightDesc"></span>
+                </button>
+              </div>
+
+            </div><!-- /.dim-carousel -->
+          </div><!-- /.field.full -->
 
           <!-- CV upload -->
           <div class="field full">
@@ -124,6 +162,7 @@
 
   <!-- Scripts -->
   <script src="js/faculty-dropdown.js"></script>
+  <script src="js/dimension-carousel.js"></script>
   <script src="js/form.js"></script>
 
 </body>

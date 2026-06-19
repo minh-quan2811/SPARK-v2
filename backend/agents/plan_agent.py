@@ -1,16 +1,3 @@
-"""
-Plan Agent — LangGraph workflow
-================================
-Nodes:
-  1. analyze_profile   — distil CV into a compact skill/experience summary
-  2. analyze_jobs      — extract job patterns and required skills from job listings
-  3. select_courses    — match curriculum courses to skill gaps
-  4. draft_sections    — write each plan section independently (parallel-ish)
-  5. assemble_plan     — merge sections + user preferences into final markdown
-
-Each node receives ONLY the data it needs, avoiding context overload.
-"""
-
 import os
 import asyncio
 import json
@@ -24,9 +11,7 @@ from langgraph.graph import StateGraph, END
 
 load_dotenv()
 
-# ─────────────────────────────────────────────────────────────
 # LLM
-# ─────────────────────────────────────────────────────────────
 
 _llm = None
 
@@ -56,40 +41,168 @@ async def _call_llm(system: str, user: str) -> str:
     return str(content).strip()
 
 
-# ─────────────────────────────────────────────────────────────
+# Roadmap-style dimension directives
+
+_DIRECTIVES = {
+    "coverage": {
+        "focused": (
+            "Coverage preference — FOCUSED: recommend only subjects that map "
+            "directly onto an identified skill gap. Do not include adjacent, "
+            "supplementary, or 'nice to have' subjects. Keep the course list "
+            "concise and tightly targeted at closing the gaps that block the "
+            "student's target roles."
+        ),
+        "broad": (
+            "Coverage preference — BROAD: in addition to subjects that close "
+            "identified skill gaps, include adjacent and supplementary subjects "
+            "that build transferable competencies beyond the immediate job "
+            "target. The roadmap should be more exploratory and somewhat "
+            "longer as a result — breadth is valued over strict minimalism."
+        ),
+    },
+    "prior_knowledge": {
+        "skip_known": (
+            "Prior-knowledge preference — SKIP KNOWN: if the student's CV "
+            "already provides clear evidence of competency in a subject's "
+            "core material (via listed skills, experience, or projects), omit "
+            "that subject from the roadmap. Avoid recommending anything "
+            "redundant with demonstrated prior knowledge."
+        ),
+        "full_coverage": (
+            "Prior-knowledge preference — FULL COVERAGE: keep foundational "
+            "subjects in the roadmap even if the student's CV suggests some "
+            "prior exposure to the material. Do not drop a subject purely "
+            "because related skills appear on the CV — ensure no foundational "
+            "gap is left unaddressed."
+        ),
+    },
+    "sequence": {
+        "prereq_first": (
+            "Learning-sequence preference — PREREQUISITE-FIRST: order the "
+            "roadmap so that every foundational/prerequisite course is "
+            "scheduled before any applied or project-based subject that "
+            "depends on it. Do not interleave applied work ahead of its "
+            "prerequisites."
+        ),
+        "early_exposure": (
+            "Learning-sequence preference — EARLY EXPOSURE: interleave "
+            "applied, project-based courses earlier in the roadmap, even when "
+            "some of their prerequisites are still pending or scheduled "
+            "later. Prioritise early practical relevance and motivation over "
+            "strict prerequisite ordering."
+        ),
+    },
+    "pace": {
+        "fast_track": (
+            "Study-pace preference — FAST-TRACK: compress the roadmap into "
+            "fewer semesters with a higher subject load per semester. Favour "
+            "covering more ground sooner over spreading the workload out."
+        ),
+        "spaced": (
+            "Study-pace preference — SPACED: spread the same content across "
+            "more semesters with a lighter load per semester, in line with "
+            "the spacing effect. Give the student more time to consolidate "
+            "each topic before progressing — do not front-load multiple "
+            "demanding subjects into the same term."
+        ),
+    },
+    "theory_practice": {
+        "theory_first": (
+            "Theory–practice preference — THEORY-FIRST: shift the roadmap "
+            "composition toward formal coursework and lectures as the "
+            "primary vehicle of learning. Practical/lab work and applied "
+            "certifications should appear as supporting activities, not the "
+            "main driver."
+        ),
+        "project_first": (
+            "Theory–practice preference — PROJECT-FIRST: shift the roadmap "
+            "composition toward practical activities, lab work, and applied "
+            "certifications as the primary vehicle of learning. Theoretical "
+            "courses should appear as support for the practical work, not as "
+            "the main driver."
+        ),
+    },
+    "structure": {
+        "structured": (
+            "Schedule-structure preference — STRUCTURED: produce a fixed "
+            "semester-by-semester plan with an explicit course assignment "
+            "for each period. The student should be able to read off exactly "
+            "which courses belong to which semester."
+        ),
+        "flexible": (
+            "Schedule-structure preference — FLEXIBLE: produce a suggested "
+            "ordering of courses/topics without committing them to specific "
+            "semesters. Frame the sequence as guidance the student can adapt "
+            "based on their own availability and workload, rather than a "
+            "locked timetable."
+        ),
+    },
+}
+
+_DIMENSION_KEYS = tuple(_DIRECTIVES.keys())
+
+
+def parse_plan_preferences(raw: str) -> tuple[str, list[str]]:
+    """
+    Splits plan_preferences into (duration_text, directives).
+    Expected format: "<duration free text>\n\ndimensions: coverage=broad,pace=spaced,..."
+    """
+    raw = raw or ""
+
+    dim_line_match = re.search(r"dimensions:\s*([^\n]*)", raw, re.IGNORECASE)
+    duration_text = raw
+    directives: list[str] = []
+
+    if dim_line_match:
+        duration_text = raw[:dim_line_match.start()].strip()
+        pairs_str = dim_line_match.group(1)
+
+        for pair in pairs_str.split(","):
+            pair = pair.strip()
+            if "=" not in pair:
+                continue
+            dim, _, side = pair.partition("=")
+            dim, side = dim.strip(), side.strip()
+            if dim in _DIRECTIVES and side in _DIRECTIVES[dim]:
+                directives.append(_DIRECTIVES[dim][side])
+
+    return duration_text.strip(), directives
+
+
 # Graph State
-# ─────────────────────────────────────────────────────────────
 
 class PlanState(TypedDict, total=False):
-    # ── raw inputs ──
+    # raw inputs
     cv_data: dict
     job_data: dict
     curriculum_data: dict
-    user_data: dict          # form fields: faculty, year, preferences, plan_preferences, background
+    user_data: dict
 
-    # ── intermediate ──
-    profile_summary: str     # compact skill/experience paragraph
-    job_insights: str        # key job patterns, required skills, seniority
-    course_selection: str    # chosen courses with rationale
+    # parsed preferences
+    duration_text: str
+    style_directives: list
 
-    # ── drafted sections ──
+    # intermediate
+    profile_summary: str
+    job_insights: str
+    course_selection: str
+
+    # drafted sections
     section_profile: str
     section_jobs: str
     section_skills: str
     section_courses: str
     section_action_plan: str
 
-    # ── final output ──
+    # final output
     markdown: str
     error: Optional[str]
 
-    # ── emit callback (not serialised by langgraph, injected at runtime) ──
+    # emit callback (not serialised by langgraph, injected at runtime)
     _emit: object
 
 
-# ─────────────────────────────────────────────────────────────
 # Helper — safe emit
-# ─────────────────────────────────────────────────────────────
 
 async def _emit(state: PlanState, node: str, message: str):
     cb = state.get("_emit")
@@ -97,9 +210,35 @@ async def _emit(state: PlanState, node: str, message: str):
         await cb(node, message)
 
 
-# ─────────────────────────────────────────────────────────────
-# Node 1 — analyze_profile
-# ─────────────────────────────────────────────────────────────
+def _directives_block(state: PlanState) -> str:
+    """Renders active style directives as a prompt-ready block."""
+    directives = state.get("style_directives") or []
+    if not directives:
+        return ""
+    bullets = "\n".join(f"- {d}" for d in directives)
+    return f"\nROADMAP STYLE DIRECTIVES (must be followed):\n{bullets}\n"
+
+
+# parse_preferences
+
+async def parse_preferences(state: PlanState) -> PlanState:
+    user = state.get("user_data", {})
+    raw_prefs = user.get("plan_preferences", "") or user.get("preferences", "") or ""
+
+    duration_text, directives = parse_plan_preferences(raw_prefs)
+
+    if directives:
+        await _emit(
+            state, "parse_preferences",
+            f"{len(directives)} roadmap-style preference(s) detected.",
+        )
+    else:
+        await _emit(state, "parse_preferences", "No roadmap-style preferences detected — using defaults.")
+
+    return {**state, "duration_text": duration_text, "style_directives": directives}
+
+
+# analyze_profile
 
 async def analyze_profile(state: PlanState) -> PlanState:
     await _emit(state, "analyze_profile", "Analysing CV and skills profile…")
@@ -167,9 +306,7 @@ async def analyze_profile(state: PlanState) -> PlanState:
     return {**state, "profile_summary": summary}
 
 
-# ─────────────────────────────────────────────────────────────
-# Node 2 — analyze_jobs
-# ─────────────────────────────────────────────────────────────
+# analyze_jobs
 
 async def analyze_jobs(state: PlanState) -> PlanState:
     await _emit(state, "analyze_jobs", "Analysing job market requirements…")
@@ -210,29 +347,33 @@ async def analyze_jobs(state: PlanState) -> PlanState:
     return {**state, "job_insights": insights}
 
 
-# ─────────────────────────────────────────────────────────────
-# Node 3 — select_courses
-# ─────────────────────────────────────────────────────────────
+# select_courses
 
 async def select_courses(state: PlanState) -> PlanState:
     await _emit(state, "select_courses", "Matching curriculum to skill gaps…")
 
     records = state["curriculum_data"].get("courses", [])[:30]
 
-    # Extract one readable label per record
+    # Use the subject name explicitly, not the first string on the record
     course_labels = []
     for r in records:
-        if isinstance(r, dict):
-            label = next(
-                (v for v in r.values() if isinstance(v, str) and 2 < len(v) < 150),
-                None,
-            )
-            if label and label not in course_labels:
-                course_labels.append(label)
+        if not isinstance(r, dict):
+            continue
+        label = r.get("name") or next(
+            (
+                v for v in r.values()
+                if isinstance(v, str) and 2 < len(v) < 150 and v != r.get("program")
+            ),
+            None,
+        )
+        if label and label not in course_labels:
+            course_labels.append(label)
 
     current_skills = state["cv_data"].get("technical_skills", [])
     profile_summary = state.get("profile_summary", "")
     job_insights    = state.get("job_insights", "")
+    directives_block = _directives_block(state)
+    duration_text = state.get("duration_text", "")
 
     system = (
         "You are a curriculum advisor. "
@@ -243,12 +384,14 @@ async def select_courses(state: PlanState) -> PlanState:
         "- Why it matters (one sentence)\n"
         "- Suggested timing (e.g. 'Month 1-2')\n\n"
         "Output as a numbered list. Be specific and practical."
+        f"{directives_block}"
     )
 
     user_msg = (
         f"Student current skills: {', '.join(current_skills[:20]) or 'None listed'}\n\n"
         f"Profile summary:\n{profile_summary}\n\n"
         f"Job market requirements:\n{job_insights}\n\n"
+        f"Student's stated duration / time constraints: {duration_text or 'None specified'}\n\n"
         f"Available courses ({len(course_labels)} total):\n"
         + "\n".join(f"- {c}" for c in course_labels)
     )
@@ -258,9 +401,7 @@ async def select_courses(state: PlanState) -> PlanState:
     return {**state, "course_selection": selection}
 
 
-# ─────────────────────────────────────────────────────────────
-# Node 4 — draft_sections  (runs 5 sub-calls concurrently)
-# ─────────────────────────────────────────────────────────────
+# draft_sections  (runs 5 sub-calls concurrently)
 
 async def draft_sections(state: PlanState) -> PlanState:
     await _emit(state, "draft_sections", "Drafting individual roadmap sections…")
@@ -273,9 +414,10 @@ async def draft_sections(state: PlanState) -> PlanState:
 
     current_skills  = cv.get("technical_skills", [])[:20]
     top_job_titles  = state["job_data"].get("top_job_titles", [])[:5]
-    plan_prefs      = user.get("plan_preferences", "") or user.get("preferences", "") or ""
+    duration_text   = state.get("duration_text", "")
     academic_year   = user.get("year", "")
     faculty         = user.get("faculty", "")
+    directives_block = _directives_block(state)
 
     # Compute skill gaps
     job_skills: set[str] = set()
@@ -285,7 +427,7 @@ async def draft_sections(state: PlanState) -> PlanState:
     current_lower = {s.lower() for s in current_skills}
     gaps = sorted(job_skills - current_lower)[:15]
 
-    # ── 5 concurrent section drafts ─────────────────────────
+    # 5 concurrent section drafts ─────────────────────────
 
     async def draft_profile_section():
         sys = (
@@ -293,6 +435,7 @@ async def draft_sections(state: PlanState) -> PlanState:
             "Write a STUDENT PROFILE section (max 150 words) in markdown. "
             "Use a heading ## Student Profile. "
             "Summarise who the student is, their strengths, and their starting point."
+            f"{directives_block}"
         )
         msg = (
             f"Faculty: {faculty} | Year: {academic_year}\n\n"
@@ -307,6 +450,7 @@ async def draft_sections(state: PlanState) -> PlanState:
             "Use heading ## Target Careers. "
             "List the recommended job titles with a one-line description each, "
             "then add a short paragraph on market outlook."
+            f"{directives_block}"
         )
         msg = (
             f"Top job titles: {', '.join(top_job_titles)}\n\n"
@@ -320,6 +464,7 @@ async def draft_sections(state: PlanState) -> PlanState:
             "Write a SKILLS ANALYSIS section (max 200 words) in markdown. "
             "Use heading ## Skills Analysis. "
             "List current strengths, then clearly highlight skill gaps the student must close."
+            f"{directives_block}"
         )
         msg = (
             f"Current technical skills: {', '.join(current_skills)}\n\n"
@@ -335,6 +480,7 @@ async def draft_sections(state: PlanState) -> PlanState:
             "Use heading ## Recommended Courses. "
             "Present the course selection clearly with timing guidance. "
             "Keep it practical and specific."
+            f"{directives_block}"
         )
         msg = f"Course selection (already analysed):\n{course_selection}"
         return await _call_llm(sys, msg)
@@ -346,12 +492,13 @@ async def draft_sections(state: PlanState) -> PlanState:
             "Use heading ## 6-Month Action Plan. "
             "Break it into Month 1-2, Month 3-4, Month 5-6. "
             "Each period should have 3-5 concrete, actionable tasks. "
-            "Tailor the plan to the student's year, gaps, and preferences. "
+            "Tailor the plan to the student's year, gaps, and stated duration/constraints. "
             "Be specific — avoid generic advice."
+            f"{directives_block}"
         )
         msg = (
             f"Academic year: {academic_year} | Faculty: {faculty}\n"
-            f"Student plan preferences: {plan_prefs or 'None specified'}\n\n"
+            f"Student duration / time constraints: {duration_text or 'None specified'}\n\n"
             f"Profile summary:\n{profile_summary}\n\n"
             f"Skill gaps to close: {', '.join(gaps) if gaps else 'None significant'}\n\n"
             f"Target jobs: {', '.join(top_job_titles)}\n\n"
@@ -379,15 +526,13 @@ async def draft_sections(state: PlanState) -> PlanState:
     }
 
 
-# ─────────────────────────────────────────────────────────────
-# Node 5 — assemble_plan
-# ─────────────────────────────────────────────────────────────
+# assemble_plan
 
 async def assemble_plan(state: PlanState) -> PlanState:
     await _emit(state, "assemble_plan", "Assembling final career roadmap…")
 
-    user = state.get("user_data", {})
-    plan_prefs = user.get("plan_preferences", "") or user.get("preferences", "") or ""
+    duration_text = state.get("duration_text", "")
+    directives_block = _directives_block(state)
 
     sections = "\n\n---\n\n".join([
         state.get("section_profile",     ""),
@@ -404,15 +549,16 @@ async def assemble_plan(state: PlanState) -> PlanState:
         "2. Add a # Personalized Career Roadmap title at the top.\n"
         "3. Add a short intro paragraph (2-3 sentences) personalised to the student.\n"
         "4. Ensure transitions between sections flow naturally.\n"
-        "5. If the student has specific plan preferences, weave them in naturally — "
+        "5. If the student has stated a duration or time constraints, weave them in naturally — "
         "   do NOT just append them at the end.\n"
         "6. Add a ## Key Takeaways section at the end with 3-5 bullet points.\n"
         "7. Keep the total length reasonable (600-900 words).\n\n"
         "Output ONLY the final markdown. No preamble, no code fences."
+        f"{directives_block}"
     )
 
     user_msg = (
-        f"Student plan preferences: {plan_prefs or 'None specified'}\n\n"
+        f"Student duration / time constraints: {duration_text or 'None specified'}\n\n"
         f"Pre-written sections:\n\n{sections}"
     )
 
@@ -426,22 +572,20 @@ async def assemble_plan(state: PlanState) -> PlanState:
     return {**state, "markdown": markdown}
 
 
-# ─────────────────────────────────────────────────────────────
 # Build LangGraph
-# ─────────────────────────────────────────────────────────────
 
 def _build_graph():
     g = StateGraph(PlanState)
 
+    g.add_node("parse_preferences", parse_preferences)
     g.add_node("analyze_profile", analyze_profile)
     g.add_node("analyze_jobs",    analyze_jobs)
     g.add_node("select_courses",  select_courses)
     g.add_node("draft_sections",  draft_sections)
     g.add_node("assemble_plan",   assemble_plan)
 
-    # Sequential flow: profile + jobs run first, then course selection,
-    # then draft (needs all three), then assemble.
-    g.set_entry_point("analyze_profile")
+    g.set_entry_point("parse_preferences")
+    g.add_edge("parse_preferences", "analyze_profile")
     g.add_edge("analyze_profile", "analyze_jobs")
     g.add_edge("analyze_jobs",    "select_courses")
     g.add_edge("select_courses",  "draft_sections")
@@ -454,9 +598,7 @@ def _build_graph():
 _graph = _build_graph()
 
 
-# ─────────────────────────────────────────────────────────────
 # Public API
-# ─────────────────────────────────────────────────────────────
 
 async def run(
     cv_data: dict,
@@ -467,19 +609,8 @@ async def run(
 ) -> str:
     """
     Run the LangGraph plan pipeline.
-
-    Args:
-        cv_data:          Output from cv_agent
-        job_data:         Output from job_agent
-        curriculum_data:  Output from curriculum_agent  (expects key 'courses' or 'records')
-        user_data:        Form fields (faculty, year, background, preferences, plan_preferences)
-        emit:             Async callback(node: str, message: str) for live updates
-
-    Returns:
-        Markdown string of the finished career roadmap.
     """
-    # Normalise curriculum_data key — agent_runner passes {courses: records}
-    # but curriculum_agent returns {records: [...]}
+    # Normalise curriculum_data key
     if "records" in curriculum_data and "courses" not in curriculum_data:
         curriculum_data = {"courses": curriculum_data["records"], **curriculum_data}
 
